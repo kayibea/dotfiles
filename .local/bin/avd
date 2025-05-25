@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# Launches an Android Virtual Device (AVD) using a graphical selector via Zenity.
+
+SDK_PATH="$HOME/Android/Sdk"
+EMULATOR_PATH="$SDK_PATH/emulator"
+AVD_MANAGER_PATH="$SDK_PATH/cmdline-tools/latest/bin"
+
+AVD_LIST=$(echo "$($EMULATOR_PATH/emulator -list-avds)" | grep -v "INFO")
+
+if [ -z "$AVD_LIST" ]; then
+    zenity --error --text="No Android Virtual Devices found."
+    exit 1
+fi
+
+AVD=$(echo "$AVD_LIST" | zenity --list --title="Select AVD" --column="AVDs")
+
+if [ -z "$AVD" ]; then
+    zenity --info --text="No AVD selected."
+    exit 1
+fi
+
+echo "Selected AVD: $AVD"
+
+"$EMULATOR_PATH/emulator" -avd "$AVD"

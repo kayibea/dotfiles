@@ -1,0 +1,14 @@
+export PATH="$PATH:$HOME/.local/bin"
+export PATH="$PATH:$HOME/.local/opt/jadx/bin"
+export PATH="$PATH:$HOME/AndroidX/Sdk/platform-tools"
+export PATH="$PATH:$HOME/AndroidX/Sdk/cmdline-tools/bin"
+export PATH="$PATH:$HOME/AndroidX/Sdk/build-tools/latest"
+
+export LD_LIBRARY_PATH="$HOME/.local/lib:$LD_LIBRARY_PATH"
+export CPLUS_INCLUDE_PATH="$HOME/.local/include:$CPLUS_INCLUDE_PATH"
+export C_INCLUDE_PATH="$HOME/.local/include:$C_INCLUDE_PATH"
+
+export LUA_PATH="$HOME/.local/share/lua/5.4/?.lua;$HOME/.local/share/lua/5.4/?/init.lua;;"
+export LUA_CPATH="$HOME/.local/lib/lua/5.4/?.so;;"
+
+export TERMUX_HOME="/data/data/com.termux/files/home"

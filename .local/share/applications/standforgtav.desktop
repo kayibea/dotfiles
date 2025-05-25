@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Stand For GTA V
+Comment=The mod menu that enhances your game experience.
+Exec=protontricks-launch --appid 271590 --no-runtime --no-bwrap /home/maars/.local/bin-exe/Stand.Launchpad.exe
+Icon=/home/maars/.local/share/icons/standforgtav.png
+Terminal=false
+Categories=Game;

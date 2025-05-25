@@ -1,0 +1,15 @@
+[Unit]
+Description=Spotify Ad Mute Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/env lua /home/maars/.local/service/spotify-ad-mute
+Restart=always
+RestartSec=5
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=spotify-ad-mute
+
+[Install]
+WantedBy=default.target

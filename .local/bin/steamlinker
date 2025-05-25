@@ -1,0 +1,143 @@
+#!/usr/bin/env lua
+
+-- Creates readable symlinks for Steam Proton compatdata folders using game names.
+
+local lfs = require "lfs"
+
+---@alias LogLevel "INFO" | "WARN" | "ERROR" | "OK"
+
+---@param level LogLevel
+---@param message string
+local function log(level, message)
+    print(string.format("[%s] %s", level, message))
+end
+
+---@param path string
+---@return boolean
+local function dir_exists(path)
+    local attr = lfs.attributes(path)
+    return attr and attr.mode == "directory"
+end
+
+---@param path string
+---@return boolean
+local function ensure_directory(path)
+    if dir_exists(path) then return true end
+    local ok, err = lfs.mkdir(path)
+    if not ok then
+        log("ERROR", "Failed to create directory: " .. path .. " Reason: " .. tostring(err))
+        return false
+    end
+    log("INFO", "Created directory: " .. path)
+    return true
+end
+
+---@param path string
+local function purge_dead_symlinks(path)
+    log("INFO", "Cleaning broken symlinks in: " .. path)
+    for file in lfs.dir(path) do
+        if file == "." or file == ".." then goto continue end
+        local fullpath = path .. "/" .. file
+        local attr = lfs.symlinkattributes(fullpath)
+        if attr and attr.mode == "link" and not lfs.attributes(fullpath) then
+            os.remove(fullpath)
+            log("WARN", "Removed dead symlink: " .. fullpath)
+        end
+        ::continue::
+    end
+end
+
+---@param manifest_path string
+---@return string|nil
+local function extract_game_name(manifest_path)
+    local file = io.open(manifest_path, "r")
+    if not file then
+        log("WARN", "Could not open manifest: " .. manifest_path)
+        return nil
+    end
+    for line in file:lines() do
+        local name = line:match('"name"%s+"([^"]+)"')
+        if name then
+            file:close()
+            return name:gsub("[^%w%s_-]", "")
+        end
+    end
+    file:close()
+    return nil
+end
+
+---@param steamapps_path string
+---@return table<string, string>
+local function get_installed_games(steamapps_path)
+    local games = {}
+    for file in lfs.dir(steamapps_path) do
+        local appid = file:match("appmanifest_(%d+)%.acf")
+        if appid then
+            local name = extract_game_name(steamapps_path .. "/" .. file)
+            if name then
+                games[appid] = name
+            end
+        end
+    end
+    return games
+end
+
+---@param source string
+---@param link string
+local function create_symlink(source, link)
+    if not dir_exists(source) then
+        log("WARN", "Missing compatdata for: " .. source)
+        return
+    end
+    os.remove(link)
+    local ok, err = lfs.link(source, link, true)
+    if not ok then
+        log("ERROR", "Failed to create symlink: " .. link .. " Reason: " .. tostring(err))
+    else
+        log("OK", string.format("Linked: %s → %s", link, source:match("([^/]+)$")))
+    end
+end
+
+---@param compatdata_path string
+---@param compatdatalink_path string
+---@param games table<string, string>
+local function link_all_games(compatdata_path, compatdatalink_path, games)
+    for appid, name in pairs(games) do
+        local src = compatdata_path .. "/" .. appid
+        local dst = compatdatalink_path .. "/" .. name
+        create_symlink(src, dst)
+    end
+end
+
+local function main()
+    local steamapps = arg[1]
+    if not steamapps then
+        log("ERROR", "Missing Steam library path!")
+        print("Usage: " .. arg[0] .. " /path/to/steamapps")
+        os.exit(1)
+    end
+
+    if not dir_exists(steamapps) then
+        log("ERROR", "Invalid path: " .. steamapps)
+        os.exit(1)
+    end
+
+    local compatdata = steamapps .. "/compatdata"
+    local compatdatalink = steamapps .. "/compatdatalink"
+
+    if not ensure_directory(compatdatalink) then
+        os.exit(1)
+    end
+
+    purge_dead_symlinks(compatdatalink)
+
+    local games = get_installed_games(steamapps)
+    if not next(games) then
+        log("ERROR", "No installed games found in: " .. steamapps)
+        os.exit(1)
+    end
+
+    link_all_games(compatdata, compatdatalink, games)
+end
+
+main()
