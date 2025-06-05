@@ -1,4 +1,0 @@
-ADB_FWD_PORT=8022
-if adb devices | grep -w "device" > /dev/null; then
-    adb forward tcp:$ADB_FWD_PORT tcp:$ADB_FWD_PORT
-fi
