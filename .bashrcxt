@@ -8,18 +8,20 @@ if [ -f ~/.bash_exports ]; then
     . ~/.bash_exports
 fi
 
-# Load custom functions from the .bash_functions directory
 for file in "$HOME/.bash_functions"/*; do
   [[ -f "$file" ]] && source "$file"
 done
 
-
-if [ -f ~/.bash_adb ]; then
-    . ~/.bash_adb
-fi
+for file in "$HOME/.bash_commons"/*; do
+  [[ -f "$file" ]] && source "$file"
+done
 
 export PS1='$(set_prompt_emoji) \[\e[0;33m\]➤ \[\e[0m\]'
 
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-    tmux attach-session 2>/dev/null || tmux new-session
-fi
+# parent_cmd=$(ps -o comm= -p $(ps -o ppid= -p $$))
+# if [[ "$parent_cmd" == "xfce4-terminal" ]]; then
+#     if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+#         tmux attach-session 2>/dev/null || tmux new-session
+#     fi
+# fi
+
