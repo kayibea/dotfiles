@@ -15,6 +15,7 @@ done
 for file in "$HOME/.bash_commons"/*; do
   [[ -f "$file" ]] && source "$file"
 done
+unset -f run
 
 export PS1='$(set_prompt_emoji) \[\e[0;33m\]➤ \[\e[0m\]'
 

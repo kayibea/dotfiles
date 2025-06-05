@@ -7,16 +7,16 @@ local function log(msg)
 end
 
 ---@param msg string
-local function logError(msg)
+local function log_error(msg)
   io.stderr:write("[ERROR] " .. msg .. "\n")
   io.stderr:flush()
 end
 
 ---@return number
-local function getSpotifyVolume()
+local function get_spotify_volume()
   local playerctl = io.popen("playerctl -p spotify volume", "r")
   if not playerctl then
-    logError("Failed to get volume")
+    log_error("Failed to get volume")
     return 0
   end
 
@@ -27,37 +27,37 @@ local function getSpotifyVolume()
 end
 
 ---@param volume number
-local function setSpotifyVolume(volume)
+local function set_spotify_volume(volume)
   os.execute("playerctl -p spotify volume " .. volume)
 end
 
 local function main()
-  local isMuted = false
-  local savedVolume = 0
+  local saved_volume = get_spotify_volume()
+  local is_muted = saved_volume == 0
 
   local stream = io.popen("playerctl -p spotify metadata --follow --format '{{mpris:trackid}}'", "r")
   if not stream then
-    logError("Failed to run playerctl --follow")
+    log_error("Failed to run playerctl --follow")
     return
   end
 
-  for trackId in stream:lines() do
-    local isAd = trackId:match("/com/spotify/ad/") ~= nil
+  for track_id in stream:lines() do
+    local is_ad = track_id:match("/com/spotify/ad/") ~= nil
 
-    if isAd and not isMuted then
-      savedVolume = getSpotifyVolume()
-      setSpotifyVolume(0)
-      isMuted = true
+    if is_ad and not is_muted then
+      saved_volume = get_spotify_volume()
+      set_spotify_volume(0)
+      is_muted = true
       log("Ad detected — muting Spotify")
-    elseif not isAd and isMuted then
-      setSpotifyVolume(savedVolume)
-      isMuted = false
+    elseif not is_ad and is_muted then
+      set_spotify_volume(saved_volume)
+      is_muted = false
       log("Ad ended — restoring volume")
     end
   end
 
   stream:close()
-  logError("Playerctl stream ended unexpectedly")
+  log_error("Playerctl stream ended unexpectedly")
 end
 
 main()
