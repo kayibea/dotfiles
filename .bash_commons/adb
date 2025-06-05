@@ -1,8 +1,9 @@
-run(){
+run() {
     local ADB_FWD_PORT=8022
-    if adb devices | grep -w "device" > /dev/null; then
+    if adb devices | grep -qw device; then
         adb forward tcp:$ADB_FWD_PORT tcp:$ADB_FWD_PORT
     fi
 }
 
 run
+unset -f run
