@@ -1,0 +1,24 @@
+#!/bin/bash
+set -e
+
+if [[ -z "$1" ]]; then
+  echo "Usage: $0 ssh_alias:/remote/path"
+  exit 1
+fi
+
+REMOTE="$1"
+SSH_ALIAS="$(echo "$REMOTE" | cut -d':' -f1)"
+MOUNT_BASE="$HOME/mnt/sshfs_mounts"
+MOUNT_POINT="$MOUNT_BASE/$SSH_ALIAS"
+
+mkdir -p "$MOUNT_POINT"
+
+if mountpoint -q "$MOUNT_POINT"; then
+  echo "Already mounted at $MOUNT_POINT"
+  exit 0
+fi
+
+sshfs "$REMOTE" "$MOUNT_POINT" -o reconnect,ServerAliveInterval=15,ServerAliveCountMax=3
+
+echo "Mounted $REMOTE at $MOUNT_POINT"
+echo "To unmount: fusermount -u $MOUNT_POINT && rmdir $MOUNT_POINT"
