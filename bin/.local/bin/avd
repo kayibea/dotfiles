@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+SDK_PATH="$HOME/Android/Sdk"
+EMULATOR_PATH="$SDK_PATH/emulator"
+EMULATOR_BIN="$EMULATOR_PATH/emulator"
+
+AVD_LIST=$("$EMULATOR_BIN" -list-avds)
+
+if [ -z "$AVD_LIST" ]; then
+  rofi -e "No Android Virtual Devices found."
+  exit 1
+fi
+
+AVD=$(echo "$AVD_LIST" | rofi -dmenu -i -p "Select AVD:" -theme-str 'window {width: 25%;}')
+
+if [ -z "$AVD" ]; then
+  rofi -e "No AVD selected."
+  exit 1
+fi
+
+echo "Selected AVD: $AVD"
+
+"$EMULATOR_BIN" -avd "$AVD" > /dev/null 2>&1 &

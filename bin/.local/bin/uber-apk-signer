@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+SCRIPT_NAME="$(basename "$0")"
+UBER_SIGNER_JAR="$SCRIPT_DIR/uber-apk-signer.jar"
+
+check_java() {
+	if ! command -v java >/dev/null 2>&1; then
+		echo "Error: Java is not installed. Please install Java to use this script." >&2
+		exit 1
+	fi
+}
+
+check_uber_signer() {
+	if [[ ! -f "$UBER_SIGNER_JAR" ]]; then
+		echo "Error: Uber APK Signer JAR not found at: $UBER_SIGNER_JAR" >&2
+    exit 1
+  fi
+}
+
+run_uber_signer() {
+	java -jar "$UBER_SIGNER_JAR" "$@"
+}
+
+sign_apk() {
+	check_java
+	check_uber_signer
+	run_uber_signer "$@"
+}
+
+if [[ $# -eq 0 ]]; then
+	echo "Usage: $SCRIPT_NAME <apk-file> [options]" >&2
+	exit 1
+fi
+
+sign_apk "$@"

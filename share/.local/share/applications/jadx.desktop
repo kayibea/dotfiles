@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=JADX
+Comment=Java decompiler and Android APK reverse engineering tool
+Exec=env _JAVA_AWT_WM_NONREPARENTING=1 /home/maars/.local/bin/jadx/bin/jadx-gui
+Icon=jadx
+Terminal=false
+Categories=Development;IDE;

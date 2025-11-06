@@ -1,0 +1,13 @@
+{
+    "Alt-/": "lua:comment.comment",
+    "Alt-d": "command:definition",
+    "Alt-f": "command:format",
+    "Alt-k": "command:hover",
+    "Alt-r": "command:references",
+    "Ctrl-j": "command:jumptag",
+    "CtrlSpace": "command:lspcompletion",
+    "CtrlUnderscore": "lua:comment.comment",
+    "F1": "command:cheat",
+    "F4": "command:jumptag",
+    "F5": "lua:wc.wordCount"
+}

@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+slugify() {
+  echo "$1" \
+    | iconv -f UTF-8 -t ASCII//TRANSLIT 2>/dev/null \
+    | tr '[:upper:]' '[:lower:]' \
+    | sed -E 's/[^a-z0-9]+/-/g' \
+    | sed -E 's/^-+|-+$//g'
+}
+
+if [[ $# -gt 0 ]]; then
+  for arg in "$@"; do
+    slugify "$arg"
+  done
+  exit 0
+fi
+
+tmpfile="$(mktemp /tmp/slug.XXXXXX)"
+cleanup() {
+  rm -f "$tmpfile"
+}
+trap cleanup EXIT
+
+command -v inotifywait >/dev/null 2>&1 || {
+  echo "error: inotifywait not found (install inotify-tools)" >&2
+  exit 1
+}
+
+(
+  sleep 0.2
+  while inotifywait -q -e close_write "$tmpfile" >/dev/null 2>&1; do
+    mapfile -t lines <"$tmpfile"
+    {
+      for line in "${lines[@]}"; do
+        [[ -z "$line" ]] && echo "" || slugify "$line"
+      done
+    } >"${tmpfile}.tmp"
+    mv "${tmpfile}.tmp" "$tmpfile"
+  done
+) &
+
+watcher_pid=$!
+
+"${EDITOR:-nano}" "$tmpfile"
+
+kill "$watcher_pid" 2>/dev/null || true
+wait "$watcher_pid" 2>/dev/null || true
