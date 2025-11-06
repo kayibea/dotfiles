@@ -1,6 +1,7 @@
 alias ..='cd ..'
 alias ...='cd ../..'
 
+alias x='extract'
 alias m='micro'
 alias cls='clear'
 alias zz='yazi'
