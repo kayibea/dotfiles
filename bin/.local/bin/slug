@@ -2,11 +2,11 @@
 set -euo pipefail
 
 slugify() {
-  echo "$1" \
-    | iconv -f UTF-8 -t ASCII//TRANSLIT 2>/dev/null \
-    | tr '[:upper:]' '[:lower:]' \
-    | sed -E 's/[^a-z0-9]+/-/g' \
-    | sed -E 's/^-+|-+$//g'
+  echo "$1" |
+    iconv -f UTF-8 -t ASCII//TRANSLIT 2>/dev/null |
+    tr '[:upper:]' '[:lower:]' |
+    sed -E 's/[^a-z0-9]+/-/g' |
+    sed -E 's/^-+|-+$//g'
 }
 
 if [[ $# -gt 0 ]]; then

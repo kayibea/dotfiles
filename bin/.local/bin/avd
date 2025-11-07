@@ -20,4 +20,4 @@ fi
 
 echo "Selected AVD: $AVD"
 
-"$EMULATOR_BIN" -avd "$AVD" > /dev/null 2>&1 &
+"$EMULATOR_BIN" -avd "$AVD" >/dev/null 2>&1 &
