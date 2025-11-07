@@ -20,6 +20,7 @@ export GTK_THEME="Adwaita:dark"
 
 export GOROOT="$HOME/.local/bin/go"
 export PATH="$PATH:$GOROOT/bin"
+export PATH="$PATH:$(go env GOPATH)/bin"
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 
