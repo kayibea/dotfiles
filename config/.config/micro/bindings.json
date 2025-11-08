@@ -1,6 +1,7 @@
 {
     "Alt-/": "lua:comment.comment",
     "Alt-d": "command:definition",
+    "Alt-e": "command:emmet",
     "Alt-f": "command:format",
     "Alt-k": "command:hover",
     "Alt-r": "command:references",

@@ -1,8 +1,11 @@
 alias ..='cd ..'
 alias ...='cd ../..'
 
+alias gs='git status'
+
 alias x='extract'
 alias m='micro'
+alias mm='micro -debug'
 alias cls='clear'
 alias zz='yazi'
 alias lz='lazygit'

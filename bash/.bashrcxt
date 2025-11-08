@@ -11,4 +11,6 @@ for file in "$HOME"/.completions/*; do
   [ -f "$file" ] && . "$file"
 done
 
+eval "$(batman --export-env)"
+
 PS1="→ "
