@@ -7,6 +7,9 @@
   "detectlimit": 200,
   "basename": true,
   "rmtrailingws": true,
+  "ft:go": {
+    "rmtrailingws": false
+  },
   "parsecursor": true,
   "matchbracestyle": "highlight",
   "hltrailingws": true,
@@ -22,5 +25,5 @@
   "lsp.server": "lua=lua-language-server,typescript=typescript-language-server --stdio",
   "lsp.tabcompletion": true,
   "tabsize": 2,
-  "tabstospaces": true,
+  "tabstospaces": true
 }
