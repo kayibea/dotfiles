@@ -7,11 +7,9 @@
   "detectlimit": 200,
   "basename": true,
   "rmtrailingws": true,
-  "ft:go": {
-    "rmtrailingws": false
-  },
   "parsecursor": true,
-  "matchbracestyle": "highlight",
+  // "matchbracestyle": "highlight",
+  "matchbracestyle": "underline",
   "hltrailingws": true,
   "hltaberrors": true,
   "fastdirty": false,
@@ -25,5 +23,12 @@
   "lsp.server": "lua=lua-language-server,typescript=typescript-language-server --stdio",
   "lsp.tabcompletion": true,
   "tabsize": 2,
-  "tabstospaces": true
+  "tabstospaces": true,
+  "ft:go": {
+    "tabstospaces": false,
+    "rmtrailingws": false,
+    "lsp.autocompleteDetails": false,
+    "lsp.tabcompletion": false,
+    "lsp.formatOnSave": false
+  }
 }

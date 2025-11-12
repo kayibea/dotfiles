@@ -3,6 +3,8 @@ alias ...='cd ../..'
 
 alias gs='git status'
 
+alias cpwd='pwd | xclip -selection clipboard'
+
 alias x='extract'
 alias m='micro'
 alias mm='micro -debug'
