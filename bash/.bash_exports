@@ -1,26 +1,35 @@
+#!/usr/bin/env bash
+
+export PATH="$PATH:/usr/sbin:/sbin"
+
+BIN="$HOME/.local/bin"
+export PATH="$PATH:$BIN"
+
+OPT="$HOME/.local/opt"
+export PATH="$PATH:$OPT/go/bin"
+export PATH="$PATH:$OPT/jadx/bin"
+export PATH="$PATH:$OPT/lua-language-server/bin"
+
 export SDK_ROOT="$HOME/AndroidX/Sdk"
 export PATH="$PATH:$SDK_ROOT/platform-tools"
 export PATH="$PATH:$SDK_ROOT/cmdline-tools/latest/bin"
 export PATH="$PATH:$SDK_ROOT/build-tools/36.1.0"
 export PATH="$PATH:$SDK_ROOT/emulator"
 
-BIN="$HOME/.local/bin"
-export PATH="$PATH:$BIN"
-export PATH="$PATH:$BIN/go/bin"
-export PATH="$PATH:$BIN/jadx/bin"
-export PATH="$PATH:$BIN/lua-language-server/bin"
-
 export TERMUX_PFX="/data/data/com.termux/files/usr/"
 export TERMUX_HOME="/data/data/com.termux/files/home/"
 export TERMUX_TMPDIR="/data/data/com.termux/files/usr/tmp/"
 export ANDROID_TMPDIR="/data/local/tmp/"
 
-export EDITOR="micro"
+export EDITOR="hx"
 export GTK_THEME="Adwaita:dark"
 
-export GOROOT="$HOME/.local/bin/go"
+export GOROOT="$HOME/.local/opt/go"
 export PATH="$PATH:$GOROOT/bin"
 export PATH="$PATH:$(go env GOPATH)/bin"
+
+export LUA_PATH="$HOME/.local/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?.lua;;"
+export LUA_CPATH="$HOME/.local/lib/lua/5.4/?.so;$HOME/.luarocks/lib/lua/5.4/?.so;;"
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 
@@ -28,4 +37,4 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 
-export PATH="$PATH:/usr/sbin:/sbin"
+

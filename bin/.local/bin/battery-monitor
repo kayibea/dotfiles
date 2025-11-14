@@ -1,0 +1,130 @@
+#!/usr/bin/env lua
+
+---@alias PowerSupplyStatus "Discharging" | "Charging" | "Full" | "Unknown"
+
+---@class PowerSupply
+---@field POWER_SUPPLY_STATUS PowerSupplyStatus
+---@field POWER_SUPPLY_CHARGE_FULL string
+---@field POWER_SUPPLY_CHARGE_NOW string
+---@field POWER_SUPPLY_CAPACITY string
+
+---@type fun(ms: integer)
+local sleep = require "sleep"
+local signal = require "posix.signal"
+local unistd = require "posix.unistd"
+
+local HOME = assert(os.getenv("HOME"))
+local ICONS_ROOT = HOME .. "/.local/share/icons/hicolor/48x48/apps"
+
+local icons = {
+  battery_ac_connected = ICONS_ROOT .. "/battery_ac_connected.png",
+  battery_ac_disconnected = ICONS_ROOT .. "/battery_ac_disconnected.png",
+  battery_critical = ICONS_ROOT .. "/battery_critical.png",
+  battery_discharging = ICONS_ROOT .. "/battery_discharging.png",
+  battery_full = ICONS_ROOT .. "/battery_full.png",
+  battery_low = ICONS_ROOT .. "/battery_low.png"
+}
+
+local running = true
+
+local BAT_POLLING_MS = 2000
+local BAT_THRESHOLD_LOW = 30
+local BAT_THRESHOLD_CRITICAL = 10
+local BAT_UEVENT = "/sys/class/power_supply/BAT1/uevent"
+
+---@param sig integer
+local function handle_signal(sig)
+  running = false
+  print(string.format("Received signal (%d)\n", sig))
+end
+
+---@param class string
+---@return PowerSupply
+local function get_power_status(class)
+  local f = assert(io.open(class, "r"))
+  local psupply = {}
+  for k, v in string.gmatch(f:read "a", "([%w_]+)=([%w%-]+)") do
+    psupply[k] = v
+    -- print(string.format("%q, %q", k, v))
+  end
+  f:close()
+  return psupply
+end
+
+
+---@param summary string
+---@param body string
+---@param icon string
+---@param urgency? "low" | "normal" | "critical"
+local function notify_send(summary, body, icon, urgency)
+  urgency = urgency or "normal"
+  local cmd = string.format(
+    "notify-send -i %q -u %s %q %q",
+    icon,
+    urgency,
+    summary,
+    body
+  )
+  os.execute(cmd)
+end
+
+
+---@param status PowerSupplyStatus
+local function get_power_status_icon(status)
+  if status == "Charging" then
+    return icons.battery_ac_connected
+  elseif status == "Discharging" then
+    return icons.battery_ac_disconnected
+  elseif status == "Full" then
+    return icons.battery_full
+  end
+end
+
+---@param psupply PowerSupply
+---@param psupply_prev PowerSupply
+local function check_power_status(psupply, psupply_prev)
+  if (psupply.POWER_SUPPLY_STATUS ~= psupply_prev.POWER_SUPPLY_STATUS) then
+    notify_send("AC Adapter", psupply.POWER_SUPPLY_STATUS, get_power_status_icon(psupply.POWER_SUPPLY_STATUS))
+  end
+
+  if (psupply.POWER_SUPPLY_STATUS == "Charging") then
+    return
+  end
+
+  local capacity = tonumber(psupply.POWER_SUPPLY_CAPACITY)
+
+  if psupply.POWER_SUPPLY_CAPACITY ~= psupply_prev.POWER_SUPPLY_CAPACITY and
+      capacity > BAT_THRESHOLD_CRITICAL and
+      capacity <= BAT_THRESHOLD_LOW and
+      capacity % 5 == 0 then
+    local body = string.format("Running low on power (%d)", capacity)
+    notify_send("PowerSupply", body, icons.battery_low)
+    return
+  end
+
+  if (capacity <= BAT_THRESHOLD_CRITICAL and psupply.POWER_SUPPLY_CAPACITY ~= psupply_prev.POWER_SUPPLY_CAPACITY) then
+    local body = string.format("About to shut down (%d)", capacity)
+    notify_send("PowerSupply", body, icons.battery_critical, "critical")
+  end
+end
+
+---@return integer
+local function main()
+  signal.signal(signal.SIGINT, handle_signal)
+  signal.signal(signal.SIGTERM, handle_signal)
+
+  print(string.format("Daemon Started: pid(%d)", unistd.getpid()))
+
+  local psupply = get_power_status(BAT_UEVENT)
+  local psupply_prev = psupply
+  while running do
+    psupply = get_power_status(BAT_UEVENT)
+    check_power_status(psupply, psupply_prev)
+    psupply_prev = psupply
+    sleep(BAT_POLLING_MS)
+  end
+
+  return 0
+end
+
+os.exit(main())

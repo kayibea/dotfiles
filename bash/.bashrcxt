@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 shopt -s nullglob
 
 [ -f ~/.bash_exports ] && . ~/.bash_exports

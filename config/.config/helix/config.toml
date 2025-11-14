@@ -1,0 +1,43 @@
+theme = "onedark"
+
+[editor]
+auto-info = true
+# bufferline="always"
+line-number = "relative"
+mouse = false
+true-color = true
+# trim-trailing-whitespace = false
+trim-trailing-whitespace = true
+clipboard-provider = "x-clip"
+
+[editor.statusline]
+left = ["mode","read-only-indicator","file-base-name", "file-modification-indicator"]
+center = []
+right = ["diagnostics","spinner", "position","file-encoding", "file-type"]
+# separator = "·"
+# mode.normal = "NOR"
+# mode.insert = "INS"
+# mode.select = "SEL"
+diagnostics = ["error"]
+
+[editor.lsp]
+display-inlay-hints = false
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[keys.normal]
+C-s = ":w"
+C-q = ":quit"
+C-f = ":format"
+up ="no_op"
+down="no_op"
+right="no_op"
+left="no_op"
+esc = ["collapse_selection", "keep_primary_selection"]
+# C-o = ":open ~/.config/helix/config.toml"

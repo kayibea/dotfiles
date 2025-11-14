@@ -1,0 +1,18 @@
+[Unit]
+Description=Battery Notification Daemon
+After=graphical.target
+Wants=graphical.target
+
+[Service]
+Type=simple
+Environment=LUA_PATH="/home/maars/.local/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?.lua;;"
+Environment=LUA_CPATH="/home/maars/.local/lib/lua/5.4/?.so;$HOME/.luarocks/lib/lua/5.4/?.so;;"
+ExecStart=%h/.local/bin/battery-monitor
+Restart=on-failure
+RestartSec=3
+# Environment=DISPLAY=:0
+# Environment=XAUTHORITY=/home/%i/.Xauthority
+
+[Install]
+WantedBy=default.target
+
