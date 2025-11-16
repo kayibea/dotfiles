@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+# Usage: ./utf8.sh 0xE2 0x82 0xAC   OR   ./utf8.sh E2 82 AC
+# Prints the UTF-8 character represented by the given bytes.
+
+if [ $# -eq 0 ]; then
+  echo "no bytes provided" >&2
+  exit 1
+fi
+
+out=""
+for b in "$@"; do
+  b="${b#0x}" # strip optional 0x
+  out+="\\x$b"
+done
+
+printf "%b\n" "$out"

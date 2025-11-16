@@ -28,6 +28,7 @@ export GOROOT="$HOME/.local/opt/go"
 export PATH="$PATH:$GOROOT/bin"
 export PATH="$PATH:$(go env GOPATH)/bin"
 
+export LLSA="$HOME/.local/opt/lua-language-server/LLS-Addons/addons"
 export LUA_PATH="$HOME/.local/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?.lua;;"
 export LUA_CPATH="$HOME/.local/lib/lua/5.4/?.so;$HOME/.luarocks/lib/lua/5.4/?.so;;"
 
@@ -36,5 +37,3 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
-
-

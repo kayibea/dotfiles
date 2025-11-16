@@ -2,18 +2,46 @@
 name = "javascript"
 auto-format=true
 
+# [[language]]
+# name = "toml"
+# formatter = { command = "prettier", args = ["--plugin", "prettier-plugin-toml", "--parser", "toml"] }
+# auto-format = true
+
+[[language]]
+name = "html"
+formatter = { command = 'prettier', args = ["--parser", "html"] }
+auto-format = true
+language-servers = [ "vscode-html-language-server", "superhtml", "emmet-lsp" ]
+
+[[language]]
+name = "css"
+auto-format = true
+formatter = { command = 'prettier', args = ["--parser", "css"] }
+language-servers = [ "vscode-css-language-server", "emmet-lsp" ]
+
+[[language]]
+name = "scss"
+auto-format = true
+formatter = { command = 'prettier', args = ["--parser", "scss"] }
+language-servers = [ "vscode-css-language-server", "emmet-lsp" ]
+
+[[language]]
+name = "json"
+auto-format = true
+formatter = { command = 'prettier', args = ["--parser", "json"]  }
+
 [[language]]
 name = "typescript"
 auto-format=true
 
 [[language]]
-name = "c"
-file-types = ["c", "h"]
-formatter = { command = 'clang-format' }
+name = "lua"
 auto-format = true
 
 [[language]]
-name = "lua"
+name = "c"
+file-types = ["c", "h"]
+formatter = { command = 'clang-format' }
 auto-format = true
 
 [[language]]
@@ -28,3 +56,12 @@ indent = { tab-width = 2, unit = "    " }
 formatter = { command = 'shfmt', args = ["-i", "2", "-ci"] }
 auto-format = true
 
+[language-server.lua-language-server.config.Lua.workspace]
+library = [
+  # "${env:LLSA}/luaposix",
+]
+checkThirdParty = "Disable"
+
+[language-server.emmet-lsp]
+command = "emmet-language-server"
+args = ["--stdio"]

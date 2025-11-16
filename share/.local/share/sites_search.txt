@@ -1,33 +1,33 @@
-MDN Web Docs           @mdn     site:developer.mozilla.org
-Linux Man Pages        @man     site:man7.org/linux/man-pages
-Node.js                @node    site:nodejs.org
-Node Package Manager   @npm     site:npmjs.com
-DevDocs                @devdocs site:devdocs.io
-Android Developers     @android site:developer.android.com
-TypeScript Handbook    @ts      site:typescriptlang.org
-Lua Manual             @lua     site:lua.org/manual
-Stack Overflow         @so      site:stackoverflow.com
-PHP                    @php     site:php.net
-GitHub                 @gh      site:github.com
-Rust Docs              @rs      site:doc.rust-lang.org
-Go Packages            @go      site:pkg.go.dev
-Python Docs            @py      site:docs.python.org
-Stack Exchange         @se      site:stackexchange.com
-The Odin Project       @odin    site:theodinproject.com
-CodePen                @cp      site:codepen.io
-LeetCode               @lc      site:leetcode.com
-Exercism               @ex      site:exercism.io
-MDX Docs               @mdx     site:mdxjs.com
-Kubernetes Docs        @k8s     site:kubernetes.io/docs
-Webpack Docs           @wp      site:webpack.js.org
-Vim Documentation      @vim     site:vimhelp.org
-C++ Reference          @cppref  site:en.cppreference.com
-Hacker News            @hn      site:news.ycombinator.com
-GitLab                 @gl      site:gitlab.com
-Deno Manual            @deno    site:deno.land/manual
-CSS-Tricks             @csst    site:css-tricks.com
-W3Schools              @w3      site:w3schools.com
-Reddit Programming     @rprog   site:reddit.com/r/programming
-DigitalOcean Tutorials @do      site:digitalocean.com/community/tutorials
-FreeCodeCamp           @fcc     site:freecodecamp.org
-JetBrains Docs         @jb      site:www.jetbrains.com/help
+MDN Web Docs           @mdn     developer.mozilla.org
+Linux Man Pages        @man     man7.org/linux/man-pages
+Node.js                @node    nodejs.org
+Node Package Manager   @npm     npmjs.com
+DevDocs                @devdocs devdocs.io
+Android Developers     @android developer.android.com
+TypeScript Handbook    @ts      typescriptlang.org
+Lua Manual             @lua     lua.org/manual
+Stack Overflow         @so      stackoverflow.com
+PHP                    @php     php.net
+GitHub                 @gh      github.com
+Rust Docs              @rs      doc.rust-lang.org
+Go Packages            @go      pkg.go.dev
+Python Docs            @py      docs.python.org
+Stack Exchange         @se      stackexchange.com
+The Odin Project       @odin    theodinproject.com
+CodePen                @cp      codepen.io
+LeetCode               @lc      leetcode.com
+Exercism               @ex      exercism.io
+MDX Docs               @mdx     mdxjs.com
+Kubernetes Docs        @k8s     kubernetes.io/docs
+Webpack Docs           @wp      webpack.js.org
+Vim Documentation      @vim     vimhelp.org
+C++ Reference          @cppref  en.cppreference.com
+Hacker News            @hn      news.ycombinator.com
+GitLab                 @gl      gitlab.com
+Deno Manual            @deno    deno.land/manual
+CSS-Tricks             @csst    css-tricks.com
+W3Schools              @w3      w3schools.com
+Reddit Programming     @rprog   reddit.com/r/programming
+DigitalOcean Tutorials @do      digitalocean.com/community/tutorials
+FreeCodeCamp           @fcc     freecodecamp.org
+JetBrains Docs         @jb      www.jetbrains.com/help

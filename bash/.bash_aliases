@@ -1,8 +1,6 @@
 alias ..='cd ..'
 alias ...='cd ../..'
 
-alias gc='git checkout'
-alias gb='git branch'
 alias gs='git status'
 
 alias bman='batman'
@@ -12,9 +10,8 @@ alias cpwd='pwd | xclip -selection clipboard'
 
 alias e='$EDITOR'
 alias x='extract'
-
 alias zz='yazi'
-alias lz='lazygit'
+alias lg='lazygit'
 
 alias l='ls -CF'
 alias la='ls -A'
