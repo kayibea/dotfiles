@@ -11,7 +11,6 @@
 ---@type fun(ms: integer)
 local sleep = require "sleep"
 local signal = require "posix.signal"
--- local unistd = require "posix.unistd"
 
 local HOME = assert(os.getenv("HOME"))
 local ICON_ROOT = HOME .. "/.local/share/icons/hicolor/48x48/apps"
@@ -26,7 +25,6 @@ local icons = {
   battery_ac_disconnected = ICON_ROOT .. "/battery_ac_disconnected.png",
 }
 
-
 local running = true
 
 
@@ -34,16 +32,6 @@ local CAPACITY_LOW      = 30
 local CAPACITY_CRITICAL = 10
 local BAT_POLLING_MS    = 2000
 
-
-local longstr = [[
-  lorem ipsum
-  lorem ipsum
-  lorem ipsum
-  lorem ipsum
-  lorem ipsum
-  lorem ipsum
-  lorem ipsum
-]]
 
 local BAT_UEVENT = "/sys/class/power_supply/BAT1/uevent"
 
@@ -112,13 +100,13 @@ local function check_power_status(psupply, psupply_prev)
       capacity > CAPACITY_CRITICAL and
       capacity <= CAPACITY_LOW and
       capacity % 5 == 0 then
-    local body = string.format("Running low on power (%d)", capacity)
+    local body = string.format("Running low on power (%d%%)", capacity)
     notify_send("PowerSupply", body, icons.battery_low)
     return
   end
 
   if capacity <= CAPACITY_CRITICAL and psupply.POWER_SUPPLY_CAPACITY ~= psupply_prev.POWER_SUPPLY_CAPACITY then
-    local body = string.format("About to shut down (%d)", capacity)
+    local body = string.format("About to shut down (%d%%)", capacity)
     notify_send("PowerSupply", body, icons.battery_critical, "critical")
   end
 end
@@ -127,8 +115,6 @@ end
 local function main()
   signal.signal(signal.SIGINT, handle_signal)
   signal.signal(signal.SIGTERM, handle_signal)
-
-  -- print(string.format("Daemon Started: pid(%d)", unistd.getpid()))
 
   local psupply = get_power_status(BAT_UEVENT)
   local psupply_prev = psupply
