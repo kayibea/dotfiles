@@ -6,6 +6,8 @@ config.font_size = 26
 config.color_scheme = 'Batman'
 config.font = wezterm.font('Iosevka Nerd Font', { weight = 'Medium', italic = false })
 
+config.disable_default_mouse_bindings = true
+
 config.enable_scroll_bar = false
 config.enable_kitty_keyboard = false
 config.enable_tab_bar = false
