@@ -34,6 +34,8 @@ export LUA_CPATH="$HOME/.local/lib/lua/5.4/?.so;$HOME/.luarocks/lib/lua/5.4/?.so
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+export LIBVIRT_DEFAULT_URI="qemu:///system"
+
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
