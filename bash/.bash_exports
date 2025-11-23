@@ -8,7 +8,7 @@ export PATH="$PATH:$OPT/go/bin"
 export PATH="$PATH:$OPT/jadx/bin"
 export PATH="$PATH:$OPT/lua-language-server/bin"
 
-export SDK_ROOT="$HOME/AndroidX/Sdk"
+SDK_ROOT="$HOME/AndroidX/Sdk"
 export PATH="$PATH:$SDK_ROOT/platform-tools"
 export PATH="$PATH:$SDK_ROOT/cmdline-tools/latest/bin"
 export PATH="$PATH:$SDK_ROOT/build-tools/36.1.0"

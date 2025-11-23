@@ -5,9 +5,7 @@ alias fzf='fzf --layout=reverse'
 
 alias gs='git status'
 
-alias bman='batman'
 alias cls='clear'
-alias cl='clear'
 alias cpwd='pwd | xclip -selection clipboard'
 
 alias e='$EDITOR'
@@ -22,10 +20,10 @@ alias ll='ls -alF'
 alias llpg='gpg --list-key --keyid-format LONG'
 alias reload='source $HOME/.bashrc && echo ".bashrc reloaded !"'
 
-alias reboot='systemctl reboot'
 # alias suspend='systemctl suspend'
 alias screenoff='xset dpms force off'
 alias poweroff='systemctl poweroff'
+alias reboot='systemctl reboot'
 alias reboot-uefi='systemctl reboot --firmware-setup'
 
 alias ealias='$EDITOR $HOME/dotfiles/bash/.bash_aliases'
