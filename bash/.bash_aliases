@@ -1,6 +1,8 @@
 alias ..='cd ..'
 alias ...='cd ../..'
 
+alias fzf='fzf --layout=reverse'
+
 alias gs='git status'
 
 alias bman='batman'

@@ -1,16 +1,16 @@
-MDN Web Docs           @mdn     developer.mozilla.org
-GitHub                 @git     github.com
 Linux Man Pages        @man     man7.org/linux/man-pages
+MDN Web Docs           @mdn     developer.mozilla.org
+Go Packages            @go      pkg.go.dev
+DevDocs                @devdocs devdocs.io
+GitHub                 @git     github.com
 Node.js                @node    nodejs.org
 Node Package Manager   @npm     npmjs.com
-DevDocs                @devdocs devdocs.io
 Android Developers     @android developer.android.com
 TypeScript Handbook    @ts      typescriptlang.org
 Lua Manual             @lua     lua.org/manual
 Stack Overflow         @so      stackoverflow.com
 PHP                    @php     php.net
 Rust Docs              @rs      doc.rust-lang.org
-Go Packages            @go      pkg.go.dev
 Python Docs            @py      docs.python.org
 Stack Exchange         @se      stackexchange.com
 The Odin Project       @odin    theodinproject.com
