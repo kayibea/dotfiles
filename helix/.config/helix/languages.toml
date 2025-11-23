@@ -15,21 +15,21 @@ auto-format = true
 language-servers = [
   "vscode-html-language-server",
   "superhtml",
-  "emmet-lsp",
-  "codebook"
+  "emmet",
+  "codebook",
 ]
 
 [[language]]
 name = "css"
 auto-format = true
 formatter = { command = "prettier", args = ["--parser", "css"] }
-language-servers = ["vscode-css-language-server", "emmet-lsp"]
+language-servers = ["vscode-css-language-server", "emmet"]
 
 [[language]]
 name = "scss"
 auto-format = true
 formatter = { command = "prettier", args = ["--parser", "scss"] }
-language-servers = ["vscode-css-language-server", "emmet-lsp"]
+language-servers = ["vscode-css-language-server", "emmet"]
 
 [[language]]
 name = "json"
@@ -81,7 +81,7 @@ auto-format = true
 # ]
 checkThirdParty = "Disable"
 
-[language-server.emmet-lsp]
+[language-server.emmet]
 command = "emmet-language-server"
 args = ["--stdio"]
 
