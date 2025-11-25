@@ -1,6 +1,6 @@
 [[language]]
 name = "go"
-language-servers = ["gopls", "golangci-lint-lsp", "codebook"]
+language-servers = ["gopls", "codebook"]
 
 [[language]]
 name = "text"
