@@ -1,29 +1,59 @@
-# Fullscreen screenshot
+# Volume up
+XF86AudioRaiseVolume
+    pactl set-sink-volume @DEFAULT_SINK@ +5% && \
+    VOL=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -n1) && \
+    notify-send -i audio-volume-high "Volume: $VOL"
+
+# Volume down
+XF86AudioLowerVolume
+    pactl set-sink-volume @DEFAULT_SINK@ -5% && \
+    VOL=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -n1) && \
+    notify-send -i audio-volume-low "Volume: $VOL"
+
+# TODO: Fix awk error
+# Volume mute
+XF86AudioMute
+    pactl set-sink-mute @DEFAULT_SINK@ toggle && \
+    MUTE=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}') && \
+    if [ "$MUTE" = "yes" ]; then \
+        notify-send -i audio-volume-muted "Volume Muted"; \
+    else \
+        notify-send -i audio-volume-high "Volume Unmuted"; \
+    fi
+
+
+# Media PLay
+XF86AudioPlay
+    playerctl play-pause; sleep 1; \
+    ART=$(playerctl metadata mpris:artUrl | sed 's|file://||'); \
+    notify-send -i "$ART" \
+    "$(playerctl metadata artist) — $(playerctl metadata title)" \
+    "Album: $(playerctl metadata album)"
+
+# Media Next
+XF86AudioNext
+    playerctl next; sleep 1; \
+    ART=$(playerctl metadata mpris:artUrl | sed 's|file://||'); \
+    notify-send -i "$ART" \
+    "$(playerctl metadata artist) — $(playerctl metadata title)" \
+    "Album: $(playerctl metadata album)"
+
+
+# Media Prev
+XF86AudioPrev
+    playerctl previous; sleep 1; \
+    ART=$(playerctl metadata mpris:artUrl | sed 's|file://||'); \
+    notify-send -i "$ART" \
+    "$(playerctl metadata artist) — $(playerctl metadata title)" \
+    "Album: $(playerctl metadata album)"
+
+# Screenshots
 Print
     scrot ~/Pictures/%Y-%m-%d-%H%M%S.png
 
-# Select area and save
 ctrl + Print
     scrot -s ~/Pictures/%Y-%m-%d-%H%M%S.png
 
-# Select area and copy to clipboard
 shift + Print
-    scrot -s /tmp/screenshot.png && xclip -selection clipboard -t image/png -i /tmp/screenshot.png && notify-send "Screenshot copied to clipboard"
-
-XF86AudioRaiseVolume
-    pactl set-sink-volume @DEFAULT_SINK@ +5%
-
-XF86AudioLowerVolume
-    pactl set-sink-volume @DEFAULT_SINK@ -5%
-
-XF86AudioMute
-    pactl set-sink-mute @DEFAULT_SINK@ toggle
-
-XF86AudioPlay
-    playerctl play-pause
-
-XF86AudioNext
-    playerctl next
-
-XF86AudioPrev
-    playerctl previous
+    scrot -s /tmp/screenshot.png && xclip -selection clipboard -t image/png -i /tmp/screenshot.png && \
+    notify-send -i image-x-generic "Screenshot copied to clipboard"

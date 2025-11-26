@@ -1,3 +1,11 @@
 [mgr]
 show_hidden = true
 show_symlink = true
+
+[plugin]
+previewers = [
+  { name = "*.dds", run = "magick -define dds:alpha=on" },
+  { mime = "image/{avif,heic,jxl,svg+xml}", run = "magick" },
+  { mime = "image/*", run = "image" },
+  { mime = "video/*", run = "video" },
+]
