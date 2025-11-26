@@ -5,6 +5,7 @@ command -v playerctl >/dev/null 2>&1 || {
   exit 1
 }
 
+PLAYER="brave"
 DELAY=0.3
 last_track=""
 last_icon=""
@@ -32,7 +33,7 @@ debounce() {
   timer_pid=$!
 }
 
-playerctl metadata --follow --format '{{ artist }} - {{ title }}|{{ mpris:artUrl }}' |
+playerctl metadata -p $PLAYER --follow --format '{{ artist }} - {{ title }}|{{ mpris:artUrl }}' |
   while IFS='|' read -r track artUrl; do
     icon="${artUrl#file://}"
     last_track="$track"
