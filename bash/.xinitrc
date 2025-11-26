@@ -7,5 +7,6 @@ xrdb -merge ~/.Xresources &
 pulseaudio --start &
 dunst &
 slstatus &
+sxhkd &
 
 exec dwm
