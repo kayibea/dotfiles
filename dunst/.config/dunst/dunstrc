@@ -222,10 +222,8 @@
     enable_recursive_icon_lookup = true
 
     # Set icon theme (only used for recursive icon lookup)
-    # icon_theme = Adwaita
-    icon_theme = "gnome, Adwaita"
+    icon_theme = "Papirus, gnome, Adwaita"
 
-    # icon_theme = gnome
     # You can also set multiple icon themes, with the leftmost one being used first.
     # icon_theme = "Adwaita, breeze"
 
@@ -236,23 +234,11 @@
     # for e.g. small files or high-dpi screens. In case of conflict,
     # max_icon_size takes precedence over this.
     min_icon_size = 32
-
-    # Scale larger icons down to this size, set to 0 to disable
     max_icon_size = 128
-
-    # Paths to default icons (only necessary when not using recursive icon lookup)
     icon_path = /usr/share/icons/gnome/16x16/status/:/usr/share/icons/gnome/16x16/devices/
-
-    ### History ###
-
-    # Should a notification popped up from history be sticky or timeout
     # as if it would normally do.
     sticky_history = yes
 
-    # Maximum amount of notifications kept in history
-    history_length = 20
-
-    ### Misc/Advanced ###
 
     # dmenu path.
     dmenu = /usr/bin/dmenu -p dunst:
@@ -282,11 +268,8 @@
     # Comma-separated list of the corners. The accepted corner values are bottom-right,
     # bottom-left, top-right, top-left, top, bottom, left, right or all.
     corners = all
-
-    # Ignore the dbus closeNotification message.
     # Useful to enforce the timeout set by dunst configuration. Without this
     # parameter, an application may close the notification sent before the
-    # user defined timeout.
     ignore_dbusclose = false
 
     ### Wayland ###
