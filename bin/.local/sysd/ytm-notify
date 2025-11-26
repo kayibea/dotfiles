@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+command -v playerctl >/dev/null 2>&1 || {
+  echo "playerctl not found"
+  exit 1
+}
+
+DELAY=0.3
+last_track=""
+last_icon=""
+timer_pid=""
+
+notify() {
+  if [[ -n "$last_track" ]]; then
+    if [[ -f "$last_icon" ]]; then
+      notify-send "Now Playing" "$last_track" -i "$last_icon"
+    else
+      notify-send "Now Playing" "$last_track" -i media-playback-start
+    fi
+  fi
+}
+
+debounce() {
+  if [[ -n "$timer_pid" ]] && kill -0 "$timer_pid" 2>/dev/null; then
+    kill "$timer_pid" 2>/dev/null
+  fi
+
+  (
+    sleep "$DELAY"
+    notify
+  ) &
+  timer_pid=$!
+}
+
+playerctl metadata --follow --format '{{ artist }} - {{ title }}|{{ mpris:artUrl }}' |
+  while IFS='|' read -r track artUrl; do
+    icon="${artUrl#file://}"
+    last_track="$track"
+    last_icon="$icon"
+    debounce
+  done

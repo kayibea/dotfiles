@@ -24,35 +24,24 @@ XF86AudioMute
 
 # Media PLay
 XF86AudioPlay
-    playerctl play-pause; sleep 1; \
-    ART=$(playerctl metadata mpris:artUrl | sed 's|file://||'); \
-    notify-send -i "$ART" \
-    "$(playerctl metadata artist) — $(playerctl metadata title)" \
-    "Album: $(playerctl metadata album)"
+    playerctl play-pause;
 
 # Media Next
 XF86AudioNext
-    playerctl next; sleep 1; \
-    ART=$(playerctl metadata mpris:artUrl | sed 's|file://||'); \
-    notify-send -i "$ART" \
-    "$(playerctl metadata artist) — $(playerctl metadata title)" \
-    "Album: $(playerctl metadata album)"
-
+    playerctl next;
 
 # Media Prev
 XF86AudioPrev
-    playerctl previous; sleep 1; \
-    ART=$(playerctl metadata mpris:artUrl | sed 's|file://||'); \
-    notify-send -i "$ART" \
-    "$(playerctl metadata artist) — $(playerctl metadata title)" \
-    "Album: $(playerctl metadata album)"
+    playerctl previous;
 
 # Screenshots
 Print
     scrot ~/Pictures/%Y-%m-%d-%H%M%S.png
+    notify-send -i image-x-generic "Screenshot saved"
 
 ctrl + Print
     scrot -s ~/Pictures/%Y-%m-%d-%H%M%S.png
+    notify-send -i image-x-generic "Screenshot saved"
 
 shift + Print
     scrot -s /tmp/screenshot.png && xclip -selection clipboard -t image/png -i /tmp/screenshot.png && \
