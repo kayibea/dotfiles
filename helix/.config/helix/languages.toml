@@ -72,6 +72,7 @@ auto-format = true
 [[language]]
 name = "toml"
 auto-format = true
+language-servers = ["tombi"]
 
 # Language servers
 

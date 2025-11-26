@@ -15,7 +15,7 @@ left = [
   "mode",
   "read-only-indicator",
   "file-base-name",
-  "file-modification-indicator"
+  "file-modification-indicator",
 ]
 center = []
 right = ["diagnostics", "spinner", "position", "file-encoding", "file-type"]
@@ -36,11 +36,7 @@ hidden = false
 C-s = ":w"
 C-q = ":quit"
 # Move line down
-A-j = [
-  "extend_to_line_bounds",
-  "delete_selection",
-  "paste_after",
-]
+A-j = ["extend_to_line_bounds", "delete_selection", "paste_after"]
 # Move line up
 A-k = [
   "extend_to_line_bounds",

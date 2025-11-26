@@ -14,8 +14,8 @@ export PATH="$PATH:$SDK_ROOT/cmdline-tools/latest/bin"
 export PATH="$PATH:$SDK_ROOT/build-tools/36.1.0"
 export PATH="$PATH:$SDK_ROOT/emulator"
 
-export TERMUX_PFX="/data/data/com.termux/files/usr/"
 export TERMUX_HOME="/data/data/com.termux/files/home/"
+export TERMUX_PREFIX="/data/data/com.termux/files/usr/"
 export TERMUX_TMPDIR="/data/data/com.termux/files/usr/tmp/"
 export ANDROID_TMPDIR="/data/local/tmp/"
 

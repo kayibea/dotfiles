@@ -11,7 +11,7 @@ alias cpwd='pwd | xclip -selection clipboard'
 alias e='$EDITOR'
 alias x='extract'
 alias zz='yazi'
-alias lg='lazygit'
+alias lz='lazygit'
 
 alias l='ls -CF'
 alias la='ls -A'
