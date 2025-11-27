@@ -5,7 +5,9 @@ command -v playerctl >/dev/null 2>&1 || {
   exit 1
 }
 
-DELAY=0.3
+DELAY=1
+NOTIFY_ID=$((16#4d0a69f2))
+
 last_track=""
 last_icon=""
 timer_pid=""
@@ -13,9 +15,9 @@ timer_pid=""
 notify() {
   if [[ -n "$last_track" ]]; then
     if [[ -f "$last_icon" ]]; then
-      notify-send "Now Playing" "$last_track" -i "$last_icon"
+      notify-send "Now Playing" "$last_track" -r $NOTIFY_ID -i "$last_icon"
     else
-      notify-send "Now Playing" "$last_track" -i media-playback-start
+      notify-send "Now Playing" "$last_track" -r $NOTIFY_ID -i media-playback-start
     fi
   fi
 }

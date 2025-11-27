@@ -1,24 +1,27 @@
 # Volume up
 XF86AudioRaiseVolume
+    NOTIFY_ID=$((16#497ffd90)); \
     pactl set-sink-volume @DEFAULT_SINK@ +5% && \
     VOL=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -n1) && \
-    notify-send -i audio-volume-high "Volume: $VOL"
+    notify-send -r $NOTIFY_ID -i audio-volume-high "Volume: $VOL"
 
 # Volume down
 XF86AudioLowerVolume
+    NOTIFY_ID=$((16#497ffd90)); \
     pactl set-sink-volume @DEFAULT_SINK@ -5% && \
     VOL=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -n1) && \
-    notify-send -i audio-volume-low "Volume: $VOL"
+    notify-send -r $NOTIFY_ID -i audio-volume-low "Volume: $VOL"
 
 # TODO: Fix awk error
 # Volume mute
 XF86AudioMute
+    NOTIFY_ID=$((16#7dbbf1e5)); \
     pactl set-sink-mute @DEFAULT_SINK@ toggle && \
     MUTE=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}') && \
     if [ "$MUTE" = "yes" ]; then \
-        notify-send -i audio-volume-muted "Volume Muted"; \
+        notify-send -r $NOTIFY_ID -i audio-volume-muted "Volume Muted"; \
     else \
-        notify-send -i audio-volume-high "Volume Unmuted"; \
+        notify-send -r $NOTIFY_ID -i audio-volume-high "Volume Unmuted"; \
     fi
 
 
@@ -36,11 +39,11 @@ XF86AudioPrev
 
 # Screenshots
 Print
-    scrot ~/Pictures/%Y-%m-%d-%H%M%S.png
+    scrot ~/Pictures/%Y-%m-%d-%H%M%S.png && \
     notify-send -i image-x-generic "Screenshot saved"
 
 ctrl + Print
-    scrot -s ~/Pictures/%Y-%m-%d-%H%M%S.png
+    scrot -s ~/Pictures/%Y-%m-%d-%H%M%S.png && \
     notify-send -i image-x-generic "Screenshot saved"
 
 shift + Print
