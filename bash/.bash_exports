@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
+# export PATH="$PATH:$HOME/.local/bin"
 export PATH="$PATH:/usr/sbin:/sbin"
-export PATH="$PATH:$HOME/.local/bin"
 
 OPT="$HOME/.local/opt"
 export PATH="$PATH:$OPT/go/bin"
