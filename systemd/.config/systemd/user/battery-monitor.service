@@ -5,8 +5,6 @@ Wants=graphical.target
 
 [Service]
 Type=simple
-Environment=LUA_PATH="/home/maars/.local/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?.lua;;"
-Environment=LUA_CPATH="/home/maars/.local/lib/lua/5.4/?.so;$HOME/.luarocks/lib/lua/5.4/?.so;;"
 ExecStart=%h/.local/sysd/battery-monitor
 Restart=on-failure
 RestartSec=3

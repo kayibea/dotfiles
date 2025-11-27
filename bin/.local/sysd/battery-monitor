@@ -9,31 +9,24 @@
 ---@field POWER_SUPPLY_CAPACITY string
 
 ---@type fun(ms: integer)
-local sleep = require "sleep"
+local sleep  = require "sleep"
 local signal = require "posix.signal"
 
-local HOME = assert(os.getenv("HOME"))
-local ICON_ROOT = HOME .. "/.local/share/icons/hicolor/48x48/apps"
 
-
-local icons = {
-  battery                 = ICON_ROOT .. "/battery.png",
-  battery_low             = ICON_ROOT .. "/battery_low.png",
-  battery_full            = ICON_ROOT .. "/battery_full.png",
-  battery_critical        = ICON_ROOT .. "/battery_critical.png",
-  battery_discharging     = ICON_ROOT .. "/battery_discharging.png",
-  battery_ac_disconnected = ICON_ROOT .. "/battery_ac_disconnected.png",
-}
-
-local running = true
-
-
+local BAT_UEVENT        = "/sys/class/power_supply/BAT1/uevent"
 local CAPACITY_LOW      = 30
 local CAPACITY_CRITICAL = 10
 local BAT_POLLING_MS    = 2000
 
 
-local BAT_UEVENT = "/sys/class/power_supply/BAT1/uevent"
+local running = true
+
+---@type table<PowerSupplyStatus, string>
+local icons = {
+  ["Charging"]    = "battery-good-charging-symbolic",
+  ["Discharging"] = "battery-medium-symbolic",
+  ["Full"]        = "battery-full-symbolic",
+}
 
 ---@param sig integer
 local function handle_signal(sig)
@@ -70,44 +63,34 @@ local function notify_send(summary, body, icon, urgency)
   os.execute(cmd)
 end
 
----@param status PowerSupplyStatus
-local function get_power_status_icon(status)
-  if status == "Charging" then
-    return icons.battery_ac_connected
-  elseif status == "Discharging" then
-    return icons.battery_ac_disconnected
-  elseif status == "Full" then
-    return icons.battery_full
-  end
-  return icons.battery
-end
 
 ---@param psupply PowerSupply
 ---@param psupply_prev PowerSupply
 local function check_power_status(psupply, psupply_prev)
   if (psupply.POWER_SUPPLY_STATUS ~= psupply_prev.POWER_SUPPLY_STATUS) then
-    local icon = get_power_status_icon(psupply.POWER_SUPPLY_STATUS)
+    local icon = icons[psupply.POWER_SUPPLY_STATUS] or "battery-missing-symbolic"
     notify_send("AC Adapter", psupply.POWER_SUPPLY_STATUS, icon)
   end
 
-  if (psupply.POWER_SUPPLY_STATUS == "Charging") then
+  if (psupply.POWER_SUPPLY_STATUS == "Charging"
+        or psupply.POWER_SUPPLY_CAPACITY == psupply_prev.POWER_SUPPLY_CAPACITY)
+  then
     return
   end
 
   local capacity = tonumber(psupply.POWER_SUPPLY_CAPACITY)
 
-  if psupply.POWER_SUPPLY_CAPACITY ~= psupply_prev.POWER_SUPPLY_CAPACITY and
-      capacity > CAPACITY_CRITICAL and
+  if capacity > CAPACITY_CRITICAL and
       capacity <= CAPACITY_LOW and
       capacity % 5 == 0 then
     local body = string.format("Running low on power (%d%%)", capacity)
-    notify_send("PowerSupply", body, icons.battery_low)
+    notify_send("PowerSupply", body, "battery-low-symbolic")
     return
   end
 
-  if capacity <= CAPACITY_CRITICAL and psupply.POWER_SUPPLY_CAPACITY ~= psupply_prev.POWER_SUPPLY_CAPACITY then
+  if capacity <= CAPACITY_CRITICAL then
     local body = string.format("About to shut down (%d%%)", capacity)
-    notify_send("PowerSupply", body, icons.battery_critical, "critical")
+    notify_send("PowerSupply", body, "battery-caution-symbolic", "critical")
   end
 end
 

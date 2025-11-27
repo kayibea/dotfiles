@@ -34,7 +34,7 @@ debounce() {
   timer_pid=$!
 }
 
-playerctl metadata --follow --format '{{ artist }} - {{ title }}|{{ mpris:artUrl }}' |
+playerctl metadata -p brave --follow --format '{{ artist }} - {{ title }}|{{ mpris:artUrl }}' |
   while IFS='|' read -r track artUrl; do
     icon="${artUrl#file://}"
     last_track="$track"
