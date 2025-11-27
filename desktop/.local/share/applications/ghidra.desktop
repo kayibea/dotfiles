@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Ghidra
 Comment=NSA Reverse Engineering Framework
-Exec=env _JAVA_AWT_WM_NONREPARENTING=1 /home/maars/.local/opt/ghidra/ghidraRun
+Exec=env _JAVA_AWT_WM_NONREPARENTING=1 ghidraRun
 Icon=ghidra
 Terminal=false
 Type=Application
