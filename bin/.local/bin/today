@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+if command -v ncal >/dev/null 2>&1; then
+  ncal
+else
+  cal
+fi
+
+echo "----------------------------------------"
+
+echo "Today's events:"
+calendar -A 0
