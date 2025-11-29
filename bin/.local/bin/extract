@@ -16,6 +16,7 @@ case "$FILE" in
   *.tar.bz2) tar -xvjf "$FILE" ;;
   *.tar.gz) tar -xvzf "$FILE" ;;
   *.tar.xz) tar -xvJf "$FILE" ;;
+  *.xz) xz -d "$FILE" ;;
   *.txz) tar -xvJf "$FILE" ;;
   *.bz2) bunzip2 "$FILE" ;;
   *.iso | *.7z) 7z x "$FILE" ;;
