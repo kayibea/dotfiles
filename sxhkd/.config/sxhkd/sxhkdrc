@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # Volume up
 XF86AudioRaiseVolume
     NOTIFY_ID=$((16#497ffd90)); \

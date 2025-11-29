@@ -15,18 +15,33 @@ done
 
 eval "$(batman --export-env)"
 
-if ! pgrep -u "$USER" ssh-agent >/dev/null; then
-  eval "$(ssh-agent -s)"
-fi
+SSH_ENV="$HOME/.ssh/agent_env"
 
+function start_agent {
+  echo "Initializing new SSH agent..."
+  ssh-agent >"$SSH_ENV"
+  chmod 600 "$SSH_ENV"
+}
+
+if [ -f "$SSH_ENV" ]; then
+  . "$SSH_ENV" >/dev/null
+  ps -p "$SSH_AGENT_PID" >/dev/null 2>&1 || {
+    start_agent
+    . "$SSH_ENV" >/dev/null
+  }
+else
+  start_agent
+  . "$SSH_ENV" >/dev/null
+fi
 ssh-add -l >/dev/null 2>&1 || ssh-add ~/.ssh/id_ed25519
+unset start_agent
+
+# Shell Prompt Style
 
 # PS1="→ "
-
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
   debian_chroot=$(cat /etc/debian_chroot)
 fi
-
 prompt_color='\[\033[;32m\]'
 info_color='\[\033[1;34m\]'
 prompt_symbol="@"
