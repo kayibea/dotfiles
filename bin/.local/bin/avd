@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+EXTRA_ARGS=""
+
+while getopts "f" opt; do
+  case "$opt" in
+    f) EXTRA_ARGS="$EXTRA_ARGS -no-snapshot-load" ;;
+  esac
+done
+
 SDK_PATH="$HOME/Android/Sdk"
 EMULATOR_PATH="$SDK_PATH/emulator"
 EMULATOR_BIN="$EMULATOR_PATH/emulator"
@@ -20,4 +28,4 @@ fi
 
 echo "Selected AVD: $AVD"
 
-"$EMULATOR_BIN" -avd "$AVD" >/dev/null 2>&1 &
+"$EMULATOR_BIN" -avd "$AVD" $EXTRA_ARGS >/dev/null 2>&1 &

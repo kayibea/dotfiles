@@ -39,11 +39,13 @@ formatter = { command = "prettier", args = ["--parser", "json"] }
 [[language]]
 name = "javascript"
 auto-format = true
+formatter = { command = "prettier", args = ["--parser", "javascript"] }
 language-servers = ["typescript-language-server", "codebook"]
 
 [[language]]
 name = "typescript"
 auto-format = true
+formatter = { command = "prettier", args = ["--parser", "typescript"] }
 language-servers = ["typescript-language-server", "codebook"]
 
 [[language]]
