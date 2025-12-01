@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=AppName
+Exec=/path/to/executable
+Icon=
+Terminal=false
+Categories=Utility;

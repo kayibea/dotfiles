@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Open Terminal Here</name>
+	<submenu></submenu>
+	<unique-id>1763733097236943-1</unique-id>
+	<command>tmux new-window</command>
+	<description>Open tmux tab here</description>
+	<range></range>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>edit-delete-remove</icon>
+	<name>Shred</name>
+	<submenu></submenu>
+	<unique-id>1764512287867711-1</unique-id>
+	<command>shred -u %N</command>
+	<description>Reduce to atoms</description>
+	<range>*</range>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<audio-files/>
+	<image-files/>
+	<other-files/>
+	<text-files/>
+	<video-files/>
+</action>
+</actions>

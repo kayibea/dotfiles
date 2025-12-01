@@ -33,7 +33,7 @@ venvs() {
     fi
 
     echo "Available virtual environments:"
-    ls -1 "$HOME/.venvs"
+    ls -1 "$HOME/.venvs" | sed 's/^/ /'
     return 0
   fi
 

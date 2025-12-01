@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+FILES="$@"
+zenity --question --text="Permanently delete the selected files?" || exit 1
+shred -uz $FILES
