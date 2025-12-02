@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+DEBOUNCE_DELAY=1
+REQ_CMDS=(playerctl notify-send)
+TRACK_INFO_FMT='{{ artist }} - {{ title }}|{{ mpris:artUrl }}'
+
+for cmd in "${REQ_CMDS[@]}"; do
+  command -v "$cmd" >/dev/null 2>&1 || {
+    echo "$cmd not found"
+    exit 1
+  }
+done
+
+players=(vlc brave)
+
+function get_player_icon() {
+  case "$1" in
+    vlc) echo "vlc" ;;
+    brave) echo "brave" ;;
+    *) echo "media-playback-start" ;;
+  esac
+}
+
+function notify() {
+  notify-send "Now Playing" "$1" -r "$3" -i "$2"
+}
+
+function handle_player() {
+  local player="$1"
+  local debounce="$2"
+  local notify_id="$3"
+
+  playerctl metadata -p "$player" --follow --format "$TRACK_INFO_FMT" |
+    while IFS='|' read -r track artUrl; do
+      track="${track}"
+      icon="${artUrl#file://}"
+
+      if ! [[ -f "$icon" ]]; then
+        icon=$(get_player_icon $player)
+      fi
+
+      if ((debounce)); then
+        kill "$debounce" 2>/dev/null || true
+        (
+          sleep "$DEBOUNCE_DELAY"
+          notify "$track" "$icon" "$notify_id"
+        ) &
+        debounce=$!
+      else
+        notify "$track" "$icon" "$notify_id"
+      fi
+    done
+}
+
+trap 'pkill -P $$; exit 0' SIGINT SIGTERM
+
+for p in "${players[@]}"; do
+  case "$p" in
+    # WARN: VLC metadatas is inconsistent
+    # vlc)
+    #   handle_player vlc 1 $((16#7f0e9fec)) &
+    #   ;;
+    brave)
+      handle_player brave 1 $((16#0df38f20)) &
+      ;;
+  esac
+done
+
+wait

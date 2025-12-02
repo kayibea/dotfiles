@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
-stow --verbose -D -t $HOME */
+
+stow --verbose -t $HOME */
 echo "All done!"

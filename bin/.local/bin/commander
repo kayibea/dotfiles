@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Run a shell command from anywhere and auto past the output
+# Must bind to kb shortcut
+
+cmd=$(zenity --entry --title="Run Command" --text="Enter the command:")
+
+[ -z "$cmd" ] && exit
+
+output=$($SHELL -c "$cmd" 2>&1)
+
+echo -n "$output" | xclip -selection clipboard
+
+xdotool key --clearmodifiers ctrl+shift+v

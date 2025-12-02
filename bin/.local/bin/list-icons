@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+ICON_PATHS="/usr/share/icons ~/.local/share/icons"
+
+find /usr/share/icons ~/.local/share/icons -type f \( -name "*.png" -o -name "*.svg" \) 2>/dev/null |
+  fzf --reverse \
+    --exact \
+    --algo=v2 \
+    --preview 'clear; chafa {} --fill=block' \
+    --preview-window=right:30%

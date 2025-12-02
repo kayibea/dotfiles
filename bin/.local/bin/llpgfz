@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+selection=$(
+  gpg --list-keys --with-colons |
+    awk -F: '
+        function algo(n) {
+            if (n == 1)  return "RSA";
+            if (n == 16) return "ELGAMAL";
+            if (n == 17) return "DSA";
+            if (n == 18) return "ECDH";
+            if (n == 19) return "ECDSA";
+            if (n == 22) return "ED25519";
+            return n;
+        }
+
+        function usage(flags) {
+            out = "";
+            if (flags ~ /s/) out = out "SIGN ";
+            if (flags ~ /e/) out = out "ENCRYPT ";
+            if (flags ~ /a/) out = out "AUTH ";
+            if (flags ~ /c/) out = out "CERT ";
+            sub(/ $/, "", out);
+            return out;
+        }
+
+        /^pub/ { uid="" }
+        /^uid/ && uid=="" { uid=$10 }
+
+        /^sub/ {
+            kid   = $5
+            atype = algo($4)
+            flags = $12
+            printf "%s  %s  %s  %s\n", kid, atype, usage(flags), uid
+        }
+    ' | fzf --prompt="GPG subkeys: "
+)
+
+[ -z "$selection" ] && exit 0
+
+kid=$(echo "$selection" | awk '{print $1}')
+
+printf "%s" "$kid" | xclip -selection clipboard
