@@ -1,7 +1,7 @@
 Linux Man Pages        @man     man7.org/linux/man-pages
 MDN Web Docs           @mdn     developer.mozilla.org
 Go Packages            @go      pkg.go.dev
-DevDocs                @devdocs devdocs.io
+DevDocs                @dd      devdocs.io
 GitHub                 @git     github.com
 Node.js                @node    nodejs.org
 Node Package Manager   @npm     npmjs.com

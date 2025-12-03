@@ -15,10 +15,11 @@ export PATH="$PATH:$SDK_ROOT/cmdline-tools/latest/bin"
 export PATH="$PATH:$SDK_ROOT/build-tools/36.1.0"
 export PATH="$PATH:$SDK_ROOT/emulator"
 
-export TERMUX_HOME="/data/data/com.termux/files/home/"
-export TERMUX_PREFIX="/data/data/com.termux/files/usr/"
-export TERMUX_TMPDIR="/data/data/com.termux/files/usr/tmp/"
-export ANDROID_TMPDIR="/data/local/tmp/"
+TERMUX_FILES_ROOT="/data/data/com.termux/files"
+export TERMUX_HOME="$TERMUX_FILES_ROOT/home"
+export TERMUX_PREFIX="$TERMUX_FILES_ROOT/usr"
+export TERMUX_TMPDIR="$TERMUX_PREFIX/tmp"
+export ANDROID_TMPDIR="/data/local/tmp"
 
 export EDITOR="hx"
 export GTK_THEME="Adwaita:dark"
@@ -34,6 +35,8 @@ export LUA_CPATH="$HOME/.local/lib/lua/5.4/?.so;$HOME/.luarocks/lib/lua/5.4/?.so
 export _JAVA_AWT_WM_NONREPARENTING=1
 
 export LIBVIRT_DEFAULT_URI="qemu:///system"
+
+export PASSWORD_STORE_GENERATED_LENGTH=32
 
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
