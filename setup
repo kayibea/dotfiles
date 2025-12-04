@@ -3,6 +3,7 @@
 xdg-user-dirs-update
 
 mkdir -p ~/.completions
+mkdir -p ~/Pictures/Prints
 mkdir -p ~/.config/systemd/user
 mkdir -p ~/.local/{bin,dbin,opt}
 mkdir -p ~/.local/share/applications

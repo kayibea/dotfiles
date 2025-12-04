@@ -40,11 +40,11 @@ XF86AudioPrev
 
 # Screenshots
 Print
-    scrot ~/Pictures/%Y-%m-%d-%H%M%S.png && \
+    scrot ~/Pictures/Prints/%Y-%m-%d-%H%M%S.png && \
     notify-send -i image-x-generic "Screenshot saved"
 
 ctrl + Print
-    scrot -s ~/Pictures/%Y-%m-%d-%H%M%S.png && \
+    scrot -s ~/Pictures/Prints/%Y-%m-%d-%H%M%S.png && \
     notify-send -i image-x-generic "Screenshot saved"
 
 shift + Print
