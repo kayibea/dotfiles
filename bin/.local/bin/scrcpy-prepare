@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# WARN: WIP
+
 # SCREEN_DENSITY=600
 # WINDOW_RESOLUTION="2560x1600"
 PROGNAME=$(basename $0)
