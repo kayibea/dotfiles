@@ -3,14 +3,8 @@ name = "go"
 language-servers = ["gopls", "codebook"]
 
 [[language]]
-name = "bash"
-language-servers = ["bash-language-server", "codebook"]
-
-# [[language]]
-# name = "text"
-# scope = "text.md"
-# file-types = ["txt", "md"]
-# language-servers = ["codebook"]
+name = "git-commit"
+language-servers = ["codebook"]
 
 [[language]]
 name = "markdown"
@@ -78,6 +72,7 @@ auto-format = true
 name = "bash"
 auto-format = true
 formatter = { command = "shfmt", args = ["-i", "2", "-ci"] }
+language-servers = ["bash-language-server", "codebook"]
 
 [[language]]
 name = "toml"
