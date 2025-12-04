@@ -14,12 +14,11 @@ XF86AudioLowerVolume
     VOL=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -n1) && \
     notify-send -r $NOTIFY_ID -i audio-volume-low "Volume: $VOL"
 
-# TODO: Fix awk error
 # Volume mute
 XF86AudioMute
     NOTIFY_ID=$((16#7dbbf1e5)); \
     pactl set-sink-mute @DEFAULT_SINK@ toggle && \
-    MUTE=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}') && \
+    MUTE=$(pactl get-sink-mute @DEFAULT_SINK@ | grep -o 'yes' | head -n1) && \
     if [ "$MUTE" = "yes" ]; then \
         notify-send -r $NOTIFY_ID -i audio-volume-muted "Volume Muted"; \
     else \

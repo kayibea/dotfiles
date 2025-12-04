@@ -3,10 +3,10 @@
 set -euo pipefail
 
 DEBOUNCE_DELAY=1
-REQ_CMDS=(playerctl notify-send)
+CMDS=(playerctl notify-send)
 TRACK_INFO_FMT='{{ artist }} - {{ title }}|{{ mpris:artUrl }}'
 
-for cmd in "${REQ_CMDS[@]}"; do
+for cmd in "${CMDS[@]}"; do
   command -v "$cmd" >/dev/null 2>&1 || {
     echo "$cmd not found"
     exit 1
@@ -15,7 +15,7 @@ done
 
 players=(vlc brave)
 
-function get_player_icon() {
+get_player_icon() {
   case "$1" in
     vlc) echo "vlc" ;;
     brave) echo "brave" ;;
@@ -23,11 +23,11 @@ function get_player_icon() {
   esac
 }
 
-function notify() {
+notify() {
   notify-send "Now Playing" "$1" -r "$3" -i "$2"
 }
 
-function handle_player() {
+handle_player() {
   local player="$1"
   local debounce="$2"
   local notify_id="$3"

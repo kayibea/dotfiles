@@ -5,7 +5,7 @@ Wants=graphical.target
 
 [Service]
 Type=simple
-ExecStart=%h/.local/sysd/battery-monitor
+ExecStart=%h/.local/dbin/battery-monitor
 Restart=on-failure
 RestartSec=3
 # Environment=DISPLAY=:0
