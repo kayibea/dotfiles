@@ -1,30 +1,38 @@
 #!/usr/bin/env bash
 
 # export PATH="$PATH:$HOME/.local/bin"
-export PATH="$PATH:/usr/sbin:/sbin"
+
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_CONFIG_HOME="$HOME/.config"
+
+export EDITOR="hx"
+export GTK_THEME="Adwaita:dark"
+
+export ANDROID_HOME="$HOME/Android"
+export ANDROID_SDK_ROOT="$ANDROID_SDK_ROOT/Sdk"
+export ANDROID_USER_HOME="$XDG_CONFIG_HOME/.android"
+export ANDROID_EMULATOR_HOME="$ANDROID_USER_HOME"
+export ANDROID_AVD_HOME="$ANDROID_AVD_HOME/avd"
 
 OPT="$HOME/.local/opt"
+export PATH="$PATH:/usr/sbin:/sbin"
 export PATH="$PATH:$OPT/go/bin"
 export PATH="$PATH:$OPT/jadx/bin"
+export PATH="$PATH:$OPT/real-esrgan"
 export PATH="$PATH:$OPT/lua-language-server/bin"
-
-SDK_ROOT="$HOME/AndroidX/Sdk"
-# export ANDROID_SDK_ROOT="$HOME/AndroidX/Sdk"
-export PATH="$PATH:$SDK_ROOT/platform-tools"
-export PATH="$PATH:$SDK_ROOT/cmdline-tools/latest/bin"
-export PATH="$PATH:$SDK_ROOT/build-tools/36.1.0"
-export PATH="$PATH:$SDK_ROOT/emulator"
+export PATH="$PATH:$ANDROID_SDK_ROOT/platform-tools"
+export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin"
+export PATH="$PATH:$ANDROID_SDK_ROOT/build-tools/36.1.0"
+export PATH="$PATH:$ANDROID_SDK_ROOT/emulator"
 
 TERMUX_FILES_ROOT="/data/data/com.termux/files"
 export TERMUX_HOME="$TERMUX_FILES_ROOT/home"
 export TERMUX_PREFIX="$TERMUX_FILES_ROOT/usr"
 export TERMUX_TMPDIR="$TERMUX_PREFIX/tmp"
-export ANDROID_TMPDIR="/data/local/tmp"
+export ANDROID_DEVICE_TMPDIR="/data/local/tmp"
 
-export EDITOR="hx"
-export GTK_THEME="Adwaita:dark"
-
-export GOROOT="$HOME/.local/opt/go"
+export GOROOT="$OPT/go"
 export PATH="$PATH:$GOROOT/bin"
 export PATH="$PATH:$(go env GOPATH)/bin"
 
@@ -37,7 +45,3 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 
 export PASSWORD_STORE_GENERATED_LENGTH=32
-
-export XDG_DATA_HOME="$HOME/.local/share"
-export XDG_CACHE_HOME="$HOME/.cache"
-export XDG_CONFIG_HOME="$HOME/.config"
