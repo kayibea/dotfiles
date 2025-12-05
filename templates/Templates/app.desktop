@@ -1,6 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=AppName
+Comment=App Description
 Exec=/path/to/executable
 Icon=
 Terminal=false

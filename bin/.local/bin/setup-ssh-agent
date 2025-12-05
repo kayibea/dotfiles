@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+SSH_ENV="$HOME/.ssh/agent_env"
+
+start_agent() {
+  echo "Initializing new SSH agent..."
+  ssh-agent >"$SSH_ENV"
+  chmod 600 "$SSH_ENV"
+}
+
+if [ -f "$SSH_ENV" ]; then
+  . "$SSH_ENV" >/dev/null
+  ps -p "$SSH_AGENT_PID" >/dev/null 2>&1 || {
+    start_agent
+    . "$SSH_ENV" >/dev/null
+  }
+else
+  start_agent
+  . "$SSH_ENV" >/dev/null
+fi
+
+ssh-add -l >/dev/null 2>&1 || ssh-add ~/.ssh/id_ed25519

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+eval "$(batman --export-env)"
+
 # export PATH="$PATH:$HOME/.local/bin"
 
 export XDG_DATA_HOME="$HOME/.local/share"
