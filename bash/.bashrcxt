@@ -14,6 +14,7 @@ for file in "$HOME"/.completions/*; do
 done
 
 prompt_color='\[\033[;32m\]'
-export PS1=$prompt_color'\[\033[0;1m\] '$prompt_color'${VIRTUAL_ENV:+(\[\033[0;1m\]$(basename $VIRTUAL_ENV)'$prompt_color')}\[\033[0m\] '
+# export PS1=$prompt_color'\[\033[0;1m\] '$prompt_color'${VIRTUAL_ENV:+(\[\033[0;1m\]$(basename $VIRTUAL_ENV)'$prompt_color')}\[\033[0m\] '
+export PS1=$prompt_color'\[\033[0;1m\]─'$prompt_color'${VIRTUAL_ENV:+(\[\033[0;1m\]$(basename $VIRTUAL_ENV)'$prompt_color')}\[\033[0m\] '
 
 VIRTUAL_ENV_DISABLE_PROMPT=1

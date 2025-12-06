@@ -3,8 +3,9 @@ alias ...='cd ../..'
 
 alias gs='git status'
 
+alias bh='bash-history'
 alias cls='clear'
-alias cpwd='pwd | xclip -selection clipboard'
+alias cwd='pwd | xclip -selection clipboard'
 
 alias e='$EDITOR'
 alias x='extract'

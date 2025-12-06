@@ -15,7 +15,7 @@ export ANDROID_HOME="$HOME/Android"
 export ANDROID_SDK_ROOT="$ANDROID_SDK_ROOT/Sdk"
 export ANDROID_USER_HOME="$XDG_CONFIG_HOME/.android"
 export ANDROID_EMULATOR_HOME="$ANDROID_USER_HOME"
-export ANDROID_AVD_HOME="$ANDROID_AVD_HOME/avd"
+export ANDROID_AVD_HOME="$ANDROID_EMULATOR_HOME/avd"
 
 OPT="$HOME/.local/opt"
 export PATH="$PATH:/usr/sbin:/sbin"
@@ -28,15 +28,15 @@ export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin"
 export PATH="$PATH:$ANDROID_SDK_ROOT/build-tools/36.1.0"
 export PATH="$PATH:$ANDROID_SDK_ROOT/emulator"
 
+export GOROOT="$OPT/go"
+export PATH="$PATH:$GOROOT/bin"
+export PATH="$PATH:$(go env GOPATH)/bin"
+
 TERMUX_FILES_ROOT="/data/data/com.termux/files"
 export TERMUX_HOME="$TERMUX_FILES_ROOT/home"
 export TERMUX_PREFIX="$TERMUX_FILES_ROOT/usr"
 export TERMUX_TMPDIR="$TERMUX_PREFIX/tmp"
 export ANDROID_DEVICE_TMPDIR="/data/local/tmp"
-
-export GOROOT="$OPT/go"
-export PATH="$PATH:$GOROOT/bin"
-export PATH="$PATH:$(go env GOPATH)/bin"
 
 export LLSA="$HOME/code/lua/LLS-Addons/addons"
 export LUA_PATH="$HOME/.local/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?.lua;;"
@@ -47,3 +47,6 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 
 export PASSWORD_STORE_GENERATED_LENGTH=32
+
+export SSH_AGENT_ENV="$HOME/.ssh/agent_env"
+[[ -f $SSH_AGENT_ENV ]] && . $SSH_AGENT_ENV >/dev/null

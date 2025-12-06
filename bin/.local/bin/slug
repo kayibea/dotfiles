@@ -2,7 +2,13 @@
 set -euo pipefail
 
 slugify() {
-  echo "$1" |
+  local input="${1:-}"
+  [[ -z "$input" ]] && {
+    echo ""
+    return
+  }
+
+  echo "$input" |
     iconv -f UTF-8 -t ASCII//TRANSLIT 2>/dev/null |
     tr '[:upper:]' '[:lower:]' |
     sed -E 's/[^a-z0-9]+/-/g' |
@@ -16,33 +22,41 @@ if [[ $# -gt 0 ]]; then
   exit 0
 fi
 
-tmpfile="$(mktemp /tmp/slug.XXXXXX)"
-cleanup() {
-  rm -f "$tmpfile"
-}
-trap cleanup EXIT
-
 command -v inotifywait >/dev/null 2>&1 || {
   echo "error: inotifywait not found (install inotify-tools)" >&2
   exit 1
 }
 
-(
-  sleep 0.2
-  while inotifywait -q -e close_write "$tmpfile" >/dev/null 2>&1; do
-    mapfile -t lines <"$tmpfile"
-    {
-      for line in "${lines[@]}"; do
-        [[ -z "$line" ]] && echo "" || slugify "$line"
-      done
-    } >"${tmpfile}.tmp"
-    mv "${tmpfile}.tmp" "$tmpfile"
-  done
-) &
+tmpfile="$(mktemp /tmp/slug.XXXXXX)"
+tmpdir="$(dirname "$tmpfile")"
+tmpbase="$(basename "$tmpfile")"
 
+watcher() {
+  # watch the directory, filter events
+  while inotifywait -q -e close_write -e moved_to "$tmpdir" >/dev/null 2>&1; do
+    # check if the edited file is what changed
+    if [[ -f "$tmpfile" ]]; then
+      IFS= readarray -t lines <"$tmpfile"
+      {
+        for line in "${lines[@]}"; do
+          slugify "$line"
+        done
+      } >"${tmpfile}.tmp"
+
+      mv "${tmpfile}.tmp" "$tmpfile"
+    fi
+  done
+}
+
+watcher &
 watcher_pid=$!
 
-"${EDITOR:-nano}" "$tmpfile"
+cleanup() {
+  kill "$watcher_pid" 2>/dev/null || true
+  rm -f "$tmpfile"
+}
+trap cleanup EXIT INT TERM
 
-kill "$watcher_pid" 2>/dev/null || true
-wait "$watcher_pid" 2>/dev/null || true
+"${EDITOR:-vi}" "$tmpfile"
+
+wait "$watcher_pid"
