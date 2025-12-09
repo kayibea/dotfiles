@@ -16,6 +16,10 @@ alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
 
+alias xcopy='xlcip -selection clipboard'
+alias xcopy-img='xlcip -selection clipboard -target image/png'
+alias xclip-purge='head -c 64 /dev/urandom | xclip -selection clipboard'
+
 alias llpg='gpg --list-key --keyid-format LONG'
 alias reload='source $HOME/.bashrc && echo ".bashrc reloaded !"'
 

@@ -2,30 +2,31 @@
 
 EXTRA_ARGS=""
 
-while getopts "f" opt; do
+while getopts ":f" opt; do
   case "$opt" in
     f) EXTRA_ARGS="$EXTRA_ARGS -no-snapshot-load" ;;
+    \?)
+      echo "invalid option: -$OPTARG"
+      exit 1
+      ;;
   esac
 done
 
-SDK_PATH="$HOME/Android/Sdk"
-EMULATOR_PATH="$SDK_PATH/emulator"
-EMULATOR_BIN="$EMULATOR_PATH/emulator"
+avd_list=$(emulator -list-avds)
 
-AVD_LIST=$("$EMULATOR_BIN" -list-avds)
-
-if [ -z "$AVD_LIST" ]; then
+if [ -z "$avd_list" ]; then
   rofi -e "No Android Virtual Devices found."
   exit 1
 fi
 
-AVD=$(echo "$AVD_LIST" | rofi -dmenu -i -p "Select AVD:" -theme-str 'window {width: 25%;}')
+avd=$(echo "$avd_list" | rofi -dmenu -i -p "Select AVD:" -theme-str 'window {width: 25%;}')
 
-if [ -z "$AVD" ]; then
+if [ -z "$avd" ]; then
   rofi -e "No AVD selected."
   exit 1
 fi
 
-echo "Selected AVD: $AVD"
+echo "Selected AVD: $avd"
 
-"$EMULATOR_BIN" -avd "$AVD" $EXTRA_ARGS >/dev/null 2>&1 &
+emulator -avd "$avd" \
+  $EXTRA_ARGS >/dev/null 2>&1 &

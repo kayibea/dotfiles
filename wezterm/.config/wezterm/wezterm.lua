@@ -6,6 +6,8 @@ config.font_size = 26
 config.color_scheme = 'Batman'
 config.font = wezterm.font('Iosevka Nerd Font', { weight = 'Medium', italic = false })
 
+config.use_dead_keys = false
+config.enable_wayland = false
 config.disable_default_mouse_bindings = true
 
 config.enable_scroll_bar = false
@@ -23,9 +25,23 @@ config.window_padding = {
   bottom = 0,
 }
 
--- config.disable_default_key_bindings = true
+local act = wezterm.action
+
+config.disable_default_key_bindings = true
 config.keys = {
-  { key = 'L', mods = 'CTRL', action = wezterm.action.ShowDebugOverlay },
+  { key = '0', mods = 'CTRL',       action = act.ResetFontSize },
+  { key = '-', mods = 'CTRL',       action = act.DecreaseFontSize },
+  { key = '+', mods = 'CTRL|SHIFT', action = act.IncreaseFontSize },
+  { key = 'l', mods = 'CTRL|SHIFT', action = act.ShowDebugOverlay },
+  { key = 'v', mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
+  {
+    key = 'u',
+    mods = 'SHIFT|CTRL',
+    action = act.CharSelect {
+      copy_on_select = true,
+      copy_to = 'ClipboardAndPrimarySelection',
+    },
+  },
 }
 
 return config
