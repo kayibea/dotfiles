@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
+set -eo pipefail
 
 LOCAL_FWD_PORT=8022 # host -> phone
 LOCAL_REV_PORT=2222 # phone -> host
-REMOTE_FWD_PORT=$LOCAL_FWD_PORT
 REMOTE_REV_PORT=22
 
 usage() {
@@ -16,7 +16,7 @@ shift || true
 case "$mode" in
   -f)
     lp="${1:-$LOCAL_FWD_PORT}"
-    rp="${2:-$REMOTE_FWD_PORT}"
+    rp="${2:-$lp}"
     adb forward "tcp:$lp" "tcp:$rp"
     ;;
   -r)

@@ -64,9 +64,10 @@ language-servers = ["clangd", "codebook"]
 
 [[language]]
 name = "cpp"
+auto-format = true
 file-types = ["cpp", "cc", "cxx", "hpp", "hcc", "hxx"]
 formatter = { command = "clang-format" }
-auto-format = true
+language-servers = ["clangd", "codebook"]
 
 [[language]]
 name = "bash"

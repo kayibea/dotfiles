@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -eo pipefail
 
 # Generate a valid 31-bit hex ID for notify-send
 

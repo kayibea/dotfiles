@@ -21,16 +21,17 @@ export PATH="$PATH:$OPT/go/bin"
 export PATH="$PATH:$OPT/jadx/bin"
 export PATH="$PATH:$OPT/real-esrgan"
 export PATH="$PATH:$OPT/lua-language-server/bin"
-export PATH="$PATH:$ANDROID_HOME/platform-tools"
-export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
-export PATH="$PATH:$ANDROID_HOME/build-tools/36.1.0"
 export PATH="$PATH:$ANDROID_HOME/emulator"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
+export PATH="$PATH:$ANDROID_HOME/build-tools/36.1.0"
+export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
 # export PATH="$PATH:$HOME/.local/bin"
 
 export GOROOT="$OPT/go"
 export PATH="$PATH:$GOROOT/bin"
 export PATH="$PATH:$(go env GOPATH)/bin"
 
+# FIXME: Wrong path for termux
 TERMUX_FILES_ROOT="/data/data/com.termux/files"
 export TERMUX_HOME="$TERMUX_FILES_ROOT/home"
 export TERMUX_PREFIX="$TERMUX_FILES_ROOT/usr"
@@ -46,6 +47,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 
 export PASSWORD_STORE_GENERATED_LENGTH=32
+export PASSWORD_STORE_DIR="$XDG_CONFIG_HOME/password-store"
 
 export SSH_AGENT_ENV="$HOME/.ssh/agent_env"
 [[ -f $SSH_AGENT_ENV ]] && . $SSH_AGENT_ENV >/dev/null

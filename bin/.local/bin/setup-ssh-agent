@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -eo pipefail
 
 start_agent() {
   echo "Initializing new SSH agent..."

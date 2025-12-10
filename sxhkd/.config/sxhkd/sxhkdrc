@@ -50,7 +50,3 @@ ctrl + Print
 shift + Print
     scrot -s /tmp/screenshot.png && xclip -selection clipboard -t image/png -i /tmp/screenshot.png && \
     notify-send -i image-x-generic "Screenshot copied to clipboard"
-
-# Open a shell prompt
-ctrl + E
-    commander

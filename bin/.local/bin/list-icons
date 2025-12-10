@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -eo pipefail
 
 ICON_PATHS="/usr/share/icons ~/.local/share/icons"
 

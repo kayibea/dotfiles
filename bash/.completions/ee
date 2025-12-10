@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+_ee_complete() {
+  local cur="${COMP_WORDS[COMP_CWORD]}"
+  COMPREPLY=($(compgen -A command -- "$cur"))
+}
+
+complete -F _ee_complete ee

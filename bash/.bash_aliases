@@ -5,7 +5,7 @@ alias gs='git status'
 
 alias bh='bash-history'
 alias cls='clear'
-alias cwd='pwd | xclip -selection clipboard'
+alias pwdc='pwd | xclip -selection clipboard'
 
 alias e='$EDITOR'
 alias x='extract'
@@ -16,8 +16,8 @@ alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
 
-alias xcopy='xlcip -selection clipboard'
-alias xcopy-img='xlcip -selection clipboard -target image/png'
+alias xcopy='xclip -selection clipboard'
+alias xcopy-img='xclip -selection clipboard -target image/png'
 alias xclip-purge='head -c 64 /dev/urandom | xclip -selection clipboard'
 
 alias llpg='gpg --list-key --keyid-format LONG'
@@ -31,3 +31,4 @@ alias reboot-uefi='systemctl reboot --firmware-setup'
 
 alias ealias='$EDITOR $HOME/dotfiles/bash/.bash_aliases'
 alias eexport='$EDITOR $HOME/dotfiles/bash/.bash_exports'
+alias ebashrc='$EDITOR $HOME/dotfiles/bash/.bashrcxt $HOME/.bashrc'

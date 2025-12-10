@@ -31,9 +31,9 @@ config.disable_default_key_bindings = true
 config.keys = {
   { key = '0', mods = 'CTRL',       action = act.ResetFontSize },
   { key = '-', mods = 'CTRL',       action = act.DecreaseFontSize },
-  { key = '+', mods = 'CTRL|SHIFT', action = act.IncreaseFontSize },
+  { key = '+', mods = 'CTRL',       action = act.IncreaseFontSize },
   { key = 'l', mods = 'CTRL|SHIFT', action = act.ShowDebugOverlay },
-  { key = 'v', mods = "CTRL|SHIFT", action = act.PasteFrom("Clipboard") },
+  { key = 'v', mods = "CTRL|SHIFT", action = act.PasteFrom "Clipboard" },
   {
     key = 'u',
     mods = 'SHIFT|CTRL',

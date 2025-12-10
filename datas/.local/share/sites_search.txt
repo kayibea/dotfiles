@@ -1,11 +1,12 @@
 Linux Man Pages        @man     man7.org/linux/man-pages
 MDN Web Docs           @mdn     developer.mozilla.org
-Go Packages            @go      pkg.go.dev
 DevDocs                @dd      devdocs.io
 GitHub                 @git     github.com
-Node.js                @node    nodejs.org
 Node Package Manager   @npm     npmjs.com
+Node.js                @node    nodejs.org
+Go Packages            @go      pkg.go.dev
 Android Developers     @android developer.android.com
+Chrome Extention       @chrome  developer.chrome.com/docs/extensions/reference/api
 TypeScript Handbook    @ts      typescriptlang.org
 Lua Manual             @lua     lua.org/manual
 Stack Overflow         @so      stackoverflow.com
@@ -23,7 +24,7 @@ Webpack Docs           @wp      webpack.js.org
 Vim Documentation      @vim     vimhelp.org
 C++ Reference          @cppref  en.cppreference.com
 Hacker News            @hn      news.ycombinator.com
-GitLab                 @gl      gitlab.com
+GitLab                 @gitl    gitlab.com
 Deno Manual            @deno    deno.land/manual
 CSS-Tricks             @csst    css-tricks.com
 W3Schools              @w3      w3schools.com
