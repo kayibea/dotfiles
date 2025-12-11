@@ -6,6 +6,7 @@ alias gs='git status'
 alias bh='bash-history'
 alias cls='clear'
 alias pwdc='pwd | xclip -selection clipboard'
+# alias reload='source $HOME/.bashrc && echo ".bashrc reloaded !"'
 
 alias e='$EDITOR'
 alias x='extract'
@@ -20,8 +21,7 @@ alias xcopy='xclip -selection clipboard'
 alias xcopy-img='xclip -selection clipboard -target image/png'
 alias xclip-purge='head -c 64 /dev/urandom | xclip -selection clipboard'
 
-alias llpg='gpg --list-key --keyid-format LONG'
-alias reload='source $HOME/.bashrc && echo ".bashrc reloaded !"'
+alias lspg='gpg --list-key --keyid-format LONG'
 
 # alias suspend='systemctl suspend'
 alias screenoff='xset dpms force off'

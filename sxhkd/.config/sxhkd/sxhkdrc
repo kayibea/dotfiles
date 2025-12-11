@@ -4,15 +4,15 @@
 XF86AudioRaiseVolume
     NOTIFY_ID=$((16#497ffd90)); \
     pactl set-sink-volume @DEFAULT_SINK@ +5% && \
-    VOL=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -n1) && \
-    notify-send -r $NOTIFY_ID -i audio-volume-high "Volume: $VOL"
+    read LEFT RIGHT <<< $(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -n2 | tr '\n' ' ') && \
+    notify-send -r $NOTIFY_ID -i audio-volume-high "PulseAudio" "L $LEFT | R $RIGHT"
 
 # Volume down
 XF86AudioLowerVolume
     NOTIFY_ID=$((16#497ffd90)); \
     pactl set-sink-volume @DEFAULT_SINK@ -5% && \
-    VOL=$(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -n1) && \
-    notify-send -r $NOTIFY_ID -i audio-volume-low "Volume: $VOL"
+    read LEFT RIGHT <<< $(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -n2 | tr '\n' ' ') && \
+    notify-send -r $NOTIFY_ID -i audio-volume-low "PulseAudio" "L $LEFT | R $RIGHT"
 
 # Volume mute
 XF86AudioMute
@@ -24,7 +24,6 @@ XF86AudioMute
     else \
         notify-send -r $NOTIFY_ID -i audio-volume-high "Volume Unmuted"; \
     fi
-
 
 # Media PLay
 XF86AudioPlay
@@ -40,13 +39,19 @@ XF86AudioPrev
 
 # Screenshots
 Print
-    scrot ~/Pictures/Prints/%Y-%m-%d-%H%M%S.png && \
+    scrot ~/Pictures/Print/%Y-%m-%d-%H%M%S.png && \
     notify-send -i image-x-generic "Screenshot saved"
 
 ctrl + Print
-    scrot -s ~/Pictures/Prints/%Y-%m-%d-%H%M%S.png && \
+    scrot -s ~/Pictures/Print/%Y-%m-%d-%H%M%S.png && \
     notify-send -i image-x-generic "Screenshot saved"
 
+alt + Print
+    scrot -u ~/Pictures/Print/%Y-%m-%d-%H%M%S.png && \
+    notify-send -i image-x-generic "Focused window screenshot saved"
+
 shift + Print
-    scrot -s /tmp/screenshot.png && xclip -selection clipboard -t image/png -i /tmp/screenshot.png && \
+    scrot -s /tmp/screenshot.png && \
+    xclip -selection clipboard -t image/png -i /tmp/screenshot.png && \
     notify-send -i image-x-generic "Screenshot copied to clipboard"
+
