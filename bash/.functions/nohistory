@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+nohistory() {
+  set +o history
+  HISTFILE=/dev/null
+  echo "Everyone suddenly went quiet."
+}
