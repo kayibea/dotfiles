@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+if [ $# -eq 0 ]; then
+  echo "Usage: $0 <text>"
+  exit 1
+fi
+
+input="$*"
+output=""
+
+for ((i = 0; i < ${#input}; i++)); do
+  char="${input:i:1}"
+  if [[ $char =~ [a-zA-Z] ]]; then
+    if ((RANDOM % 2)); then
+      char="${char^^}"
+    else
+      char="${char,,}"
+    fi
+  fi
+  output+="$char"
+done
+
+echo "$output"

@@ -3,9 +3,7 @@ alias ...='cd ../..'
 
 alias gs='git status'
 
-alias bh='bash-history'
 alias cl='clear'
-# alias cls='clear'
 alias pwdc='pwd | xclip -selection clipboard'
 # alias reload='source $HOME/.bashrc && echo ".bashrc reloaded !"'
 

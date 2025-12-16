@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-eval "$(batman --export-env)"
-
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
@@ -51,3 +49,6 @@ export PASSWORD_STORE_DIR="$XDG_CONFIG_HOME/password-store"
 
 export SSH_AGENT_ENV="$HOME/.ssh/agent_env"
 [[ -f $SSH_AGENT_ENV ]] && . $SSH_AGENT_ENV >/dev/null
+
+eval "$(batman --export-env)"
+FZF_ALT_C_COMMAND= FZF_CTRL_T_COMMAND= eval "$(fzf --bash)"
