@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if (($# < 1)); then
+  echo "Usage: $(basename "$0") <text1> [text2...]" >&2
+  exit 1
+fi
+
+for text in "$@"; do
+  echo "$text" |
+    tr '[:upper:]' '[:lower:]' |
+    sed 's/ /-/g' |
+    sed 's/[^a-z0-9-]//g'
+done

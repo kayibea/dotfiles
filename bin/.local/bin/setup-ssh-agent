@@ -4,7 +4,7 @@ set -eo pipefail
 start_agent() {
   echo "Initializing new SSH agent..."
   ssh-agent >"$SSH_AGENT_ENV"
-  chmod 600 "$SSH_AGENT_ENV"
+  # chmod 600 "$SSH_AGENT_ENV"
 }
 
 if [ -f "$SSH_AGENT_ENV" ]; then
