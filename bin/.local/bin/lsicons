@@ -3,5 +3,5 @@ set -euo pipefail
 
 find /usr/share/icons ~/.local/share/icons -type f \( -name "*.png" -o -name "*.svg" \) 2>/dev/null |
   fzf \
-    --preview 'clear; chafa {} --fill=block' \
+    --preview 'chafa {} --fill=block' \
     --preview-window=right:30%
