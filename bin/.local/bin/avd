@@ -1,17 +1,7 @@
 #!/usr/bin/env bash
-set -eo pipefail
+set -euo pipefail
 
-EXTRA_ARGS=""
-
-while getopts ":f" opt; do
-  case "$opt" in
-    f) EXTRA_ARGS="$EXTRA_ARGS -no-snapshot-load" ;;
-    \?)
-      echo "invalid option: -$OPTARG"
-      exit 1
-      ;;
-  esac
-done
+DEFAULT_ARGS=(-no-metrics)
 
 avd_list=$(emulator -list-avds)
 
@@ -29,5 +19,9 @@ fi
 
 echo "Selected AVD: $avd"
 
-emulator -avd "$avd" \
-  $EXTRA_ARGS >/dev/null 2>&1 &
+if [[ "${1:-}" == "-f" ]]; then
+  shift
+  exec emulator -avd "$avd" "${DEFAULT_ARGS[@]}" "$@"
+else
+  exec emulator -avd "$avd" "${DEFAULT_ARGS[@]}" "$@" >/dev/null 2>&1 &
+fi

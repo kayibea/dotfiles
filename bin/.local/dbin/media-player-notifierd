@@ -1,71 +1,74 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
+set -m
 
 DEBOUNCE_DELAY=1
-CMDS=(playerctl notify-send)
 TRACK_INFO_FMT='{{ artist }} - {{ title }}|{{ mpris:artUrl }}'
 
-for cmd in "${CMDS[@]}"; do
-  command -v "$cmd" >/dev/null 2>&1 || {
-    echo "$cmd not found"
-    exit 1
-  }
-done
+PLAYERS=(
+  # vlc
+  brave
+)
 
-players=(vlc brave)
+declare -A PLAYER_ICONS=(
+  [vlc]="vlc"
+  [brave]="brave"
+)
 
-get_player_icon() {
-  case "$1" in
-    vlc) echo "vlc" ;;
-    brave) echo "brave" ;;
-    *) echo "media-playback-start" ;;
-  esac
+declare -A NOTIFY_IDS=(
+  [vlc]=$((16#0df38f21))
+  [brave]=$((16#0df38f20))
+)
+
+get_icon() {
+  local player="$1" art="$2"
+
+  if [[ "$art" == file://* && -f "${art#file://}" ]]; then
+    echo "${art#file://}"
+  else
+    echo "${PLAYER_ICONS[$player]:-media-playback-start}"
+  fi
 }
 
-notify() {
-  notify-send "Now Playing" "$1" -r "$3" -i "$2"
+send_notify() {
+  local id="$1" title="$2" icon="$3"
+  notify-send "Now Playing" "$title" -r "$id" -i "$icon"
 }
 
-handle_player() {
+watch_player() {
   local player="$1"
-  local debounce="$2"
-  local notify_id="$3"
+  local notify_id="${NOTIFY_IDS[$player]}"
+  local debounce_pid=0
 
-  playerctl metadata -p "$player" --follow --format "$TRACK_INFO_FMT" |
-    while IFS='|' read -r track artUrl; do
-      track="${track}"
-      icon="${artUrl#file://}"
+  while IFS='|' read -r track art; do
+    [[ -z "$track" ]] && continue
 
-      if ! [[ -f "$icon" ]]; then
-        icon=$(get_player_icon $player)
-      fi
+    local icon
+    icon="$(get_icon "$player" "$art")"
 
-      if ((debounce)); then
-        kill "$debounce" 2>/dev/null || true
-        (
-          sleep "$DEBOUNCE_DELAY"
-          notify "$track" "$icon" "$notify_id"
-        ) &
-        debounce=$!
-      else
-        notify "$track" "$icon" "$notify_id"
-      fi
-    done
+    if ((debounce_pid)); then
+      kill "$debounce_pid" 2>/dev/null || true
+    fi
+
+    (
+      sleep "$DEBOUNCE_DELAY"
+      send_notify "$notify_id" "$track" "$icon"
+    ) &
+    debounce_pid=$!
+
+  done < <(
+    exec playerctl metadata -p "$player" --follow --format "$TRACK_INFO_FMT"
+  )
 }
 
-trap 'pkill -P $$; exit 0' SIGINT SIGTERM
+cleanup() {
+  kill -- -$$ 2>/dev/null || true
+}
 
-for p in "${players[@]}"; do
-  case "$p" in
-    # WARN: VLC metadatas is inconsistent
-    # vlc)
-    #   handle_player vlc 1 $((16#7f0e9fec)) &
-    #   ;;
-    brave)
-      handle_player brave 1 $((16#0df38f20)) &
-      ;;
-  esac
+trap cleanup SIGINT SIGTERM EXIT
+
+for player in "${PLAYERS[@]}"; do
+  watch_player "$player" &
 done
 
 wait

@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
-set -eo pipefail
-
-ICON_PATHS="/usr/share/icons ~/.local/share/icons"
+set -euo pipefail
 
 find /usr/share/icons ~/.local/share/icons -type f \( -name "*.png" -o -name "*.svg" \) 2>/dev/null |
-  fzf --reverse \
-    --exact \
-    --algo=v2 \
+  fzf \
     --preview 'clear; chafa {} --fill=block' \
     --preview-window=right:30%

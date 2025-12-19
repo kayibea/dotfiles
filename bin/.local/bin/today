@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -eo pipefail
+set -euo pipefail
 
 if command -v ncal >/dev/null 2>&1; then
   ncal
