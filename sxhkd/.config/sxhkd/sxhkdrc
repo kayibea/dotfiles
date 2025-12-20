@@ -37,6 +37,20 @@ XF86AudioNext
 XF86AudioPrev
     playerctl previous;
 
+# Keyboard Layout
+alt + shift + k
+  NOTIFY_ID=$((16#30ee8f58)); \
+  notify_icon='/usr/share/icons/Papirus/24x24/panel/keyboard-layout.svg'; \
+  cur=$(setxkbmap -query | awk '/layout/\{print $2\}'); \
+  if [ "$cur" = "us" ]; then \
+    setxkbmap fr; \
+    notify-send -r $NOTIFY_ID -i "$notify_icon" "Keyboard Map" "FR"; \
+  else \
+    setxkbmap us; \
+    notify-send -r $NOTIFY_ID -i "$notify_icon" "Keyboard Map" "US"; \
+  fi
+
+
 # Screenshots
 Print
     scrot ~/Pictures/Print/%Y-%m-%d-%H%M%S.png && \
