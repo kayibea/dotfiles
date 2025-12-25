@@ -82,11 +82,18 @@ language-servers = ["tombi"]
 
 # Language servers
 
-[language-server.lua-language-server.config.Lua.workspace]
 # library = [
 #   "${env:LLSA}/luaposix",
 # ]
-checkThirdParty = "Disable"
+# [language-server.lua-language-server.config.Lua.workspace]
+# checkThirdParty = "Disable"
+
+# [language-server.lua-language-server.config.Lua.runtime]
+# version = "Lua 5.5"
+
+[language-server.lua-language-server.config.Lua]
+workspace = { checkThirdParty = "Disable" }
+runtime = { version = "Lua 5.5" }
 
 [language-server.emmet]
 command = "emmet-language-server"

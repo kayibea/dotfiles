@@ -16,11 +16,11 @@ alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
 
+alias llpg='gpg --list-key --keyid-format LONG'
+
 alias xcopy='xclip -selection clipboard'
 alias xcopy-img='xclip -selection clipboard -target image/png'
 alias xclip-purge='head -c 64 /dev/urandom | xclip -selection clipboard'
-
-alias lspg='gpg --list-key --keyid-format LONG'
 
 # alias suspend='systemctl suspend'
 alias screenoff='xset dpms force off'

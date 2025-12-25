@@ -9,6 +9,7 @@ rules = [
   { mime = "video/*", use = "vlc" },
   { mime = "audio/*", use = "vlc" },
   { mime = "inode/directory", use = "cd" },
+  { mime = "application/json", use = "edit" },
 ]
 
 [opener]

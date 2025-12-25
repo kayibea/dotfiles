@@ -1,32 +1,34 @@
 #!/usr/bin/env bash
 
+OPT="$HOME/.local/opt"
+
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_CONFIG_HOME="$HOME/.config"
 
 export EDITOR="hx"
 export GTK_THEME="Adwaita:dark"
+export HELIX_RUNTIME="$OPT/helix/runtime"
 
 export ANDROID_HOME="$HOME/Android/Sdk"
 export ANDROID_USER_HOME="$XDG_CONFIG_HOME/.android"
 export ANDROID_EMULATOR_HOME="$ANDROID_USER_HOME"
 export ANDROID_AVD_HOME="$ANDROID_EMULATOR_HOME/avd"
 
-OPT="$HOME/.local/opt"
-export PATH="$PATH:/usr/sbin:/sbin"
-export PATH="$PATH:$OPT/scrcpy"
-export PATH="$PATH:$OPT/go/bin"
-export PATH="$PATH:$OPT/jadx/bin"
-export PATH="$PATH:$OPT/real-esrgan"
-export PATH="$PATH:$OPT/lua-language-server/bin"
-export PATH="$PATH:$ANDROID_HOME/emulator"
-export PATH="$PATH:$ANDROID_HOME/platform-tools"
-export PATH="$PATH:$ANDROID_HOME/build-tools/36.1.0"
+PATH="$PATH:/usr/sbin:/sbin"
+PATH="$PATH:$OPT/scrcpy"
+PATH="$PATH:$OPT/go/bin"
+PATH="$PATH:$OPT/jadx/bin"
+PATH="$PATH:$OPT/real-esrgan"
+PATH="$PATH:$OPT/lua-language-server/bin"
+PATH="$PATH:$ANDROID_HOME/emulator"
+PATH="$PATH:$ANDROID_HOME/platform-tools"
+PATH="$PATH:$ANDROID_HOME/build-tools/36.1.0"
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
 # export PATH="$PATH:$HOME/.local/bin"
 
 export GOROOT="$OPT/go"
-export PATH="$PATH:$GOROOT/bin"
+PATH="$PATH:$GOROOT/bin"
 export PATH="$PATH:$(go env GOPATH)/bin"
 
 # FIXME: Wrong path for termux
