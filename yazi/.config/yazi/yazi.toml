@@ -2,6 +2,14 @@
 show_hidden = true
 show_symlink = true
 
+[opener]
+vlc = [
+  { run = 'vlc "$@"', orphan = true },
+]
+feh = [
+  { run = 'feh --auto-zoom --scale-down "$@"', orphan = true },
+]
+
 [open]
 rules = [
   { mime = "text/*", use = "edit" },
@@ -10,14 +18,6 @@ rules = [
   { mime = "audio/*", use = "vlc" },
   { mime = "inode/directory", use = "cd" },
   { mime = "application/json", use = "edit" },
-]
-
-[opener]
-vlc = [
-  { run = 'vlc "$@"', orphan = true },
-]
-feh = [
-  { run = 'feh --auto-zoom --scale-down "$@"', orphan = true },
 ]
 
 [plugin]

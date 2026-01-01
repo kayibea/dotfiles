@@ -1,0 +1,4 @@
+[[mgr.prepend_keymap]]
+on = "<C-w>"
+run = 'shell --confirm "feh --bg-fill \"$@\""'
+desc = "Set hovered file as wallpaper"

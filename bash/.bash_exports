@@ -38,9 +38,9 @@ export TERMUX_PREFIX="$TERMUX_FILES_ROOT/usr"
 export TERMUX_TMPDIR="$TERMUX_PREFIX/tmp"
 export ANDROID_DEVICE_TMPDIR="/data/local/tmp"
 
-export LLSA="$HOME/code/lua/LLS-Addons/addons"
-export LUA_PATH="$HOME/.local/share/lua/5.4/?.lua;$HOME/.luarocks/share/lua/5.4/?.lua;;"
-export LUA_CPATH="$HOME/.local/lib/lua/5.4/?.so;$HOME/.luarocks/lib/lua/5.4/?.so;;"
+export LLS_ADDONS="$HOME/code/lua/LLS-Addons/addons"
+# export LUA_PATH="$HOME/.local/share/lua/5.5/?.lua;$HOME/.luarocks/share/lua/5.5/?.lua;;"
+# export LUA_CPATH="$HOME/.local/lib/lua/5.5/?.so;$HOME/.luarocks/lib/lua/5.5/?.so;;"
 
 export _JAVA_AWT_WM_NONREPARENTING=1
 

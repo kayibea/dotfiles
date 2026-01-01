@@ -3,3 +3,4 @@ config/.config/gtk-3.0/bookmarks
 yazi/.config/yazi/*
 !yazi/.config/yazi/yazi.toml
 !yazi/.config/yazi/theme.toml
+!yazi/.config/yazi/keymap.toml
