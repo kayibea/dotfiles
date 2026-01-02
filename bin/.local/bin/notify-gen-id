@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
-# Generate a valid 31-bit hex ID for notify-send
-
-raw=$(od -An -N4 -tu4 </dev/urandom)
-printf '%08x\n' $((raw & 0x7fffffff))
