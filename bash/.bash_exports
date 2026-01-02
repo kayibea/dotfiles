@@ -49,5 +49,8 @@ export LIBVIRT_DEFAULT_URI="qemu:///system"
 export PASSWORD_STORE_GENERATED_LENGTH=32
 export PASSWORD_STORE_DIR="$XDG_CONFIG_HOME/password-store"
 
+export SSH_AGENT_ENV="$HOME/.ssh/agent.env"
+[[ -f $SSH_AGENT_ENV ]] && . $SSH_AGENT_ENV >/dev/null
+
 eval "$(batman --export-env)"
 FZF_ALT_C_COMMAND= FZF_CTRL_T_COMMAND= eval "$(fzf --bash)"
