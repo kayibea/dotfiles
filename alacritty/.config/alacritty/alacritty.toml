@@ -5,29 +5,28 @@ normal = { family = "Iosevka Nerd Font", style = "SemiBold" }
 
 [window]
 padding = { x = 0, y = 0 }
-dynamic_padding=false
+dynamic_padding = false
 # dynamic_title = true
-decorations = "None"
+decorations = "none"
 # opacity=0.1
 # blur=true
 # startup_mode="Fullscreen"
-startup_mode="Maximized"
+startup_mode = "Maximized"
 
 [colors.primary]
 background = "0x1e1e2e"
 foreground = "0xcdd6f4"
 
 [cursor]
-style = {blinking="Always", shape="Block"}
+style = { blinking = "Always", shape = "Block" }
 
 [scrolling]
 history = 10000
 multiplier = 3
 
 [keyboard]
-bindings=[
-  {key="+",mods= "Control|Shift", action="IncreaseFontSize"},
-  {key="-",mods= "Control|Shift", action="DecreaseFontSize"},
-  {key="0",mods= "Control|Shift", action="ResetFontSize"}
+bindings = [
+  { key = "+", mods = "Control|Shift", action = "IncreaseFontSize" },
+  { key = "-", mods = "Control|Shift", action = "DecreaseFontSize" },
+  { key = "0", mods = "Control|Shift", action = "ResetFontSize" }
 ]
-

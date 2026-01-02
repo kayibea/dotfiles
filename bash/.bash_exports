@@ -38,7 +38,7 @@ export TERMUX_PREFIX="$TERMUX_FILES_ROOT/usr"
 export TERMUX_TMPDIR="$TERMUX_PREFIX/tmp"
 export ANDROID_DEVICE_TMPDIR="/data/local/tmp"
 
-export LLS_ADDONS="$HOME/code/lua/LLS-Addons/addons"
+export LLS_ADDONS="$OPT/LLS-Addons/addons"
 # export LUA_PATH="$HOME/.local/share/lua/5.5/?.lua;$HOME/.luarocks/share/lua/5.5/?.lua;;"
 # export LUA_CPATH="$HOME/.local/lib/lua/5.5/?.so;$HOME/.luarocks/lib/lua/5.5/?.so;;"
 
@@ -48,9 +48,6 @@ export LIBVIRT_DEFAULT_URI="qemu:///system"
 
 export PASSWORD_STORE_GENERATED_LENGTH=32
 export PASSWORD_STORE_DIR="$XDG_CONFIG_HOME/password-store"
-
-export SSH_AGENT_ENV="$HOME/.ssh/agent_env"
-[[ -f $SSH_AGENT_ENV ]] && . $SSH_AGENT_ENV >/dev/null
 
 eval "$(batman --export-env)"
 FZF_ALT_C_COMMAND= FZF_CTRL_T_COMMAND= eval "$(fzf --bash)"

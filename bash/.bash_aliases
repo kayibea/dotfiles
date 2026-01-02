@@ -9,7 +9,6 @@ alias pwdc='pwd | xclip -selection clipboard'
 
 alias e='$EDITOR'
 alias x='extract'
-alias zz='yazi'
 alias lz='lazygit'
 
 alias l='ls -CF'
@@ -19,7 +18,6 @@ alias ll='ls -alF'
 alias llpg='gpg --list-key --keyid-format LONG'
 
 alias xcopy='xclip -selection clipboard'
-alias xcopy-img='xclip -selection clipboard -target image/png'
 alias xclip-purge='head -c 64 /dev/urandom | xclip -selection clipboard'
 
 # alias suspend='systemctl suspend'

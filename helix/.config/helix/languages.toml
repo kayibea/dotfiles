@@ -81,16 +81,9 @@ auto-format = true
 language-servers = ["tombi"]
 
 # Language servers
-
 # library = [
-#   "${env:LLSA}/luaposix",
+#   "${env:LLSA_ADDONS}/luaposix",
 # ]
-# [language-server.lua-language-server.config.Lua.workspace]
-# checkThirdParty = "Disable"
-
-# [language-server.lua-language-server.config.Lua.runtime]
-# version = "Lua 5.5"
-
 [language-server.lua-language-server.config.Lua]
 workspace = { checkThirdParty = "Disable" }
 runtime = { version = "Lua 5.5" }
