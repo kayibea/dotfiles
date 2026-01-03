@@ -3,12 +3,12 @@ theme = "onedark"
 [editor]
 scrolloff = 999
 auto-info = true
-# bufferline="always"
 line-number = "relative"
 mouse = false
 true-color = true
 clipboard-provider = "x-clip"
 trim-trailing-whitespace = true
+end-of-line-diagnostics = "warning"
 
 [editor.statusline]
 left = [
@@ -18,8 +18,8 @@ left = [
   "file-modification-indicator",
 ]
 center = []
-right = ["diagnostics", "spinner", "position", "file-encoding", "file-type"]
-diagnostics = ["error"]
+right = ["spinner", "diagnostics", "position", "file-encoding", "file-type"]
+diagnostics = ["warning", "error"]
 
 [editor.lsp]
 display-inlay-hints = false

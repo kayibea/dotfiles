@@ -1,14 +1,18 @@
 [[language]]
+name = "toml"
+auto-format = true
+
+[[language]]
 name = "go"
 language-servers = ["gopls", "codebook"]
 
 [[language]]
 name = "git-commit"
-language-servers = ["codebook"]
+language-servers = ["commit-lsp", "codebook"]
 
 [[language]]
 name = "markdown"
-language-servers = ["marksman", "markdown-oxide", "codebook"]
+language-servers = ["marksman", "codebook"]
 
 [[language]]
 name = "html"
@@ -16,8 +20,8 @@ formatter = { command = "prettier", args = ["--parser", "html"] }
 auto-format = true
 language-servers = [
   "vscode-html-language-server",
-  "superhtml",
   "emmet",
+  "superhtml",
   "codebook",
 ]
 
@@ -57,16 +61,12 @@ language-servers = ["lua-language-server", "codebook"]
 
 [[language]]
 name = "c"
-file-types = ["c", "h"]
 auto-format = true
-formatter = { command = "clang-format" }
 language-servers = ["clangd", "codebook"]
 
 [[language]]
 name = "cpp"
 auto-format = true
-file-types = ["cpp", "cc", "cxx", "hpp", "hcc", "hxx"]
-formatter = { command = "clang-format" }
 language-servers = ["clangd", "codebook"]
 
 [[language]]
@@ -75,15 +75,6 @@ auto-format = true
 formatter = { command = "shfmt", args = ["-i", "2", "-ci"] }
 language-servers = ["bash-language-server", "codebook"]
 
-[[language]]
-name = "toml"
-auto-format = true
-language-servers = ["tombi"]
-
-# Language servers
-# library = [
-#   "${env:LLS_ADDONS}/luaposix",
-# ]
 [language-server.lua-language-server.config.Lua]
 workspace = { checkThirdParty = "Disable" }
 runtime = { version = "Lua 5.5" }
