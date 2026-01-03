@@ -82,7 +82,7 @@ language-servers = ["tombi"]
 
 # Language servers
 # library = [
-#   "${env:LLSA_ADDONS}/luaposix",
+#   "${env:LLS_ADDONS}/luaposix",
 # ]
 [language-server.lua-language-server.config.Lua]
 workspace = { checkThirdParty = "Disable" }

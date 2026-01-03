@@ -15,7 +15,7 @@ fi
 
 case "$FILE" in
   *.tar* | *.tgz | *.tbz2 | *.txz) tar xf "$FILE" ;;
-  *.zip) unzip "$FILE" ;;
+  *.zip | *.apk) unzip "$FILE" ;;
   *.7z) 7z x "$FILE" ;;
   *.rar) unrar x "$FILE" ;;
   *.gz) gunzip "$FILE" ;;

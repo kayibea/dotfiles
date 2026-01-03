@@ -53,7 +53,6 @@ A-h = "copy_selection_on_prev_line"
 A-l = "copy_selection_on_next_line"
 # Duplicate line bellow
 A-d = ["extend_to_line_bounds", "yank", "paste_after"]
-# Remove multi cursors
 C = "no_op"
 A-C = "no_op"
 up = "no_op"

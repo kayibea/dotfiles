@@ -4,6 +4,7 @@ alias ...='cd ../..'
 alias gs='git status'
 
 alias cl='clear'
+alias man='batman'
 alias pwdc='pwd | xclip -selection clipboard'
 # alias reload='source $HOME/.bashrc && echo ".bashrc reloaded !"'
 

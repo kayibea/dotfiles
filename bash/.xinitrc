@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
+xset s 600 600
+xset dpms 600 600 600
+xss-lock -- slock &
+setxkbmap us &
+
 nm-applet &
 blueman-applet &
 picom &
-setxkbmap us &
 pulseaudio --start &
 dunst &
 slstatus &
 sxhkd &
+
+[ -x "$HOME/.fehbg" ] && "$HOME/.fehbg" &
 
 exec dwm
