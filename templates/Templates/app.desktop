@@ -1,8 +1,13 @@
 [Desktop Entry]
+Version=1.0
 Type=Application
 Name=AppName
+GenericName=Generic App Name
 Comment=App Description
-Exec=/path/to/executable
-Icon=
+Exec=/path/to/executable %F
+Icon=/path/to/icon
 Terminal=false
 Categories=Utility;
+StartupNotify=true
+MimeType=application/x-custom;
+Keywords=tool;utility;helper;
