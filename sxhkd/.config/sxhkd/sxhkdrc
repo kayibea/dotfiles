@@ -65,7 +65,7 @@ alt + Print
     notify-send -i image-x-generic "Focused window screenshot saved"
 
 shift + Print
-    scrot -s /tmp/screenshot.png && \
+    scrot -os /tmp/screenshot.png && \
     xclip -selection clipboard -t image/png -i /tmp/screenshot.png && \
     notify-send -i image-x-generic "Screenshot copied to clipboard"
 

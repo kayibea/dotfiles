@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+PROGNAME="$(basename "$0")"
+
 if [[ $# -eq 0 ]]; then
-  echo "Usage: $(basename "$0") <file>"
+  echo "Usage: $PROGNAME <file>"
   exit 1
 fi
 
@@ -16,7 +18,7 @@ fi
 case "$FILE" in
   *.tar* | *.tgz | *.tbz2 | *.txz) tar xf "$FILE" ;;
   *.zip | *.apk) unzip "$FILE" ;;
-  *.7z) 7z x "$FILE" ;;
+  *.7z | *.iso) 7z x "$FILE" ;;
   *.rar) unrar x "$FILE" ;;
   *.gz) gunzip "$FILE" ;;
   *.bz2) bunzip2 "$FILE" ;;
@@ -25,6 +27,6 @@ case "$FILE" in
   *.pax.Z) uncompress --stdout "$FILE" | pax -r ;;
   *.Z) uncompress "$FILE" ;;
   *)
-    echo "File '$FILE' cannot be extracted via extract"
+    echo "File '$FILE' cannot be extracted via $PROGNAME"
     ;;
 esac
