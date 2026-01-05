@@ -67,7 +67,6 @@ export GOMODCACHE="$GOPATH/pkg/mod"
 export GOENV="$XDG_CONFIG_HOME/go/env"
 export PATH="$GOROOT/bin:$GOBIN:$PATH"
 
-
 # Lua
 export LLS_ADDONS="$LOCAL_OPT/LLS-Addons/addons"
 export LUAROCKS_CONFIG="$XDG_CONFIG_HOME/luarocks/config.lua"
