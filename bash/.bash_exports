@@ -1,57 +1,92 @@
 #!/usr/bin/env bash
 
-OPT="$HOME/.local/opt"
+LOCAL_OPT="$HOME/.local/opt"
 
+# XDG base dirs
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# GNU Pass
+export PASSWORD_STORE_GENERATED_LENGTH=32
+export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
+
+# Rust
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
+
+# Parallel
+export PARALLEL_HOME="$XDG_STATE_HOME/parallel"
+
+# Node / npm
+export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
+export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
+export NODE_REPL_HISTORY="$XDG_STATE_HOME/node_repl_history"
+
+# Editor / UI
 export EDITOR="hx"
 export GTK_THEME="Adwaita:dark"
-export HELIX_RUNTIME="$OPT/helix/runtime"
+export HELIX_RUNTIME="$LOCAL_OPT/helix/runtime"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/settings.ini"
 
+# Android Studio
 export ANDROID_HOME="$HOME/Android/Sdk"
-export ANDROID_USER_HOME="$XDG_CONFIG_HOME/.android"
+export ANDROID_USER_HOME="$XDG_DATA_HOME/android"
 export ANDROID_EMULATOR_HOME="$ANDROID_USER_HOME"
 export ANDROID_AVD_HOME="$ANDROID_EMULATOR_HOME/avd"
+export ANDROID_DEVICE_TMPDIR="/data/local/tmp"
 
-export PATH="$PATH:/usr/sbin:/sbin"
-export PATH="$PATH:$OPT/scrcpy"
-export PATH="$PATH:$OPT/go/bin"
-export PATH="$PATH:$OPT/jadx/bin"
-export PATH="$PATH:$OPT/real-esrgan"
-export PATH="$PATH:$OPT/lua-language-server/bin"
-export PATH="$PATH:$ANDROID_HOME/emulator"
-export PATH="$PATH:$ANDROID_HOME/platform-tools"
-export PATH="$PATH:$ANDROID_HOME/build-tools/36.1.0"
-export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin"
-# export PATH="$PATH:$HOME/.local/bin"
-
-export GOROOT="$OPT/go"
-export PATH="$PATH:$GOROOT/bin"
-export PATH="$PATH:$(go env GOPATH)/bin"
-export GOMODCACHE="$XDG_CACHE_HOME/go/mod"
-
+# Termux
 TERMUX_FILES_ROOT="/data/data/com.termux/files"
 export TERMUX_HOME="$TERMUX_FILES_ROOT/home"
 export TERMUX_PREFIX="$TERMUX_FILES_ROOT/usr"
 export TERMUX_TMPDIR="$TERMUX_PREFIX/tmp"
-export ANDROID_DEVICE_TMPDIR="/data/local/tmp"
 
-export LLS_ADDONS="$OPT/LLS-Addons/addons"
+# Base PATH
+export PATH="/usr/sbin:/sbin:$PATH"
+
+# Local optional tools
+export PATH="$LOCAL_OPT/scrcpy:$PATH"
+export PATH="$LOCAL_OPT/jadx/bin:$PATH"
+export PATH="$LOCAL_OPT/real-esrgan:$PATH"
+export PATH="$LOCAL_OPT/lua-language-server/bin:$PATH"
+
+# Android tools
+export PATH="$ANDROID_HOME/emulator:$PATH"
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
+export PATH="$ANDROID_HOME/build-tools/36.1.0:$PATH"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+
+# Golang
+export GOROOT="$LOCAL_OPT/go"
+export GOPATH="$XDG_DATA_HOME/go"
+export GOBIN="$GOPATH/bin"
+export GOCACHE="$XDG_CACHE_HOME/go"
+export GOMODCACHE="$GOPATH/pkg/mod"
+export GOENV="$XDG_CONFIG_HOME/go/env"
+export PATH="$GOROOT/bin:$GOBIN:$PATH"
+
+
+# Lua
+export LLS_ADDONS="$LOCAL_OPT/LLS-Addons/addons"
+export LUAROCKS_CONFIG="$XDG_CONFIG_HOME/luarocks/config.lua"
 # export LUA_PATH="$HOME/.local/share/lua/5.5/?.lua;$HOME/.luarocks/share/lua/5.5/?.lua;;"
 # export LUA_CPATH="$HOME/.local/lib/lua/5.5/?.so;$HOME/.luarocks/lib/lua/5.5/?.so;;"
 
+# Java / Gradle
+export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
 export _JAVA_AWT_WM_NONREPARENTING=1
+export _JAVA_OPTIONS="-Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
+export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 
+# Libvirt
 export LIBVIRT_DEFAULT_URI="qemu:///system"
 
-export PASSWORD_STORE_GENERATED_LENGTH=32
-export PASSWORD_STORE_DIR="$XDG_CONFIG_HOME/password-store"
-
+# SSH agent
 export SSH_AGENT_ENV="$HOME/.ssh/agent.env"
-[[ -f $SSH_AGENT_ENV ]] && . $SSH_AGENT_ENV >/dev/null
+[[ -f "$SSH_AGENT_ENV" ]] && source "$SSH_AGENT_ENV" >/dev/null
 
+# Tools
 eval "$(batman --export-env)"
 FZF_ALT_C_COMMAND= FZF_CTRL_T_COMMAND= eval "$(fzf --bash)"
