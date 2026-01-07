@@ -10,13 +10,13 @@ if ! command -v java >/dev/null 2>&1; then
 fi
 
 if [[ ! -f "$JAR_FILE" ]]; then
-  echo "Error: Uber APK Signer JAR not found at: $JAR_FILE" >&2
+  echo "Error: JAR File not found at: $JAR_FILE" >&2
   exit 1
 fi
 
 if [[ $# -eq 0 ]]; then
   java -jar "$JAR_FILE" --help
-  exit 0
+  exit 1
 fi
 
 java -jar "$JAR_FILE" "$@"

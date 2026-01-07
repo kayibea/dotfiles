@@ -8,9 +8,22 @@ export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# GNU PG
+export GPG_TTY=$(tty)
+export GPGHOME="$HOME/.gnupg"
+export GNUPGHOME="$HOME/.gnupg"
+
 # GNU Pass
 export PASSWORD_STORE_GENERATED_LENGTH=32
+export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
+export PASSWORD_STORE_EXTENSIONS_DIR="$PASSWORD_STORE_DIR/.extensions"
+
+# Editor / UI
+export EDITOR="$(command -v hx 2>/dev/null || printf "%s" vi)"
+export GTK_THEME="Adwaita:dark"
+export HELIX_RUNTIME="$LOCAL_OPT/helix/runtime"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/settings.ini"
 
 # Rust
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
@@ -23,12 +36,6 @@ export PARALLEL_HOME="$XDG_STATE_HOME/parallel"
 export NPM_CONFIG_CACHE="$XDG_CACHE_HOME/npm"
 export NPM_CONFIG_USERCONFIG="$XDG_CONFIG_HOME/npm/npmrc"
 export NODE_REPL_HISTORY="$XDG_STATE_HOME/node_repl_history"
-
-# Editor / UI
-export EDITOR="hx"
-export GTK_THEME="Adwaita:dark"
-export HELIX_RUNTIME="$LOCAL_OPT/helix/runtime"
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/settings.ini"
 
 # Android Studio
 export ANDROID_HOME="$HOME/Android/Sdk"
@@ -69,9 +76,9 @@ export PATH="$GOROOT/bin:$GOBIN:$PATH"
 
 # Lua
 export LLS_ADDONS="$LOCAL_OPT/LLS-Addons/addons"
+export LUA_PATH="$XDG_DATA_HOME/luarocks/share/lua/5.5/?.lua;;"
+export LUA_CPATH="$XDG_DATA_HOME/luarocks/lib/lua/5.5/?.so;;"
 export LUAROCKS_CONFIG="$XDG_CONFIG_HOME/luarocks/config.lua"
-# export LUA_PATH="$HOME/.local/share/lua/5.5/?.lua;$HOME/.luarocks/share/lua/5.5/?.lua;;"
-# export LUA_CPATH="$HOME/.local/lib/lua/5.5/?.so;$HOME/.luarocks/lib/lua/5.5/?.so;;"
 
 # Java / Gradle
 export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"

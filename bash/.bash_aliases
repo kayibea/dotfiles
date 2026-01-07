@@ -8,9 +8,9 @@ alias man='batman'
 alias pwdc='pwd | xclip -selection clipboard && echo "working dir copied !"'
 # alias reload='source $HOME/.bashrc && echo ".bashrc reloaded !"'
 
+alias e='$EDITOR'
 alias x='extract'
 alias lz='lazygit'
-alias e='${EDITOR:-vi}'
 
 alias ls='ls --color=auto'
 alias l='ls -CF'

@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+lnabs() {
+  ln -s "$(realpath "$1")" "$2"
+}
+
 nohistory() {
   set +o history
   HISTFILE=/dev/null
