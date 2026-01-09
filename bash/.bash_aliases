@@ -3,6 +3,8 @@ alias ...='cd ../..'
 
 alias gs='git status'
 
+alias pass-totp='sed -n '2p' | gopher-totp'
+
 alias cl='clear'
 alias man='batman'
 alias pwdc='pwd | xclip -selection clipboard && echo "working dir copied !"'

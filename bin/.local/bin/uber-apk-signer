@@ -5,7 +5,7 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 JAR_FILE="$SCRIPT_DIR/uber-apk-signer.jar"
 
 if ! command -v java >/dev/null 2>&1; then
-  echo "Error: Java is not installed. Please install Java to use this script." >&2
+  echo "Error: Java is not installed" >&2
   exit 1
 fi
 

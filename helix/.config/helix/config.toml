@@ -33,6 +33,8 @@ select = "underline"
 hidden = false
 
 [keys.normal]
+tab = ":buffer-next"
+S-tab = ":buffer-previous"
 C-s = ":w"
 C-q = ":quit"
 esc = ["collapse_selection", "keep_primary_selection"]

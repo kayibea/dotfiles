@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+_git_has_changes() {
+  local staged=$1
+  if $staged; then
+    git diff --cached --quiet || return 0
+  else
+    git diff --quiet || return 0
+  fi
+  return 1
+}
+
+function gda() {
+  local staged=false
+  [[ "$1" == "--cached" || "$1" == "-c" ]] && staged=true
+
+  _git_has_changes $staged || {
+    git status
+    return 0
+  }
+
+  local file
+  file=$(mktemp -t XXXX.diff)
+  if $staged; then
+    git diff --cached >"$file"
+  else
+    git diff >"$file"
+  fi
+
+  "$EDITOR" "$file"
+  rm -f -- "$file"
+}
+
+function gd() {
+  local staged=false
+  [[ "$1" == "--cached" || "$1" == "-c" ]] && staged=true
+
+  _git_has_changes $staged || {
+    git status
+    return 0
+  }
+
+  local repo_root
+  repo_root=$(git rev-parse --show-toplevel) || return 1
+
+  local files
+  if $staged; then
+    files=$(git -C "$repo_root" diff --name-only --cached)
+  else
+    files=$(git -C "$repo_root" diff --name-only)
+  fi
+
+  local tmpfiles=()
+  for f in $files; do
+    local tmp
+    tmp=$(mktemp -t XXXXXX.diff)
+    if $staged; then
+      git -C "$repo_root" diff --cached -- "$f" >"$tmp"
+    else
+      git -C "$repo_root" diff -- "$f" >"$tmp"
+    fi
+    tmpfiles+=("$tmp")
+  done
+
+  "$EDITOR" "${tmpfiles[@]}"
+  rm -f -- "${tmpfiles[@]}"
+}
