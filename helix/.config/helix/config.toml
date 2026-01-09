@@ -22,7 +22,7 @@ right = ["spinner", "diagnostics", "position", "file-encoding", "file-type"]
 diagnostics = ["warning", "error"]
 
 [editor.lsp]
-display-inlay-hints = false
+display-inlay-hints = true
 
 [editor.cursor-shape]
 insert = "bar"
@@ -33,10 +33,10 @@ select = "underline"
 hidden = false
 
 [keys.normal]
+C-q = ":quit"
+C-s = ":update"
 tab = ":buffer-next"
 S-tab = ":buffer-previous"
-C-s = ":w"
-C-q = ":quit"
 esc = ["collapse_selection", "keep_primary_selection"]
 # Add new line top/bottom
 C-j = "add_newline_below"
