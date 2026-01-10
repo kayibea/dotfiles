@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+MEDIA_ROOT=/media
+
+[[ -d "$MEDIA_ROOT" ]] || {
+  echo "missing $MEDIA_ROOT"
+  exit 1
+}
+
+mapfile -t devices < <(
+  lsblk -rpo NAME,RM,MOUNTPOINT |
+    awk '$2 == 1 && $3 == "" { print $1 }'
+)
+
+((${#devices[@]} == 0)) && {
+  echo "nothing to mount"
+  exit 0
+}
+
+device=$(
+  printf '%s\n' "${devices[@]}" |
+    fzf \
+      --prompt="mount > " \
+      --height=40% \
+      --border \
+      --exit-0 \
+      --preview='lsblk -o NAME,SIZE,FSTYPE,MODEL,SERIAL {}'
+)
+
+[[ -z "$device" ]] && exit 0
+
+mapfile -t mountpoints < <(
+  find "$MEDIA_ROOT" -mindepth 1 -maxdepth 1 -type d |
+    while read -r d; do
+      mountpoint -q "$d" && continue
+      [[ -z "$(ls -A "$d")" ]] || continue
+      echo "$d"
+    done
+)
+
+((${#mountpoints[@]} == 0)) && {
+  echo "no free mountpoints in $MEDIA_ROOT"
+  exit 1
+}
+
+mtp=$(
+  printf '%s\n' "${mountpoints[@]}" |
+    fzf \
+      --prompt="mount $device -> " \
+      --height=40% \
+      --border \
+      --exit-0
+)
+
+[[ -z "$mtp" ]] && exit 0
+
+echo "mounting $device to $mtp"
+if ! sudo mount "$device" "$mtp"; then
+  echo "failed: $device (busy or permissions)"
+fi
