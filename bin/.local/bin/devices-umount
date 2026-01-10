@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mapfile -t targets < <(
+  lsblk -rpo NAME,MOUNTPOINT,RM |
+    awk '$2 != "" && $2 != "/" && $3 == 1 { print $1 " -> " $2 }'
+)
+
+((${#targets[@]} == 0)) && {
+  echo "nothing to unmount"
+  exit 0
+}
+
+mapfile -t selections < <(
+  printf '%s\n' "${targets[@]}" |
+    fzf --multi \
+      --prompt="unmount > " \
+      --height=40% \
+      --border \
+      --exit-0
+)
+
+((${#selections[@]} == 0)) && exit 0
+
+for sel in "${selections[@]}"; do
+  device=${sel%% *}
+  mountpoint=${sel##*-> }
+
+  echo "unmounting $device from $mountpoint"
+  if ! sudo umount "$device"; then
+    echo "failed: $device (busy or permissions)"
+  fi
+done

@@ -7,6 +7,7 @@ export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
 export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 
 # GNU PG
 export GPG_TTY=$(tty)
@@ -21,7 +22,7 @@ export PASSWORD_STORE_EXTENSIONS_DIR="$PASSWORD_STORE_DIR/.extensions"
 export EDITOR="$(command -v hx 2>/dev/null | xargs basename || printf "%s" vi)"
 export GTK_THEME="Adwaita:dark"
 export HELIX_RUNTIME="$LOCAL_OPT/helix/runtime"
-export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/settings.ini"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
 
 # Rust
 export CARGO_HOME="$XDG_DATA_HOME/cargo"

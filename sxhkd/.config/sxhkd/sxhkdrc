@@ -38,7 +38,7 @@ XF86AudioPrev
     playerctl previous;
 
 # Keyboard Layout
-alt + shift + k
+ctrl + shift + k
   NOTIFY_ID=$((16#30ee8f58)); \
   notify_icon='/usr/share/icons/Papirus/24x24/panel/keyboard-layout.svg'; \
   cur=$(setxkbmap -query | awk '/layout/\{print $2\}'); \

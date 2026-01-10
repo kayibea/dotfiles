@@ -6,6 +6,8 @@ alias git-lazy-commit='git commit -m "$(fortune -s || date "+%Y-%m-%d %H:%M:%S")
 
 alias pass-totp='sed -n '2p' | gopher-totp'
 
+alias llpg='gpg --list-key --keyid-format LONG'
+
 alias cl='clear'
 alias man='batman'
 alias pwdc='pwd | xclip -selection clipboard && echo "working dir copied !"'
@@ -23,8 +25,6 @@ alias ll='ls -alF'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-
-alias llpg='gpg --list-key --keyid-format LONG'
 
 alias xcopy='xclip -selection clipboard'
 alias xclip-purge='head -c 64 /dev/urandom | xclip -selection clipboard'

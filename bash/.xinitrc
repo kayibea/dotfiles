@@ -3,7 +3,7 @@
 xset s 600 600
 xset dpms 600 600 600
 xss-lock -- slock &
-setxkbmap us &
+setxkbmap fr &
 
 nm-applet &
 blueman-applet &

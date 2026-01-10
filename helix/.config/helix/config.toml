@@ -22,7 +22,7 @@ right = ["spinner", "diagnostics", "position", "file-encoding", "file-type"]
 diagnostics = ["warning", "error"]
 
 [editor.lsp]
-display-inlay-hints = true
+display-inlay-hints = false
 
 [editor.cursor-shape]
 insert = "bar"
