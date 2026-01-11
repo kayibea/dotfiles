@@ -20,13 +20,14 @@ function gda() {
   }
 
   local file
-  file=$(mktemp -t XXXX.diff)
+  file=$(mktemp -t git.XXXX.diff)
   if $staged; then
     git diff --cached >"$file"
   else
     git diff >"$file"
   fi
 
+  chmod 400 "$file"
   "$EDITOR" "$file"
   rm -f -- "$file"
 }
@@ -53,7 +54,7 @@ function gd() {
   local tmpfiles=()
   for f in $files; do
     local tmp
-    tmp=$(mktemp -t XXXXXX.diff)
+    tmp=$(mktemp -t git.XXXXXX.diff)
     if $staged; then
       git -C "$repo_root" diff --cached -- "$f" >"$tmp"
     else
@@ -62,6 +63,7 @@ function gd() {
     tmpfiles+=("$tmp")
   done
 
+  chmod 400 "${tmpfiles[@]}"
   "$EDITOR" "${tmpfiles[@]}"
   rm -f -- "${tmpfiles[@]}"
 }
