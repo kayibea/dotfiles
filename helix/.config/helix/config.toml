@@ -9,6 +9,7 @@ line-number = "relative"
 clipboard-provider = "x-clip"
 trim-trailing-whitespace = true
 end-of-line-diagnostics = "warning"
+color-modes = true
 
 [editor.statusline]
 left = [
