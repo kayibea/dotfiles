@@ -10,7 +10,9 @@ export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 
 # GNU PG
-export GPG_TTY=$(tty)
+unset SSH_AGENT_PID
+export GPG_TTY="$(tty)"
+export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
 # GNU Pass
 export PASSWORD_STORE_GENERATED_LENGTH=32
@@ -87,10 +89,6 @@ export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 
 # Libvirt
 export LIBVIRT_DEFAULT_URI="qemu:///system"
-
-# SSH agent
-export SSH_AGENT_ENV="$HOME/.ssh/agent.env"
-[[ -f "$SSH_AGENT_ENV" ]] && source "$SSH_AGENT_ENV" >/dev/null
 
 # Tools
 eval "$(batman --export-env)"

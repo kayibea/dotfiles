@@ -1,5 +1,10 @@
 config/.config/gtk-3.0/bookmarks
 
+gnupg/.gnupg/*
+!gnupg/.gnupg/gpg.conf
+!gnupg/.gnupg/gpg-agent.conf
+!gnupg/.gnupg/dirmngr.conf
+
 yazi/*
 !yazi/.config/yazi/yazi.toml
 !yazi/.config/yazi/theme.toml
