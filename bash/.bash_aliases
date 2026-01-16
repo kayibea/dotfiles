@@ -14,7 +14,7 @@ alias pwdc='pwd | xclip -selection clipboard && echo "working dir copied !"'
 
 alias e='$EDITOR'
 alias x='extract'
-alias lz='lazygit'
+alias g='lazygit'
 
 alias ls='ls --color=auto'
 alias l='ls -CF'

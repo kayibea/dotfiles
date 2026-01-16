@@ -9,7 +9,7 @@ export XDG_STATE_HOME="$HOME/.local/state"
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_RUNTIME_DIR="/run/user/$(id -u)"
 
-# GNU PG
+# GNU PG / SSH Agent
 unset SSH_AGENT_PID
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
@@ -75,7 +75,7 @@ export GOMODCACHE="$GOPATH/pkg/mod"
 export GOENV="$XDG_CONFIG_HOME/go/env"
 export PATH="$GOROOT/bin:$GOBIN:$PATH"
 
-# Lua
+# Lua / Luarocks
 export LLS_ADDONS="$LOCAL_OPT/LLS-Addons/addons"
 export LUA_PATH="$XDG_DATA_HOME/luarocks/share/lua/5.5/?.lua;;"
 export LUA_CPATH="$XDG_DATA_HOME/luarocks/lib/lua/5.5/?.so;;"

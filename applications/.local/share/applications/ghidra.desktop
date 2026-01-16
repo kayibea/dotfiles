@@ -1,4 +1,5 @@
 [Desktop Entry]
+Version=1.0
 Name=Ghidra
 Comment=NSA Reverse Engineering Framework
 Exec=env _JAVA_AWT_WM_NONREPARENTING=1 ghidraRun
