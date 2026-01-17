@@ -10,28 +10,6 @@ _git_has_changes() {
   return 1
 }
 
-function gda() {
-  local staged=false
-  [[ "$1" == "--cached" || "$1" == "-c" ]] && staged=true
-
-  _git_has_changes $staged || {
-    git status
-    return 0
-  }
-
-  local file
-  file=$(mktemp -t git-XXXX.diff)
-  if $staged; then
-    git diff --cached >"$file"
-  else
-    git diff >"$file"
-  fi
-
-  chmod 400 "$file"
-  "$EDITOR" "$file"
-  rm -f -- "$file"
-}
-
 function gd() {
   local staged=false
   [[ "$1" == "--cached" || "$1" == "-c" ]] && staged=true
