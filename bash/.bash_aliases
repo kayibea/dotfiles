@@ -1,6 +1,7 @@
 alias ..='cd ..'
 alias ...='cd ../..'
 
+alias g='lazygit'
 alias gs='git status'
 alias git-lazy-commit='git commit -m "$(fortune -s || date "+%Y-%m-%d %H:%M:%S")"'
 
@@ -14,7 +15,6 @@ alias pwdc='pwd | xclip -selection clipboard && echo "working dir copied !"'
 
 alias e='$EDITOR'
 alias x='extract'
-alias g='lazygit'
 
 alias ls='ls --color=auto'
 alias l='ls -CF'

@@ -1,7 +1,5 @@
 local wezterm = require 'wezterm'
 
-local HOME = os.getenv("HOME")
-
 local config = wezterm.config_builder()
 
 config.font_size = 26
@@ -17,15 +15,6 @@ config.enable_scroll_bar = false
 config.enable_kitty_keyboard = false
 config.warn_about_missing_glyphs = false
 config.adjust_window_size_when_changing_font_size = false
-
-local wall_root = HOME .. "/Pictures/Wallpapers"
-local wall_path = wall_root .. "/neon-anime-girl-3840x2160-16062.png"
-config.background = {
-  {
-    opacity = 0.3,
-    source = { File = wall_path },
-  },
-}
 
 config.window_padding = {
   left = 0,
