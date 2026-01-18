@@ -22,26 +22,21 @@ function gd() {
   local repo_root
   repo_root=$(git rev-parse --show-toplevel) || return 1
 
+  local diff_flags=()
+  $staged && diff_flags+=(--cached)
+
   local files
-  if $staged; then
-    files=$(git -C "$repo_root" diff --name-only --cached)
-  else
-    files=$(git -C "$repo_root" diff --name-only)
-  fi
+  files=$(git -C "$repo_root" diff --name-only "${diff_flags[@]}")
 
   local tmpfiles=()
+  local f tmp
   for f in $files; do
-    local tmp
     tmp=$(mktemp -t git-XXXXXX.diff)
-    if $staged; then
-      git -C "$repo_root" diff --cached -- "$f" >"$tmp"
-    else
-      git -C "$repo_root" diff -- "$f" >"$tmp"
-    fi
+    git -C "$repo_root" diff "${diff_flags[@]}" -- "$f" >"$tmp"
     tmpfiles+=("$tmp")
   done
 
-  chmod 400 "${tmpfiles[@]}"
-  "$EDITOR" "${tmpfiles[@]}"
+  chmod 400 -- "${tmpfiles[@]}"
+  "$EDITOR" -- "${tmpfiles[@]}"
   rm -f -- "${tmpfiles[@]}"
 }
