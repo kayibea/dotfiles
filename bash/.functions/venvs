@@ -56,6 +56,7 @@ venvs() {
       return 1
     fi
     rm -rfv "$VENV_DIR" && echo "Virtual environment '$VENV_NAME' removed."
+    return 0
   fi
 
   # Create venv if missing
