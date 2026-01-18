@@ -20,6 +20,11 @@ export PASSWORD_STORE_ENABLE_EXTENSIONS=true
 export PASSWORD_STORE_DIR="$XDG_DATA_HOME/password-store"
 export PASSWORD_STORE_EXTENSIONS_DIR="$PASSWORD_STORE_DIR/.extensions"
 
+# Wine (Don't drink and drive)
+WINEPREFIXROOT="$XDG_DATA_HOME/wineprefixs"
+export WINEARCH=win64
+export WINEPREFIX="$WINEPREFIXROOT/wine64"
+
 # Editor / UI
 export EDITOR="$(command -v hx 2>/dev/null | xargs basename 2>/dev/null || printf "%s" vi)"
 export GTK_THEME="Adwaita:dark"
