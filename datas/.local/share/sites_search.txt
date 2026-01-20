@@ -1,35 +1,50 @@
+# Core Documentation
 Linux Man Pages           @man         man7.org/linux/man-pages
 MDN Web Docs              @mdn         developer.mozilla.org
 DevDocs                   @dd          devdocs.io
-Node Package Manager      @npm         npmjs.com
-GitHub                    @git         github.com
-GitLab                    @gitl        gitlab.com
-Node.js                   @node        nodejs.org
+W3Schools                 @w3          w3schools.com
+
+# Language Documentation
 Go Packages               @go          pkg.go.dev
-Android Developers        @droidndk    developer.android.com/ndk/reference
-Android Developers NDK    @droid       developer.android.com/reference
-Chrome Extention          @chrome      developer.chrome.com/docs/extensions/reference/api
-TypeScript Handbook       @ts          typescriptlang.org
-Lua Manual                @lua         lua.org/manual
-Stack Overflow            @so          stackoverflow.com
-PHP                       @php         php.net
+Node.js                   @node        nodejs.org
+C++ Reference             @cppref      en.cppreference.com
 Rust Docs                 @rs          doc.rust-lang.org
 Python Docs               @py          docs.python.org
-Stack Exchange            @se          stackexchange.com
-The Odin Project          @odin        theodinproject.com
-CodePen                   @cp          codepen.io
-LeetCode                  @lc          leetcode.com
-Exercism                  @ex          exercism.io
-MDX Docs                  @mdx         mdxjs.com
-Kubernetes Docs           @k8s         kubernetes.io/docs
-Webpack Docs              @wp          webpack.js.org
-Vim Documentation         @vim         vimhelp.org
-C++ Reference             @cppref      en.cppreference.com
-Hacker News               @hn          news.ycombinator.com
+PHP                       @php         php.net
+Lua Manual                @lua         lua.org/manual
+TypeScript Handbook       @ts          typescriptlang.org
 Deno Manual               @deno        deno.land/manual
+MDX Docs                  @mdx         mdxjs.com
+
+# Web & Frontend
 CSS-Tricks                @csst        css-tricks.com
-W3Schools                 @w3          w3schools.com
-Reddit Programming        @rprog       reddit.com/r/programming
-DigitalOcean Tutorials    @do          digitalocean.com/community/tutorials
-FreeCodeCamp              @fcc         freecodecamp.org
+Webpack Docs              @wp          webpack.js.org
+Chrome Extention          @chrome      developer.chrome.com/docs/extensions/reference/api
+CodePen                   @cp          codepen.io
+
+# Platforms & Ecosystems
+Node Package Manager      @npm         npmjs.com
+Kubernetes Docs           @k8s         kubernetes.io/docs
+Android Developers        @droid       developer.android.com/reference
+Android Developers NDK    @droidndk    developer.android.com/ndk/reference
+
+# Version Control & Hosting
+GitHub                    @git         github.com
+GitLab                    @gitl        gitlab.com
+
+# Editors & Tooling
+Vim Documentation         @vim         vimhelp.org
 JetBrains Docs            @jb          www.jetbrains.com/help
+
+# Learning Platforms
+The Odin Project          @odin        theodinproject.com
+FreeCodeCamp              @fcc         freecodecamp.org
+Exercism                  @ex          exercism.io
+DigitalOcean Tutorials    @do          digitalocean.com/community/tutorials
+
+# Q&A / Community
+Stack Overflow            @so          stackoverflow.com
+Stack Exchange            @se          stackexchange.com
+Hacker News               @hn          news.ycombinator.com
+Reddit Programming        @rprog       reddit.com/r/programming
+LeetCode                  @lc          leetcode.com
