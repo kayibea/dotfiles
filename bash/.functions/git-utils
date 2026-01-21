@@ -10,7 +10,7 @@ _git_has_changes() {
   return 1
 }
 
-function gd() {
+gd() {
   local staged=false
   [[ "$1" == "--cached" || "$1" == "-c" ]] && staged=true
 
