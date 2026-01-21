@@ -75,14 +75,13 @@ if [[ -z "$issuer" ]]; then
   exit 1
 fi
 
-# label="$issuer"
-# if [[ -n "$account" ]]; then
-#   label="${issuer}:${account}"
-# fi
+label="$issuer"
+if [[ -n "$account" ]]; then
+  label="${issuer}:${account}"
+fi
 
 secret="$(printf '%s' "$secret" | tr -d '[:space:]' | tr '[:lower:]' '[:upper:]')"
-uri="otpauth://totp?secret=${secret}&issuer=${issuer}"
-# uri="otpauth://totp/${label}?secret=${secret}&issuer=${issuer}"
+uri="otpauth://totp/${label}?secret=${secret}&issuer=${issuer}"
 
 [[ -n "$algorithm" ]] && uri+="&algorithm=${algorithm}"
 [[ -n "$digits" ]] && uri+="&digits=${digits}"
