@@ -14,25 +14,27 @@ gd() {
   local staged=false
   [[ "$1" == "--cached" || "$1" == "-c" ]] && staged=true
 
+  if [[ ! -d "$PWD/.git" ]]; then
+    echo "Error: must run from repo root" >&2
+    return 1
+  fi
+
   _git_has_changes $staged || {
     git status
     return 0
   }
 
-  local repo_root
-  repo_root=$(git rev-parse --show-toplevel) || return 1
-
   local diff_flags=()
   $staged && diff_flags+=(--cached)
 
   local files
-  files=$(git -C "$repo_root" diff --name-only "${diff_flags[@]}")
+  files=$(git diff --name-only "${diff_flags[@]}")
 
   local tmpfiles=()
   local f tmp
   for f in $files; do
     tmp=$(mktemp -t git-XXXXXX.diff)
-    git -C "$repo_root" diff "${diff_flags[@]}" -- "$f" >"$tmp"
+    git diff "${diff_flags[@]}" -- "$f" >"$tmp"
     tmpfiles+=("$tmp")
   done
 
