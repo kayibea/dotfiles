@@ -24,8 +24,11 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
+alias xclear='echo -n | xclip -selection clipboard'
 alias xcopy='xclip -selection clipboard'
-alias xclip-purge='head -c 64 /dev/urandom | xclip -selection clipboard'
+alias xcopy-img='xclip -selection clipboard -t image/png'
+alias xpaste='xclip -o -selection clipboard'
+alias xpaste-img='xclip -selection clipboard -t image/png -o'
 
 # alias suspend='systemctl suspend'
 alias screenoff='xset dpms force off'

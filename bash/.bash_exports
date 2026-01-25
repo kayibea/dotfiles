@@ -48,7 +48,6 @@ export ANDROID_HOME="$HOME/Android/Sdk"
 export ANDROID_USER_HOME="$XDG_DATA_HOME/android"
 export ANDROID_EMULATOR_HOME="$ANDROID_USER_HOME"
 export ANDROID_AVD_HOME="$ANDROID_EMULATOR_HOME/avd"
-export ANDROID_DEVICE_TMPDIR="/data/local/tmp"
 
 # Termux
 TERMUX_FILES_ROOT="/data/data/com.termux/files"
