@@ -32,5 +32,6 @@ y() {
 pass-totp() {
   sed -n '2p' |
     awk -F'[?&=]' '{for(i=1;i<=NF;i++)if($i=="secret"){print $(i+1);exit}}' |
-    gopher-totp
+    totp-gen --clip --pretty
+  # gopher-totp
 }

@@ -218,7 +218,7 @@ main() {
     counter=$((TIME / PERIOD))
     otp=$(totp "$SECRET_HEX" "$ALGO" "$TOTPMOD" "$counter")
     formatted=$(format_code "$(printf "%0*d" "$DIGITS" "$otp")")
-    copy_to_clipboard "$formatted"
+    copy_to_clipboard "$(printf "%0*d" "$DIGITS" "$otp")"
     printf "%s\n" "$formatted"
     exit 0
   fi
@@ -233,7 +233,7 @@ main() {
       last_counter=$counter
       otp=$(totp "$SECRET_HEX" "$ALGO" "$TOTPMOD" "$counter")
       formatted=$(format_code "$(printf "%0*d" "$DIGITS" "$otp")")
-      copy_to_clipboard "$formatted"
+      copy_to_clipboard "$(printf "%0*d" "$DIGITS" "$otp")"
     fi
 
     remaining=$((PERIOD - now % PERIOD))
