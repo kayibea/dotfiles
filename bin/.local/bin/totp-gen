@@ -1,0 +1,245 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+DIGITS=6
+PERIOD=30
+ALGO="sha1"
+TIME=""
+BASE32=true
+RUNONCE=false
+CLIP=false
+PRETTY=false
+
+required_cmds=(openssl xxd base32 date)
+for cmd in "${required_cmds[@]}"; do
+  command -v "$cmd" &>/dev/null || {
+    echo "Command '$cmd' not found" >&2
+    exit 1
+  }
+done
+
+usage() {
+  cat <<EOF
+Usage: ${0##*/} [options]
+
+Reads the TOTP secret from stdin.
+
+Options:
+  -d, --digits DIGITS      Number of digits (default: $DIGITS)
+  -p, --period PERIOD      Time step in seconds (default: $PERIOD)
+  -a, --algo ALGO          HMAC algorithm: sha1 | sha256 | sha512 (default: $ALGO)
+  -c, --clip               Copy code to clipboard if available
+  -t, --time TIME          Unix timestamp (default: now)
+      --hex                Secret is raw hex (default: base32)
+      --once               Run once and exit
+      --pretty             Insert separators for readability
+  -h, --help               Show this help
+
+Example:
+  echo JBSWY3DPEHPK3PXP | ${0##*/}
+  echo 3132333435363738393031323334353637383930 | ${0##*/} --hex --algo sha1
+EOF
+}
+
+decode_secret() {
+  local s=$1
+  if [[ "$BASE32" == true ]]; then
+    printf '%s' "$s" | base32 --decode 2>/dev/null | xxd -p -c 256 | tr -d '\n' || {
+      echo "Invalid base32 secret" >&2
+      exit 1
+    }
+  else
+    [[ "$s" =~ ^[0-9a-fA-F]+$ ]] || {
+      echo "Invalid hex secret" >&2
+      exit 1
+    }
+    printf '%s' "$s"
+  fi
+}
+
+get_clipboard_cmd() {
+  case "$(uname -s)" in
+    Darwin) echo pbcopy ;;
+    CYGWIN* | MINGW* | MSYS*) echo clip ;;
+    Linux)
+      if [ -n "${WAYLAND_DISPLAY:-}" ] && command -v wl-copy &>/dev/null; then
+        echo wl-copy
+        return
+      fi
+      if [ -n "${DISPLAY:-}" ]; then
+        if command -v xclip &>/dev/null; then
+          echo xclip -selection clipboard
+          return
+        fi
+        if command -v xsel &>/dev/null; then
+          echo xsel --clipboard --input
+          return
+        fi
+      fi
+      if command -v termux-clipboard-set &>/dev/null; then
+        echo termux-clipboard-set
+        return
+      fi
+      ;;
+  esac
+  echo ":"
+}
+
+copy_to_clipboard() {
+  [[ "$CLIP" == true && "${CLIPCMD[0]}" != ":" ]] || return 0
+  printf "%s" "$1" | "${CLIPCMD[@]}"
+}
+
+hmac() {
+  local secret=$1
+  local algo=$2
+  local counter_hex=$3
+  printf "%s" "$counter_hex" |
+    xxd -r -p |
+    openssl dgst "-$algo" -mac HMAC -macopt hexkey:"$secret" -binary |
+    xxd -p -c 256
+}
+
+totp() {
+  local secret=$1
+  local algo=$2
+  local mod=$3
+  local counter=$4
+  local counter_hex mac offset codebin
+  counter_hex=$(printf '%016x' "$counter")
+  mac=$(hmac "$secret" "$algo" "$counter_hex")
+  offset=$((0x${mac: -1} & 0x0f))
+  codebin=$(((0x${mac:$((offset * 2)):8} & 0x7fffffff)))
+  echo $((codebin % mod))
+}
+
+format_code() {
+  local code=$1
+  if [[ "$PRETTY" == true ]]; then
+    echo "$code" | sed 's/.\{3\}/&-/g' | sed 's/-$//'
+  else
+    echo "$code"
+  fi
+}
+
+parse_args() {
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      -d | --digits)
+        DIGITS="$2"
+        shift 2
+        ;;
+      -p | --period)
+        PERIOD="$2"
+        shift 2
+        ;;
+      -a | --algo)
+        ALGO="$2"
+        shift 2
+        ;;
+      -c | --clip)
+        CLIP=true
+        shift 1
+        ;;
+      -t | --time)
+        TIME="$2"
+        RUNONCE=true
+        shift 2
+        ;;
+      --hex)
+        BASE32=false
+        shift 1
+        ;;
+      --once)
+        RUNONCE=true
+        shift 1
+        ;;
+      --pretty)
+        PRETTY=true
+        shift 1
+        ;;
+      -h | --help)
+        usage
+        exit 0
+        ;;
+      *)
+        echo "Unknown option: $1" >&2
+        usage
+        exit 1
+        ;;
+    esac
+  done
+}
+
+validate_args() {
+  [[ "$DIGITS" =~ ^[0-9]+$ ]] || {
+    echo "Invalid digits" >&2
+    exit 1
+  }
+  [[ "$PERIOD" =~ ^[0-9]+$ ]] || {
+    echo "Invalid period" >&2
+    exit 1
+  }
+
+  local algos=(sha1 sha256 sha512)
+  if ! [[ " ${algos[*]} " =~ " $ALGO " ]]; then
+    echo "Invalid algo: $ALGO" >&2
+    exit 1
+  fi
+}
+
+main() {
+  parse_args "$@"
+  validate_args
+
+  TOTPMOD=$((10 ** DIGITS))
+
+  SECRET=$(cat | tr -d ' \n')
+  [[ -z "$SECRET" ]] && {
+    echo "No secret provided" >&2
+    exit 1
+  }
+  SECRET_HEX=$(decode_secret "$SECRET")
+
+  [[ "$CLIP" == true ]] && CLIPCMD=($(get_clipboard_cmd)) &&
+    [[ "${CLIPCMD[0]}" == ":" ]] && echo "Warning: clipboard unavailable" >&2
+
+  if [[ -n "$TIME" ]]; then
+    if ! date -d @"$TIME" &>/dev/null; then
+      echo "Invalid Unix timestamp" >&2
+      exit 1
+    fi
+  elif [[ "$RUNONCE" == true ]]; then
+    TIME=$(date +%s)
+  fi
+
+  if [[ -n "$TIME" || "$RUNONCE" == true ]]; then
+    [[ -z "$TIME" ]] && TIME=$(date +%s)
+    counter=$((TIME / PERIOD))
+    otp=$(totp "$SECRET_HEX" "$ALGO" "$TOTPMOD" "$counter")
+    formatted=$(format_code "$(printf "%0*d" "$DIGITS" "$otp")")
+    copy_to_clipboard "$formatted"
+    printf "%s\n" "$formatted"
+    exit 0
+  fi
+
+  echo 'Ctrl+C to exit.'
+  last_counter=""
+  while true; do
+    now=$(date +%s)
+    counter=$((now / PERIOD))
+
+    if [[ "$counter" != "$last_counter" ]]; then
+      last_counter=$counter
+      otp=$(totp "$SECRET_HEX" "$ALGO" "$TOTPMOD" "$counter")
+      formatted=$(format_code "$(printf "%0*d" "$DIGITS" "$otp")")
+      copy_to_clipboard "$formatted"
+    fi
+
+    remaining=$((PERIOD - now % PERIOD))
+    printf '\rExpires in: %2ds | Code: %s' "$remaining" "$formatted"
+    sleep 1
+  done
+}
+
+main "$@"
