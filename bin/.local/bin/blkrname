@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-EDITOR="${EDITOR:-vi}"
+PROG=${0##*/}
 CONFIRM=true
+EDITOR="${EDITOR:-vi}"
 
 usage() {
   cat <<EOF
-Usage: ${0##*/} [options] FILE...
+Usage:
+  $PROG [options] FILE...
 
 Edit file paths in your editor to rename files.
 Paths must remain absolute or relative; line order matters.
@@ -17,23 +19,17 @@ Options:
   -h, --help    Show this help and exit
 
 Example:
-  ${0##*/} file1.txt file2.txt file3.txt
-  ${0##*/} --editor nano --yes file1.txt file2.txt file3.txt
-  EDITOR=vi ${0##*/} file1.txt file2.txt file3.txt
+  $PROG file1.txt file2.txt file3.txt
+  $PROG --editor nano --yes file1.txt file2.txt file3.txt
+  EDITOR=vi $PROG file1.txt file2.txt file3.txt
 EOF
 }
-
-if [[ $# -eq 0 ]]; then
-  echo "Error: no files provided" >&2
-  usage
-  exit 1
-fi
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -y | --yes)
       CONFIRM=false
-      shit 1
+      shift 1
       ;;
     -e | --editor)
       EDITOR="$1"
@@ -59,6 +55,12 @@ while [[ $# -gt 0 ]]; do
 done
 
 filespath=("$@")
+
+if [[ ${#filespath[@]} -eq 0 ]]; then
+  echo "No files provided" >&2
+  usage
+  exit 1
+fi
 
 tmpfile=$(mktemp -t blkrname.XXXX)
 trap 'rm -f "$tmpfile"' EXIT
