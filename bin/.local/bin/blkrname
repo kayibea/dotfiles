@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+EDITOR="${EDITOR:-vi}"
+CONFIRM=true
+
+usage() {
+  cat <<EOF
+Usage: ${0##*/} [options] FILE...
+
+Edit file paths in your editor to rename files.
+Paths must remain absolute or relative; line order matters.
+
+Options:
+  -y, --yes     Do not show a confirmation prompt
+  -e, --editor  The editor to use
+  -h, --help    Show this help and exit
+
+Example:
+  ${0##*/} file1.txt file2.txt file3.txt
+  ${0##*/} --editor nano --yes file1.txt file2.txt file3.txt
+  EDITOR=vi ${0##*/} file1.txt file2.txt file3.txt
+EOF
+}
+
+if [[ $# -eq 0 ]]; then
+  echo "Error: no files provided" >&2
+  usage
+  exit 1
+fi
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -y | --yes)
+      CONFIRM=false
+      shit 1
+      ;;
+    -e | --editor)
+      EDITOR="$1"
+      shit 2
+      ;;
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    --)
+      shift 1
+      break
+      ;;
+    -*)
+      echo "Unknown option: $1" >&2
+      usage
+      exit 1
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+filespath=("$@")
+
+tmpfile=$(mktemp -t blkrname.XXXX)
+trap 'rm -f "$tmpfile"' EXIT
+
+printf '%s\n' "${filespath[@]}" >"$tmpfile"
+tmpfile_sha1sum=$(sha1sum "$tmpfile" | cut -d' ' -f1)
+
+"$EDITOR" -- "$tmpfile"
+
+mapfile -t newpaths <"$tmpfile"
+
+((${#newpaths[@]} == ${#filespath[@]})) || {
+  echo "Error: number of lines changed" >&2
+  exit 1
+}
+
+declare -A seen
+for p in "${newpaths[@]}"; do
+  [[ -n $p ]] || {
+    echo "Error: empty path not allowed" >&2
+    exit 1
+  }
+  [[ -z ${seen[$p]:-} ]] || {
+    echo "Error: duplicate target path: $p" >&2
+    exit 1
+  }
+  seen[$p]=1
+done
+
+if echo "$tmpfile_sha1sum  $tmpfile" | sha1sum --check --status; then
+  echo "No changes."
+  exit 0
+fi
+
+if [[ "$CONFIRM" = true ]]; then
+  for i in "${!filespath[@]}"; do
+    src=${filespath[i]}
+    dst=${newpaths[i]}
+    if [[ $src != "$dst" ]]; then
+      printf '%s -> %s\n' "$src" "$dst"
+    fi
+  done
+
+  echo
+  read -r -p "Continue to rename? (y/N): " answer
+  case "$answer" in
+    y | Y) ;;
+    *)
+      echo "Aborted."
+      exit 0
+      ;;
+  esac
+fi
+
+tmps=()
+
+for i in "${!filespath[@]}"; do
+  src=${filespath[i]}
+  dst=${newpaths[i]}
+
+  if [[ $src == "$dst" ]]; then
+    tmps+=("")
+    continue
+  fi
+
+  tmp="${src}.blkrname.$$.$i"
+  mv -- "$src" "$tmp"
+  tmps+=("$tmp")
+done
+
+for i in "${!tmps[@]}"; do
+  [[ -n ${tmps[i]} ]] || continue
+  mv -- "${tmps[i]}" "${newpaths[i]}"
+done
