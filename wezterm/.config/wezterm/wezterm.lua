@@ -3,8 +3,9 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 config.font_size = 26
-config.color_scheme = 'Batman'
+-- config.color_scheme = 'Batman'
 -- config.color_scheme = "Darkside"
+config.color_scheme = 'Argonaut'
 config.font = wezterm.font('Iosevka Nerd Font', { weight = 'Medium', italic = false })
 
 config.max_fps = 144

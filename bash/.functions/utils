@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+strict_on() {
+  local old_opts
+  old_opts=$(set +o)
+  trap 'eval "$old_opts"' RETURN
+  set -euo pipefail
+}
+
 nohistory() {
   if [[ -z "${_HIST_ORIG:-}" ]]; then
     _HIST_ORIG="${HISTFILE:-$HOME/.bash_history}"
