@@ -1,7 +1,48 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DEFAULT_ARGS=(-no-metrics)
+prog=${0##*/}
+background=true
+default_args=(-no-metrics)
+
+usage() {
+  cat <<EOF
+Usage: $prog [options] [-- emulator-args...]
+
+Options:
+  -f, --foreground        Run emulator in foreground
+  -n, --no-default-args   Disable default emulator arguments
+  -h, --help              Show this help
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -f | --foreground)
+      background=false
+      shift
+      ;;
+    -n | --no-default-args)
+      default_args=()
+      shift
+      ;;
+    -h | --help)
+      usage
+      exit 0
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+done
+
+emulator_args=("$@")
 
 avd_list=$(emulator -list-avds)
 
@@ -10,13 +51,31 @@ if [[ -z "$avd_list" ]]; then
   exit 1
 fi
 
-avd=$(echo "$avd_list" | rofi -dmenu -i -p "Select AVD:" -theme-str 'window {width: 25%;}') || true
+mapfile -t avds <<<"$avd_list"
 
-if [[ -z "$avd" ]]; then
-  echo "No AVD selected." >&2
-  exit 1
+if ((${#avds[@]} == 1)); then
+  avd=${avds[0]}
+else
+  if ! avd=$(printf '%s\n' "${avds[@]}" |
+    rofi -dmenu -i -p "Select AVD:" -theme-str 'window {width: 25%;}'); then
+    echo "No AVD selected." >&2
+    exit 1
+  fi
 fi
 
 echo "Selected AVD: $avd"
 
-emulator -avd "$avd" "${DEFAULT_ARGS[@]}" "$@"
+cmd=(emulator -avd "$avd" "${default_args[@]}" "${emulator_args[@]}")
+
+case "$background" in
+  true)
+    log="${XDG_CACHE_HOME:-$HOME/.cache}/emulator.log"
+    mkdir -p "$(dirname "$log")"
+    "${cmd[@]}" >>"$log" 2>&1 &
+    echo "Emulator started in background."
+    echo "Log file: $log"
+    ;;
+  false)
+    "${cmd[@]}"
+    ;;
+esac
