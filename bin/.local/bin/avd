@@ -6,22 +6,17 @@ DEFAULT_ARGS=(-no-metrics)
 avd_list=$(emulator -list-avds)
 
 if [[ -z "$avd_list" ]]; then
-  rofi -e "No Android Virtual Devices found."
+  echo "No Android Virtual Devices found." >&2
   exit 1
 fi
 
-avd=$(echo "$avd_list" | rofi -dmenu -i -p "Select AVD:" -theme-str 'window {width: 25%;}')
+avd=$(echo "$avd_list" | rofi -dmenu -i -p "Select AVD:" -theme-str 'window {width: 25%;}') || true
 
 if [[ -z "$avd" ]]; then
-  rofi -e "No AVD selected."
+  echo "No AVD selected." >&2
   exit 1
 fi
 
 echo "Selected AVD: $avd"
 
-if [[ "${1:-}" == "-f" ]]; then
-  shift
-  exec emulator -avd "$avd" "${DEFAULT_ARGS[@]}" "$@"
-else
-  exec emulator -avd "$avd" "${DEFAULT_ARGS[@]}" "$@" >/dev/null 2>&1 &
-fi
+emulator -avd "$avd" "${DEFAULT_ARGS[@]}" "$@"
