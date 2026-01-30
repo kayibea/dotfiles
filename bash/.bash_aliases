@@ -28,7 +28,7 @@ alias xclear=': | xclip -selection clipboard'
 alias xcopy='xclip -selection clipboard'
 alias xpaste='xclip -o -selection clipboard'
 # alias xcopy-img='xclip -selection clipboard -t image/png'
-# alias xpaste-img='xclip -selection clipboard -t image/png -o'
+alias xpaste-img='xclip -selection clipboard -t image/png -o'
 
 # alias suspend='systemctl suspend'
 alias screenoff='xset dpms force off'

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# TODO: Refactor this nice and good
+
 venvs() {
   local CREATE_IF_MISSING=0
   local LIST_VENVS=0
