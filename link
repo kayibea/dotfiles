@@ -1,5 +1,30 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-stow --verbose -t $HOME */
+remove=false
+
+usage() {
+  echo "Usage: ${0##*/} [-r | --remove]"
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -r | --remove)
+      shift
+      remove=true
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [[ "$remove" = true ]]; then
+  stow --verbose -D -t $HOME */
+else
+  stow --verbose -t $HOME */
+fi
+
 echo "All done!"
