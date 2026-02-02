@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+OUTPUT="DP-2"
+MODE="1920x1080"
+LOW_HZ="60.00"
+HIGH_HZ="144.00"
+
+current_profile=$(powerprofilesctl get)
+
+perf="Performance"
+bal="Balanced"
+save="Power Saver"
+
+case "$current_profile" in
+  performance) perf="$perf *" ;;
+  balanced) bal="$bal *" ;;
+  power-saver) save="$save *" ;;
+esac
+
+options="$perf\n$bal\n$save"
+
+choice=$(
+  printf "%b" "$options" | rofi \
+    -dmenu \
+    -i \
+    -p "Power Profile" \
+    -theme-str '
+      * {
+        font: "JetBrainsMono Nerd Font 14";
+        background: #0b0f14;
+        foreground: #e6e6e6;
+        accent: #ff4f9a;
+      }
+      window {
+        width: 420px;
+        border-radius: 16px;
+        padding: 24px;
+      }
+      listview {
+        lines: 3;
+        spacing: 12px;
+      }
+      element {
+        padding: 12px;
+        border-radius: 12px;
+      }
+      element selected {
+        background-color: @accent;
+        text-color: #000000;
+      }
+    '
+) || true
+
+[ -z "$choice" ] && exit 0
+
+choice=$(printf "%s" "$choice" | sed 's/ \*$//')
+
+case "$choice" in
+  Performance)
+    powerprofilesctl set performance
+    xrandr --output "$OUTPUT" --mode "$MODE" --rate "$HIGH_HZ"
+    notify-send "Power profile" "Performance"
+    ;;
+  Balanced)
+    powerprofilesctl set balanced
+    xrandr --output "$OUTPUT" --mode "$MODE" --rate "$HIGH_HZ"
+    notify-send "Power profile" "Balanced"
+    ;;
+  "Power Saver")
+    powerprofilesctl set power-saver
+    xrandr --output "$OUTPUT" --mode "$MODE" --rate "$LOW_HZ"
+    notify-send "Power profile" "Power saver (60 Hz)"
+    ;;
+esac

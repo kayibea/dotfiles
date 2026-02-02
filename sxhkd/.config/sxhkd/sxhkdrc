@@ -69,3 +69,9 @@ shift + Print
     xclip -selection clipboard -t image/png -i /tmp/screenshot.png && \
     notify-send -i image-x-generic "Screenshot copied to clipboard"
 
+# Power Mode Profile
+# space + p
+#     powermode &>/dev/null
+    # ~/.local/bin/powermode &>/dev/null
+
+
