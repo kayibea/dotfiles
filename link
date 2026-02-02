@@ -4,7 +4,15 @@ set -euo pipefail
 remove=false
 
 usage() {
-  echo "Usage: ${0##*/} [-r | --remove]"
+  cat <<EOF
+Usage: ${0##*/} [OPTIONS]
+
+Stow the dotfiles
+
+Options:
+  -r, --remove    Unlink stowed dotfiles
+  -h, --help      Show this help and exit
+EOF
 }
 
 while [[ $# -gt 0 ]]; do
@@ -12,6 +20,10 @@ while [[ $# -gt 0 ]]; do
     -r | --remove)
       shift
       remove=true
+      ;;
+    -h | --help)
+      usage
+      exit 0
       ;;
     *)
       echo "Unknown option: $1" >&2
