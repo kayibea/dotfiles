@@ -15,7 +15,7 @@ gd() {
   [[ "$1" == "--cached" || "$1" == "-c" ]] && staged=true
 
   if [[ ! -d "$PWD/.git" ]]; then
-    echo "Error: must run from repo root" >&2
+    echo "must run from repo root" >&2
     return 1
   fi
 

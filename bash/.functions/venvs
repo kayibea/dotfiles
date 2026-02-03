@@ -1,86 +1,118 @@
-#!/usr/bin/env bash
+_venvs_base() {
+  echo "${XDG_DATA_HOME:-$HOME/.local/share}/venvs"
+}
 
-# TODO: Refactor this nice and good
+_venvs_usage() {
+  echo "Usage: venvs [-c|--create] <venv_name>"
+  echo "       venvs -l|--list"
+  echo "       venvs -r|--remove <venv_name>"
+}
 
-venvs() {
-  local CREATE_IF_MISSING=0
-  local LIST_VENVS=0
-  local REMOVE_VENV=0
+_venvs_list() {
+  local VENV_BASE="$(_venvs_base)"
 
-  local VENV_BASE="${XDG_DATA_HOME:-$HOME/.local/share}/venvs"
-
-  while [[ "$1" == -* ]]; do
-    case "$1" in
-      -c | --create)
-        CREATE_IF_MISSING=1
-        shift
-        ;;
-      -l | --list)
-        LIST_VENVS=1
-        shift
-        ;;
-      -r | --remove)
-        REMOVE_VENV=1
-        shift
-        ;;
-      -*)
-        echo "Unknown option: $1"
-        return 1
-        ;;
-    esac
-  done
-
-  # List venvs
-  if [ "$LIST_VENVS" -eq 1 ]; then
-    if [ ! -d "$VENV_BASE" ]; then
-      echo "No virtual environments directory found at $VENV_BASE"
-      return 1
-    fi
-    echo "Available virtual environments:"
-    ls -1 "$VENV_BASE" | sed 's/^/ /'
-    return 0
-  fi
-
-  if [ -z "$1" ]; then
-    echo "Usage: venvs [-c|--create] <venv_name>"
-    echo "       venvs -l|--list"
-    echo "       venvs -r|--remove <venv_name>"
+  if [ ! -d "$VENV_BASE" ]; then
+    echo "No virtual environments directory found at $VENV_BASE"
     return 1
   fi
 
+  echo "Available virtual environments:"
+  ls -1 "$VENV_BASE" | sed 's/^/ /'
+}
+
+_venvs_remove() {
   local VENV_NAME=$1
+  local VENV_BASE="$(_venvs_base)"
   local VENV_DIR="$VENV_BASE/$VENV_NAME"
 
-  # Remove venv
-  if [ "$REMOVE_VENV" -eq 1 ]; then
-    if [ ! -d "$VENV_DIR" ]; then
-      echo "Virtual environment '$VENV_NAME' does not exist."
-      return 1
-    fi
-    rm -rfv "$VENV_DIR" && echo "Virtual environment '$VENV_NAME' removed."
-    return 0
-  fi
-
-  # Create venv if missing
   if [ ! -d "$VENV_DIR" ]; then
-    if [ "$CREATE_IF_MISSING" -eq 1 ]; then
-      mkdir -p "$VENV_BASE"
-      echo "Creating virtual environment '$VENV_NAME'..."
-      python3 -m venv "$VENV_DIR" || {
-        echo "Failed to create virtual environment."
-        return 1
-      }
-    else
-      echo "Virtual environment '$VENV_NAME' does not exist."
-      return 1
-    fi
+    echo "Virtual environment '$VENV_NAME' does not exist."
+    return 1
   fi
 
-  # Activate
+  rm -rfv "$VENV_DIR" && echo "Virtual environment '$VENV_NAME' removed."
+}
+
+_venvs_create() {
+  local VENV_NAME=$1
+  local VENV_BASE="$(_venvs_base)"
+  local VENV_DIR="$VENV_BASE/$VENV_NAME"
+
+  mkdir -p "$VENV_BASE"
+  echo "Creating virtual environment '$VENV_NAME'..."
+  python3 -m venv "$VENV_DIR" || {
+    echo "Failed to create virtual environment."
+    return 1
+  }
+}
+
+_venvs_activate() {
+  local VENV_NAME=$1
+  local VENV_BASE="$(_venvs_base)"
+  local VENV_DIR="$VENV_BASE/$VENV_NAME"
+
+  if [ ! -d "$VENV_DIR" ]; then
+    echo "Virtual environment '$VENV_NAME' does not exist."
+    return 1
+  fi
+
   source "$VENV_DIR/bin/activate" || {
     echo "Failed to activate virtual environment '$VENV_NAME'."
     return 1
   }
 
   echo "Virtual environment '$VENV_NAME' activated."
+}
+
+venvs() {
+  local CREATE_IF_MISSING=0
+  local LIST_VENVS=0
+  local REMOVE_VENV=0
+
+  while [[ "$1" == -* ]]; do
+    case "$1" in
+      -c | --create) CREATE_IF_MISSING=1 ;;
+      -l | --list) LIST_VENVS=1 ;;
+      -r | --remove) REMOVE_VENV=1 ;;
+      -h | --help)
+        _venvs_usage
+        exit 0
+        ;;
+      *)
+        echo "Unknown option: $1"
+        return 1
+        ;;
+    esac
+    shift
+  done
+
+  if [ "$LIST_VENVS" -eq 1 ]; then
+    _venvs_list
+    return $?
+  fi
+
+  if [ -z "$1" ]; then
+    _venvs_usage
+    return 1
+  fi
+
+  local VENV_NAME=$1
+  local VENV_BASE="$(_venvs_base)"
+  local VENV_DIR="$VENV_BASE/$VENV_NAME"
+
+  if [ "$REMOVE_VENV" -eq 1 ]; then
+    _venvs_remove "$VENV_NAME"
+    return $?
+  fi
+
+  if [ ! -d "$VENV_DIR" ]; then
+    if [ "$CREATE_IF_MISSING" -eq 1 ]; then
+      _venvs_create "$VENV_NAME" || return 1
+    else
+      echo "Virtual environment '$VENV_NAME' does not exist."
+      return 1
+    fi
+  fi
+
+  _venvs_activate "$VENV_NAME"
 }
