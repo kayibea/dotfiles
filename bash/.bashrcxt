@@ -9,7 +9,15 @@ for file in "$HOME"/.{functions,completions}/*; do
   [ -f "$file" ] && . "$file"
 done
 
-prompt_color='\[\033[;32m\]'
-export PS1=$prompt_color'\[\033[0;1m\]─'$prompt_color'${VIRTUAL_ENV:+(\[\033[0;1m\]$(basename $VIRTUAL_ENV)'$prompt_color')}\[\033[0m\] '
+_ps_green='\[\033[0;32m\]'
+_ps_bold='\[\033[0;1m\]'
+_ps_reset='\[\033[0m\]'
+
+_ps_sep='─'
+_ps_icon=''
+
+_ps_venv='${VIRTUAL_ENV:+('"$_ps_bold"'$(basename "$VIRTUAL_ENV")'"$_ps_green"')}'
+
+export PS1="$_ps_green$_ps_bold$_ps_sep$_ps_green$_ps_venv$_ps_icon$_ps_reset "
 
 VIRTUAL_ENV_DISABLE_PROMPT=1
