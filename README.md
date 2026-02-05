@@ -3,8 +3,8 @@
 Symlinked config files managed with [GNU Stow](https://www.gnu.org/software/stow/).
 
 ## Requirements:
-`git`
-`stow`
+- `git`
+- `stow`
 
 ## Setup
 
