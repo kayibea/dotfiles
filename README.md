@@ -46,7 +46,7 @@ Each folder maps into your home or XDG paths, e.g.:
 
 ```bash
 alacritty/       → ~/.config/alacritty
-bash/            → ~/ (bash/x11 configs)
+bash/            → ~/ (shell env configs)
 dunst/           → ~/.config/dunst
 ssh/             → ~/.ssh
 …                → …

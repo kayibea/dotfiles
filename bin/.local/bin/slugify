@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if (($# < 1)); then
-  echo "Usage: $(basename "$0") <text1> [text2...]" >&2
+if [[ $# -ne 0 ]]; then
+  echo "Usage: ${0##*/}" >&2
   exit 1
 fi
 
-for text in "$@"; do
-  echo "$text" |
-    tr '[:upper:]' '[:lower:]' |
-    sed 's/ /-/g' |
-    sed 's/[^a-z0-9-]//g'
+while IFS= read -r line || [[ -n $line ]]; do
+  echo "$line" | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g; s/[^a-z0-9-]//g'
 done

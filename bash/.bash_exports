@@ -14,6 +14,8 @@ unset SSH_AGENT_PID
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
+export SNIPPET_STORE_DIR="$XDG_DATA_HOME/snippet-store"
+
 # GNU Pass
 export PASSWORD_STORE_GENERATED_LENGTH=32
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
@@ -30,6 +32,7 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
 WINEPREFIXROOT="$XDG_DATA_HOME/wineprefixs"
 export WINEARCH=win64
 export WINEPREFIX="$WINEPREFIXROOT/$WINEARCH"
+unset WINEPREFIXROOT
 
 # Rust
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
@@ -54,6 +57,7 @@ TERMUX_FILES_ROOT="/data/data/com.termux/files"
 export TERMUX_HOME="$TERMUX_FILES_ROOT/home"
 export TERMUX_PREFIX="$TERMUX_FILES_ROOT/usr"
 export TERMUX_TMPDIR="$TERMUX_PREFIX/tmp"
+unset TERMUX_FILES_ROOT
 
 # Base PATH
 export PATH="/usr/sbin:/sbin:$PATH"
@@ -93,6 +97,8 @@ export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 
 # Libvirt
 export LIBVIRT_DEFAULT_URI="qemu:///system"
+
+unset LOCAL_OPT
 
 # Tools
 eval "$(batman --export-env)"

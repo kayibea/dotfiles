@@ -70,6 +70,6 @@ case "$choice" in
   "Power Saver")
     powerprofilesctl set power-saver
     xrandr --output "$OUTPUT" --mode "$MODE" --rate "$LOW_HZ"
-    notify-send "Power profile" "Power saver (60 Hz)"
+    notify-send "Power profile" "Power saver ($LOW_HZ Hz)"
     ;;
 esac

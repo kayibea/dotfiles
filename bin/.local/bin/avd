@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-prog=${0##*/}
-background=true
-default_args=(-no-metrics)
+BACKGROUND=true
+DEFAULT_ARGS=(-no-metrics)
 
 usage() {
   cat <<EOF
-Usage: $prog [options] [-- emulator-args...]
+Usage: ${0##*/} [options] [-- emulator-args...]
 
 Options:
   -f, --foreground        Run emulator in foreground
@@ -19,11 +18,11 @@ EOF
 while [[ $# -gt 0 ]]; do
   case "$1" in
     -f | --foreground)
-      background=false
+      BACKGROUND=false
       shift
       ;;
     -n | --no-default-args)
-      default_args=()
+      DEFAULT_ARGS=()
       shift
       ;;
     -h | --help)
@@ -65,9 +64,9 @@ fi
 
 echo "Selected AVD: $avd"
 
-cmd=(emulator -avd "$avd" "${default_args[@]}" "${emulator_args[@]}")
+cmd=(emulator -avd "$avd" "${DEFAULT_ARGS[@]}" "${emulator_args[@]}")
 
-case "$background" in
+case "$BACKGROUND" in
   true)
     log="${XDG_CACHE_HOME:-$HOME/.cache}/emulator.log"
     mkdir -p "$(dirname "$log")"

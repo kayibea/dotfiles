@@ -1,26 +1,5 @@
 #!/usr/bin/env bash
 
-nohistory() {
-  if [[ -z "${_HIST_ORIG:-}" ]]; then
-    _HIST_ORIG="${HISTFILE:-$HOME/.bash_history}"
-  fi
-
-  if [[ -z "${_HIST_TMPFILE:-}" ]]; then
-    _HIST_TMPFILE="$(mktemp)"
-    trap 'rm -f "$_HIST_TMPFILE"' EXIT
-  fi
-
-  if [[ "$HISTFILE" != "$_HIST_TMPFILE" ]]; then
-    cp -f -- "$_HIST_ORIG" "$_HIST_TMPFILE" 2>/dev/null || :
-    chmod 600 -- "$_HIST_TMPFILE"
-    HISTFILE="$_HIST_TMPFILE"
-    echo "Everyone suddenly went quiet."
-  else
-    HISTFILE="$_HIST_ORIG"
-    echo "Talk to the hand."
-  fi
-}
-
 y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   command yazi "$@" --cwd-file="$tmp"
@@ -33,5 +12,4 @@ pass-totp() {
   sed -n '2p' |
     awk -F'[?&=]' '{for(i=1;i<=NF;i++)if($i=="secret"){print $(i+1);exit}}' |
     totp-gen --clip --pretty
-  # gopher-totp
 }

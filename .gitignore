@@ -1,11 +1,19 @@
-config/.config/gtk-3.0/bookmarks
-
+# GnuPG configs
 gnupg/.gnupg/*
-!gnupg/.gnupg/gpg.conf
 !gnupg/.gnupg/gpg-agent.conf
-!gnupg/.gnupg/dirmngr.conf
 
-yazi/*
+# Helix editor configs
+helix/.config/helix/*
+!helix/.config/helix/config.toml
+!helix/.config/helix/languages.toml
+
+# systemd user units
+systemd/.config/systemd/user/*
+!systemd/.config/systemd/user/*.timer
+!systemd/.config/systemd/user/*.service
+
+# Yazi editor configs
+yazi/.config/yazi/*
 !yazi/.config/yazi/yazi.toml
 !yazi/.config/yazi/theme.toml
 !yazi/.config/yazi/keymap.toml

@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+# TODO: Fix this pile of shit
+
+snip() {
+  local store="${SNIPPET_STORE_DIR:-$HOME/.local/snippet-store}"
+  if [[ ! -d "$store" ]]; then
+    echo "$SNIPPET_STORE_DIR is empty" >&2
+    return 1
+  fi
+
+  local choice=$(
+    fzf \
+      --delimiter='│' \
+      --with-nth=1,2 \
+      --preview "sed '1d' \"$store\"/{1} | bat --style=plain --color=always --language=bash" \
+      --preview-window=right:45%:wrap \
+      < <(
+        find "$store" -type f | while read -r file; do
+          desc=$(sed -n '1s/^# *//p' "$file")
+          rel="${file#$store/}" # <-- FIXED here
+          printf "%s│%s\n" "$rel" "$desc"
+        done
+      )
+  )
+
+  local rel="${file#$store/}"
+  local file="$store/$rel"
+
+  local snippet
+  if [[ "$1" == "-e" ]]; then
+    local tmp
+    tmp=$(mktemp)
+    cp "$file" "$tmp"
+    ${EDITOR:-vi} "$tmp"
+    snippet=$(sed '1d' "$tmp")
+    rm -f "$tmp"
+  else
+    snippet=$(sed '1d' "$file")
+  fi
+
+  READLINE_LINE+="$snippet"
+  READLINE_POINT=${#READLINE_LINE}
+}

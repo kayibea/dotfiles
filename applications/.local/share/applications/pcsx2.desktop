@@ -2,8 +2,8 @@
 Version=1.0
 Type=Application
 Name=PCSX2
-Comment=PCSX2 is a free and open-source PlayStation 2 (PS2) emulator.
+Comment=Free and open-source PlayStation 2 (PS2) emulator
 Exec=pcsx2
 Icon=pcsx2
 Terminal=false
-Categories=Emulator;IDE;
+Categories=Emulator;Game;

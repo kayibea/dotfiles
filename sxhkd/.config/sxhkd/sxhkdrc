@@ -1,77 +1,45 @@
 #!/usr/bin/env bash
 
-# Volume up
-XF86AudioRaiseVolume
-    NOTIFY_ID=$((16#497ffd90)); \
-    pactl set-sink-volume @DEFAULT_SINK@ +5% && \
-    read LEFT RIGHT <<< $(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -n2 | tr '\n' ' ') && \
-    notify-send -r $NOTIFY_ID -i audio-volume-high "PulseAudio" "L $LEFT | R $RIGHT"
+# Volume Control (Raise / Lower)
+XF86Audio{Raise,Lower}Volume
+    pactl set-sink-volume @DEFAULT_SINK@ {+,-}5% && \
+    pactl get-sink-volume @DEFAULT_SINK@ | \
+    awk -F/ -v id=$((16#497ffd90)) \
+    '/Volume/ \{ \
+        gsub(/ /,"",$2); gsub(/ /,"",$4); \
+        val = ($4 ? "L " $2 " | R " $4 : "Vol " $2); \
+        system("notify-send -r " id " -i audio-volume-high \"PulseAudio\" \"" val "\"") \
+    \}'
 
-# Volume down
-XF86AudioLowerVolume
-    NOTIFY_ID=$((16#497ffd90)); \
-    pactl set-sink-volume @DEFAULT_SINK@ -5% && \
-    read LEFT RIGHT <<< $(pactl get-sink-volume @DEFAULT_SINK@ | grep -oP '\d+%' | head -n2 | tr '\n' ' ') && \
-    notify-send -r $NOTIFY_ID -i audio-volume-low "PulseAudio" "L $LEFT | R $RIGHT"
 
-# Volume mute
+# Mute Toggle
 XF86AudioMute
-    NOTIFY_ID=$((16#7dbbf1e5)); \
     pactl set-sink-mute @DEFAULT_SINK@ toggle && \
-    MUTE=$(pactl get-sink-mute @DEFAULT_SINK@ | grep -o 'yes' | head -n1) && \
-    if [ "$MUTE" = "yes" ]; then \
-        notify-send -r $NOTIFY_ID -i audio-volume-muted "Volume Muted"; \
-    else \
-        notify-send -r $NOTIFY_ID -i audio-volume-high "Volume Unmuted"; \
-    fi
+    pactl get-sink-mute @DEFAULT_SINK@ | \
+    awk -v id=$((16#7dbbf1e5)) \
+    '\{ s=($2=="yes"?"muted":"medium"); \
+    system("notify-send -r " id " -i audio-volume-" s " \"Volume " toupper(substr(s,1,1)) substr(s,2) "\"") \}'
 
-# Media PLay
-XF86AudioPlay
-    playerctl play-pause;
+# Media Controls
+XF86Audio{Play,Next,Prev}
+    playerctl {play-pause,next,previous}
 
-# Media Next
-XF86AudioNext
-    playerctl next;
-
-# Media Prev
-XF86AudioPrev
-    playerctl previous;
-
-# Keyboard Layout
+# Keyboard Layout Toggle (US <-> FR)
 ctrl + shift + k
-  NOTIFY_ID=$((16#30ee8f58)); \
-  notify_icon='/usr/share/icons/Papirus/24x24/panel/keyboard-layout.svg'; \
-  cur=$(setxkbmap -query | awk '/layout/\{print $2\}'); \
-  if [ "$cur" = "us" ]; then \
-    setxkbmap fr; \
-    notify-send -r $NOTIFY_ID -i "$notify_icon" "Keyboard Map" "FR"; \
-  else \
-    setxkbmap us; \
-    notify-send -r $NOTIFY_ID -i "$notify_icon" "Keyboard Map" "US"; \
-  fi
-
+    setxkbmap -query | \
+    awk -v id=$((16#30ee8f58)) \
+    '/layout/ \{ \
+        new = ($2=="us" ? "fr" : "us"); \
+        system("setxkbmap " new); \
+        system("notify-send -r " id " -i input-keyboard \"Keyboard Map\" \"" toupper(new) "\"") \
+    \}'
 
 # Screenshots
-Print
-    scrot ~/Pictures/Print/%Y-%m-%d-%H%M%S.png && \
-    notify-send -i image-x-generic "Screenshot saved"
+# Grouped variants: Full, Select (-s), Focused (-u), Clipboard (-os)
+{_,ctrl +,alt +}Print
+    scrot { ,-s ,-u } ~/Pictures/Print/%Y-%m-%d-%H%M%S.png \
+    -e 'notify-send -i image-x-generic "Screenshot saved" "$f"'
 
-ctrl + Print
-    scrot -s ~/Pictures/Print/%Y-%m-%d-%H%M%S.png && \
-    notify-send -i image-x-generic "Screenshot saved"
-
-alt + Print
-    scrot -u ~/Pictures/Print/%Y-%m-%d-%H%M%S.png && \
-    notify-send -i image-x-generic "Focused window screenshot saved"
-
+# Clipboard screenshot (Selection)
 shift + Print
-    scrot -os /tmp/screenshot.png && \
-    xclip -selection clipboard -t image/png -i /tmp/screenshot.png && \
-    notify-send -i image-x-generic "Screenshot copied to clipboard"
-
-# Power Mode Profile
-# space + p
-#     powermode &>/dev/null
-    # ~/.local/bin/powermode &>/dev/null
-
-
+    scrot -s - | xclip -sel clipboard -target image/png  && notify-send -i image-x-generic "Screenshot copied to clipboard"

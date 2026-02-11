@@ -1,16 +1,12 @@
 [Unit]
 Description=Battery Notification Daemon
-After=graphical.target
-Wants=graphical.target
+After=graphical-session.target
 
 [Service]
 Type=simple
 ExecStart=%h/.local/dbin/battery-monitor
 Restart=on-failure
 RestartSec=3
-Environment=DISPLAY=:0
-Environment=XAUTHORITY=%h/.Xauthority
 
 [Install]
-WantedBy=default.target
-
+WantedBy=graphical-session.target
