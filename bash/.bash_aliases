@@ -9,10 +9,9 @@ alias llpg='gpg --list-key --keyid-format LONG'
 
 alias cl='clear'
 alias man='batman'
-alias pwdc='pwd | xclip -selection clipboard && echo "working dir copied !"'
+alias pwdc='pwd | xclip -sel clipboard && echo "working dir copied !"'
 
 alias e='$EDITOR'
-alias x='extract'
 
 alias ls='ls --color=auto'
 alias l='ls -CF'
