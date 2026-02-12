@@ -28,6 +28,15 @@ export GTK_THEME="Adwaita:dark"
 export HELIX_RUNTIME="$LOCAL_OPT/helix/runtime"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
 
+export HISTFILE="$XDG_STATE_HOME/bash/history"
+export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
+export GIT_CONFIG_GLOBAL="$XDG_CONFIG_HOME/git/config"
+
+# Nvidia
+export NVIDIA_SETTINGS_RC="$XDG_CONFIG_HOME/nvidia/settings"
+export __GL_SHADER_DISK_CACHE_PATH="$XDG_CACHE_HOME/nvidia"
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
+
 # Wine (Don't drink and drive)
 WINEPREFIXROOT="$XDG_DATA_HOME/wineprefixs"
 export WINEARCH=win64
@@ -49,6 +58,7 @@ export NODE_REPL_HISTORY="$XDG_STATE_HOME/node_repl_history"
 # Android Studio
 export ANDROID_HOME="$HOME/Android/Sdk"
 export ANDROID_USER_HOME="$XDG_DATA_HOME/android"
+export ANDROID_SDK_HOME="$XDG_DATA_HOME/android"
 export ANDROID_EMULATOR_HOME="$ANDROID_USER_HOME"
 export ANDROID_AVD_HOME="$ANDROID_EMULATOR_HOME/avd"
 
