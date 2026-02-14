@@ -15,5 +15,4 @@ sxhkd &
 
 [ -x "$HOME/.fehbg" ] && "$HOME/.fehbg" &
 
-# exec dwm
-exec dwm >"$XDG_STATE_HOME/xsession-errors" 2>&1
+exec dwm

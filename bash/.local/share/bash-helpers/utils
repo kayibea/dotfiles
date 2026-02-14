@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+gpg-here() {
+  local dirpath="$PWD/.gnupg"
+  export GNUPGHOME="$dirpath"
+}
+
+pass-here() {
+  local dirpath="$PWD/password-store"
+  export PASSWORD_STORE_DIR="$dirpath"
+}
+
 y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   command yazi "$@" --cwd-file="$tmp"
