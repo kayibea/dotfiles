@@ -1,4 +1,18 @@
 [[mgr.prepend_keymap]]
 on = "<C-w>"
-run = 'shell --confirm "feh --bg-fill \"$@\""'
+run = '''
+shell --confirm '
+mime="$(file --brief --mime-type -- "$1")"
+case "$mime" in
+  image/*)
+    feh --bg-fill -- "$1" &&
+    notify-send -i com.github.philip-scott.wallpaperize "Wallpaper" "$1"
+    ;;
+  *)
+    notify-send -u low "Wallpaper" "Not an image file: $mime"
+    exit 1
+    ;;
+esac
+'
+'''
 desc = "Set hovered file as wallpaper"

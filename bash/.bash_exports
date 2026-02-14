@@ -39,6 +39,7 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 
 # Wine (Don't drink and drive)
 WINEPREFIXROOT="$XDG_DATA_HOME/wineprefixs"
+# export WINEARCH=win32
 export WINEARCH=win64
 export WINEPREFIX="$WINEPREFIXROOT/$WINEARCH"
 unset WINEPREFIXROOT
