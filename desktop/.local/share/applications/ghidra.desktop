@@ -3,7 +3,7 @@ Version=1.0
 Type=Application
 Name=Ghidra
 Comment=NSA Reverse Engineering Framework
-Exec=env _JAVA_AWT_WM_NONREPARENTING=1 ghidraRun
 Icon=ghidra
+Exec=env _JAVA_AWT_WM_NONREPARENTING=1 ghidraRun
 Terminal=false
-Categories=Development;Security;ReverseEngineering;
+Categories=Development;X-ReverseEngineering;

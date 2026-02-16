@@ -28,7 +28,6 @@ export GTK_THEME="Adwaita:dark"
 export HELIX_RUNTIME="$LOCAL_OPT/helix/runtime"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
 
-export HISTFILE="$XDG_STATE_HOME/bash/history"
 export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
 export GIT_CONFIG_GLOBAL="$XDG_CONFIG_HOME/git/config"
 
@@ -59,7 +58,6 @@ export NODE_REPL_HISTORY="$XDG_STATE_HOME/node_repl_history"
 # Android Studio
 export ANDROID_HOME="$HOME/Android/Sdk"
 export ANDROID_USER_HOME="$XDG_DATA_HOME/android"
-export ANDROID_SDK_HOME="$XDG_DATA_HOME/android"
 export ANDROID_EMULATOR_HOME="$ANDROID_USER_HOME"
 export ANDROID_AVD_HOME="$ANDROID_EMULATOR_HOME/avd"
 
@@ -82,7 +80,7 @@ export PATH="$LOCAL_OPT/lua-language-server/bin:$PATH"
 # Android tools
 export PATH="$ANDROID_HOME/emulator:$PATH"
 export PATH="$ANDROID_HOME/platform-tools:$PATH"
-export PATH="$ANDROID_HOME/build-tools/36.1.0:$PATH"
+export PATH="$ANDROID_HOME/build-tools/$(ls -1 "$ANDROID_HOME/build-tools" | tail -n1):$PATH"
 export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
 
 # Golang

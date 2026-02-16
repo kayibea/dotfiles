@@ -6,4 +6,4 @@ Comment=Java decompiler and Android APK reverse engineering tool
 Exec=env _JAVA_AWT_WM_NONREPARENTING=1 jadx-gui
 Icon=jadx
 Terminal=false
-Categories=Development;IDE;Security;ReverseEngineering;
+Categories=Development;IDE;X-ReverseEngineering;

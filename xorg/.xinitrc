@@ -3,7 +3,8 @@
 xset s 600 600
 xset dpms 600 600 600
 xss-lock -- slock &
-setxkbmap fr &
+
+command lsusb -d 320f:505b &>/dev/null && setxkbmap us || setxkbmap fr
 
 nm-applet &
 blueman-applet &
@@ -12,6 +13,7 @@ pulseaudio --start &
 dunst &
 slstatus &
 sxhkd &
+xsettingsd &
 
 [ -x "$HOME/.fehbg" ] && "$HOME/.fehbg" &
 
