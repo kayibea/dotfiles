@@ -68,21 +68,6 @@ export TERMUX_PREFIX="$TERMUX_FILES_ROOT/usr"
 export TERMUX_TMPDIR="$TERMUX_PREFIX/tmp"
 unset TERMUX_FILES_ROOT
 
-# Base PATH
-export PATH="/usr/sbin:/sbin:$PATH"
-
-# Local optional tools
-export PATH="$LOCAL_OPT/scrcpy:$PATH"
-export PATH="$LOCAL_OPT/jadx/bin:$PATH"
-export PATH="$LOCAL_OPT/real-esrgan:$PATH"
-export PATH="$LOCAL_OPT/lua-language-server/bin:$PATH"
-
-# Android tools
-export PATH="$ANDROID_HOME/emulator:$PATH"
-export PATH="$ANDROID_HOME/platform-tools:$PATH"
-export PATH="$ANDROID_HOME/build-tools/$(ls -1 "$ANDROID_HOME/build-tools" | tail -n1):$PATH"
-export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
-
 # Golang
 export GOROOT="$LOCAL_OPT/go"
 export GOPATH="$XDG_DATA_HOME/go"
@@ -90,13 +75,14 @@ export GOBIN="$GOPATH/bin"
 export GOCACHE="$XDG_CACHE_HOME/go"
 export GOMODCACHE="$GOPATH/pkg/mod"
 export GOENV="$XDG_CONFIG_HOME/go/env"
-export PATH="$GOROOT/bin:$GOBIN:$PATH"
 
 # Lua / Luarocks
+LUA_V=5.5
 export LLS_ADDONS="$LOCAL_OPT/LLS-Addons/addons"
-export LUA_PATH="$XDG_DATA_HOME/luarocks/share/lua/5.5/?.lua;;"
-export LUA_CPATH="$XDG_DATA_HOME/luarocks/lib/lua/5.5/?.so;;"
+export LUA_PATH="$XDG_DATA_HOME/luarocks/share/lua/$LUA_V/?.lua;;"
+export LUA_CPATH="$XDG_DATA_HOME/luarocks/lib/lua/$LUA_V/?.so;;"
 export LUAROCKS_CONFIG="$XDG_CONFIG_HOME/luarocks/config.lua"
+unset LUA_V
 
 # Java / Gradle
 export SDKMAN_DIR="$XDG_DATA_HOME/sdkman"
@@ -106,6 +92,18 @@ export GRADLE_USER_HOME="$XDG_DATA_HOME/gradle"
 
 # Libvirt
 export LIBVIRT_DEFAULT_URI="qemu:///system"
+
+# Path
+export PATH="/usr/sbin:/sbin:$PATH"
+export PATH="$LOCAL_OPT/scrcpy:$PATH"
+export PATH="$LOCAL_OPT/jadx/bin:$PATH"
+export PATH="$LOCAL_OPT/real-esrgan:$PATH"
+export PATH="$LOCAL_OPT/lua-language-server/bin:$PATH"
+export PATH="$ANDROID_HOME/emulator:$PATH"
+export PATH="$ANDROID_HOME/platform-tools:$PATH"
+export PATH="$ANDROID_HOME/build-tools/$(ls -1 "$ANDROID_HOME/build-tools" | tail -n1):$PATH"
+export PATH="$ANDROID_HOME/cmdline-tools/latest/bin:$PATH"
+export PATH="$GOROOT/bin:$GOBIN:$PATH"
 
 unset LOCAL_OPT
 
