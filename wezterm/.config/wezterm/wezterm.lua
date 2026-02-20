@@ -5,7 +5,7 @@ local config = wezterm.config_builder()
 -- config.font_size = 26
 config.font_size = 20
 config.color_scheme = 'Argonaut'
--- config.font = wezterm.font('IosevkaTerm Nerd Font', { weight = 'Medium', italic = false })
+-- config.font = wezterm.font('Iosevka Nerd Font', { weight = 'Medium', italic = false })
 config.font = wezterm.font('Google Sans Code', { weight = 'Regular', italic = false })
 
 config.max_fps = 144

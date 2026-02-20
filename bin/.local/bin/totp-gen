@@ -64,6 +64,8 @@ copy_to_clipboard() {
     cmd=(pbcopy)
   elif command -v clip.exe &>/dev/null; then
     cmd=(clip.exe)
+  elif command -v termux-clipboard-set &>/dev/null; then
+    cmd=(termux-clipboard-set)
   fi
 
   [[ ${#cmd[@]} -gt 0 ]] && printf '%s' "$input" | "${cmd[@]}"

@@ -7,6 +7,11 @@ name = "go"
 language-servers = ["gopls", "codebook"]
 
 [[language]]
+name = "svelte"
+auto-format = true
+language-servers = ["svelteserver", "codebook"]
+
+[[language]]
 name = "git-commit"
 language-servers = ["commit-lsp", "codebook"]
 
