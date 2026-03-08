@@ -7,7 +7,6 @@ config.font_size = 20
 config.color_scheme = 'Argonaut'
 -- config.font = wezterm.font('Iosevka Nerd Font', { weight = 'Medium', italic = false })
 config.font = wezterm.font('Google Sans Code', { weight = 'Regular', italic = false })
-
 config.max_fps = 144
 config.use_dead_keys = false
 config.enable_wayland = false
