@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BACKUP_DIR="luks-headers-backups"
+DATE="$(date +%Y%m%d-%H%M%S)"
+KEEP=5
+
+mkdir -p "$BACKUP_DIR"
+
+while read -r dev; do
+  if cryptsetup isLuks "$dev" 2>/dev/null; then
+    name="$(basename "$dev")"
+    outfile="${BACKUP_DIR}/${name}-${DATE}.bin"
+
+    echo "Backing up LUKS header: $dev -> $outfile"
+    cryptsetup luksHeaderBackup "$dev" --header-backup-file "$outfile"
+    chmod 600 "$outfile"
+
+    # rotation (keep newest $KEEP)
+    mapfile -t files < <(
+      ls -1t "${BACKUP_DIR}/${name}-"*.bin 2>/dev/null || true
+    )
+
+    if ((${#files[@]} > KEEP)); then
+      for old in "${files[@]:KEEP}"; do
+        echo "Removing old backup $old"
+        rm -f -- "$old"
+      done
+    fi
+  fi
+done < <(lsblk -prn -o NAME,TYPE | awk '$2=="disk" || $2=="part" {print $1}')
