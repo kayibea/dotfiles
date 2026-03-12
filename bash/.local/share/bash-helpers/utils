@@ -17,9 +17,3 @@ y() {
   [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
   rm -f -- "$tmp"
 }
-
-pass-totp() {
-  sed -n '2p' |
-    awk -F'[?&=]' '{for(i=1;i<=NF;i++)if($i=="secret"){print $(i+1);exit}}' |
-    totp-gen --clip --pretty
-}

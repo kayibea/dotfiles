@@ -5,6 +5,8 @@ alias g='lazygit'
 alias gs='git status'
 alias git-lazy-commit='git commit -m "$(fortune -s || date "+%Y-%m-%d %H:%M:%S")"'
 
+alias pass-totp='sed -n 2p | gopher-totp --pretty --clip'
+
 alias llpg='gpg --list-key --keyid-format LONG'
 
 alias cl='clear'
@@ -25,8 +27,7 @@ alias egrep='egrep --color=auto'
 alias xclear=': | xclip -sel clipboard'
 alias xcopy='xclip -sel clipboard'
 alias xpaste='xclip -o -sel clipboard'
-# alias xcopy-img='xclip -sel clipboard -t image/png'
-alias xpaste-img='xclip -sel clipboard -t image/png -o'
+alias xpastei='xclip -sel clipboard -t image/png -o'
 
 # alias suspend='systemctl suspend'
 alias screenoff='xset dpms force off'
