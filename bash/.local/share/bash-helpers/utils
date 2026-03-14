@@ -10,6 +10,12 @@ pass-here() {
   export PASSWORD_STORE_DIR="$dirpath"
 }
 
+genpin() {
+  local digits="${1:-6}"
+  tr -dc '0-9' </dev/urandom | head -c "$digits"
+  echo
+}
+
 y() {
   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
   command yazi "$@" --cwd-file="$tmp"
