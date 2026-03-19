@@ -5,9 +5,11 @@ alias g='lazygit'
 alias gs='git status'
 alias git-lazy-commit='git commit -m "$(fortune -s || date "+%Y-%m-%d %H:%M:%S")"'
 
-alias pass-totp='sed -n 2p | gopher-totp --pretty --clip'
+alias whatip='curl ifconfig.me; echo'
+alias pingthevoid='ping google.com -c 3'
 
 alias llpg='gpg --list-key --keyid-format LONG'
+alias pass-totp='sed -n 2p | gopher-totp --pretty --clip'
 
 alias cl='clear'
 alias man='batman'
@@ -19,6 +21,7 @@ alias ls='ls --color=auto'
 alias l='ls -CF'
 alias la='ls -A'
 alias ll='ls -alF'
+alias llh='ls -alhF'
 
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'

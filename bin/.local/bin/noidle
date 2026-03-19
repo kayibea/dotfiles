@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [ "$#" -eq 0 ]; then
+  echo "usage: ${0##*/} <command> [args...]"
+  exit 1
+fi
+
+OLD_SS=$(xset q | awk '/timeout:/ {print $2, $4}')
+OLD_DPMS=$(xset q | awk '/DPMS is/ {print $3}')
+
+xset s off -dpms
+
+cleanup() {
+  xset s $OLD_SS
+  if [ "$OLD_DPMS" = "Enabled" ]; then
+    xset +dpms
+  else
+    xset -dpms
+  fi
+}
+
+trap cleanup EXIT INT TERM
+
+exec "$@"

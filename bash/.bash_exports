@@ -14,8 +14,6 @@ unset SSH_AGENT_PID
 export GPG_TTY="$(tty)"
 export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
 
-export SNIPPET_STORE_DIR="$XDG_DATA_HOME/snippet-store"
-
 # GNU Pass
 export PASSWORD_STORE_GENERATED_LENGTH=32
 export PASSWORD_STORE_ENABLE_EXTENSIONS=true
