@@ -1,3 +1,10 @@
+
+# Temp fix for unwanted icons files being included
+desktop/.local/share/icons/hicolor/*/*
+!desktop/.local/share/icons/hicolor/
+!desktop/.local/share/icons/hicolor/64x64/apps
+# !desktop/.local/share/icons/hicolor/512x512/apps
+
 # GnuPG configs
 gnupg/.gnupg/*
 !gnupg/.gnupg/gpg-agent.conf
