@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=KeePassXC
+Comment=Password Manager
+Exec=keepassxc
+Icon=keepassxc
+Terminal=false
+Categories=Utility;Security;
+StartupNotify=true

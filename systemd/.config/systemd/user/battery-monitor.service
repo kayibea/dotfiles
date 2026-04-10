@@ -1,6 +1,5 @@
 [Unit]
 Description=Battery Notification Daemon
-After=graphical-session.target
 
 [Service]
 Type=simple
@@ -9,4 +8,4 @@ Restart=on-failure
 RestartSec=3
 
 [Install]
-WantedBy=graphical-session.target
+WantedBy=default.target
