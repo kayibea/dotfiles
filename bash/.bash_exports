@@ -59,7 +59,7 @@ export ANDROID_USER_HOME="$XDG_DATA_HOME/android"
 export ANDROID_EMULATOR_HOME="$ANDROID_USER_HOME"
 export ANDROID_AVD_HOME="$ANDROID_EMULATOR_HOME/avd"
 
-# Termux
+# Termux Android
 TERMUX_FILES_ROOT="/data/data/com.termux/files"
 export TERMUX_HOME="$TERMUX_FILES_ROOT/home"
 export TERMUX_PREFIX="$TERMUX_FILES_ROOT/usr"

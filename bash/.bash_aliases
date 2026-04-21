@@ -6,7 +6,6 @@ alias gs='git status'
 alias git-lazy-commit='git commit -m "$(fortune -s || date "+%Y-%m-%d %H:%M:%S")"'
 
 alias ping3='ping google.com -c 3'
-alias whatip='curl ifconfig.me; echo'
 
 alias llpg='gpg --list-key --keyid-format LONG'
 alias pass-totp='sed -n 2p | gopher-totp --pretty --clip'
