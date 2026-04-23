@@ -6,6 +6,7 @@ show_symlink = true
 vlc = [
   { run = 'vlc "$@"', orphan = true },
 ]
+
 feh = [
   { run = 'feh --auto-zoom --scale-down "$@"', orphan = true },
 ]
@@ -24,6 +25,6 @@ rules = [
 prepend_previewers = [
   { mime = "image/*", run = "image" },
   { mime = "video/*", run = "video" },
-  { name = "*.dds", run = "magick -define dds:alpha=on" },
+  { name = "*.dds", mime = "application/octet-stream", run = "magick -define dds:alpha=on" },
   { mime = "image/{avif,heic,jxl,svg+xml}", run = "magick" },
 ]
