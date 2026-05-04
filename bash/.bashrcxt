@@ -6,7 +6,7 @@ shopt -s nullglob
 [ -f ~/.bash_aliases ] && . ~/.bash_aliases
 [ -f ~/.bash_logout ] && . ~/.bash_logout
 
-source_dirs=("$XDG_DATA_HOME/bash-completions" "$XDG_DATA_HOME/bash-helpers")
+source_dirs=("$XDG_DATA_HOME/bash-completions" "$XDG_DATA_HOME/bash-utils")
 for dir in "${source_dirs[@]}"; do
   [[ -d "$dir" ]] || continue
   for f in "$dir"/*; do
