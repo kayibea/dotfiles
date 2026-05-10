@@ -45,6 +45,6 @@ prepend_previewers = [
   { mime = "image/{avif,heic,jxl,svg+xml}", run = "magick" },
   { mime = "image/*", run = "image" },
   { mime = "video/*", run = "video" },
-  { mime = "application/octet-stream", name = "*.dds", run = "magick -define dds:alpha=on" },
+  { url = "*.dds", mime = "application/octet-stream", run = "magick -define dds:alpha=on" },
   { mime = "application/octet-stream", run = "file" },
 ]
