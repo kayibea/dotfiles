@@ -3,73 +3,26 @@ set -euo pipefail
 
 OUTPUT="DP-2"
 MODE="1920x1080"
-LOW_HZ="60.00"
-HIGH_HZ="144.00"
 
-current_profile=$(powerprofilesctl get)
-
-perf="Performance"
-bal="Balanced"
-save="Power Saver"
-
-case "$current_profile" in
-  performance) perf="$perf *" ;;
-  balanced) bal="$bal *" ;;
-  power-saver) save="$save *" ;;
-esac
-
-options="$perf\n$bal\n$save"
+current=$(powerprofilesctl get)
 
 choice=$(
-  printf "%b" "$options" | rofi \
-    -dmenu \
-    -i \
-    -p "Power Profile" \
-    -theme-str '
-      * {
-        font: "JetBrainsMono Nerd Font 14";
-        background: #0b0f14;
-        foreground: #e6e6e6;
-        accent: #ff4f9a;
-      }
-      window {
-        width: 420px;
-        border-radius: 16px;
-        padding: 24px;
-      }
-      listview {
-        lines: 3;
-        spacing: 12px;
-      }
-      element {
-        padding: 12px;
-        border-radius: 12px;
-      }
-      element selected {
-        background-color: @accent;
-        text-color: #000000;
-      }
-    '
-) || true
+  printf "performance\nbalanced\npower-saver\n" |
+    sed "s/^$current/& */" |
+    fzf --prompt="Power Profile > " --height=10 --border
+) || exit 0
 
-[ -z "$choice" ] && exit 0
+choice=${choice% *}
 
-choice=$(printf "%s" "$choice" | sed 's/ \*$//')
+powerprofilesctl set "$choice"
 
 case "$choice" in
-  Performance)
-    powerprofilesctl set performance
-    xrandr --output "$OUTPUT" --mode "$MODE" --rate "$HIGH_HZ"
-    notify-send "Power profile" "Performance"
+  performance | balanced)
+    xrandr --output "$OUTPUT" --mode "$MODE" --rate 144
     ;;
-  Balanced)
-    powerprofilesctl set balanced
-    xrandr --output "$OUTPUT" --mode "$MODE" --rate "$HIGH_HZ"
-    notify-send "Power profile" "Balanced"
-    ;;
-  "Power Saver")
-    powerprofilesctl set power-saver
-    xrandr --output "$OUTPUT" --mode "$MODE" --rate "$LOW_HZ"
-    notify-send "Power profile" "Power saver ($LOW_HZ Hz)"
+  power-saver)
+    xrandr --output "$OUTPUT" --mode "$MODE" --rate 60
     ;;
 esac
+
+notify-send "Power profile" "$choice"
