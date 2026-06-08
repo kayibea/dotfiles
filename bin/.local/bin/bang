@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+usage() {
+  cat <<EOF
+Usage:
+  ${0##*/} filename
+  ${0##*/} runner filename
+  ${0##*/} runner arg1 [arg2 ...] filename
+
+Examples:
+  ${0##*/} test.sh
+  ${0##*/} lua script.lua
+  ${0##*/} uv run script.py
+EOF
+}
+
+(($# >= 1)) || {
+  usage >&2
+  exit 1
+}
+
+if (($# == 1)); then
+  runner=(bash)
+  filename=$1
+else
+  runner=("${@:1:$#-1}")
+  filename=${!#}
+fi
+
+{
+  printf '#!/usr/bin/env'
+  printf ' %q' "${runner[@]}"
+  printf '\n'
+} >"$filename"
+
+chmod +x "$filename"
+
+"$EDITOR" -- "$filename"

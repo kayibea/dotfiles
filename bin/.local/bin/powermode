@@ -12,7 +12,7 @@ choice=$(
     fzf --prompt="Power Profile > " --height=10 --border
 ) || exit 0
 
-choice=${choice% *}
+choice="${choice% *}"
 
 powerprofilesctl set "$choice"
 

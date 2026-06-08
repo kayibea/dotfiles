@@ -26,15 +26,7 @@ export GTK_THEME="Adwaita:dark"
 export HELIX_RUNTIME="$LOCAL_OPT/helix/runtime"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
 
-export WGETRC="$XDG_CONFIG_HOME/wget/wgetrc"
-export GIT_CONFIG_GLOBAL="$XDG_CONFIG_HOME/git/config"
-
-# Nvidia
-export NVIDIA_SETTINGS_RC="$XDG_CONFIG_HOME/nvidia/settings"
-export __GL_SHADER_DISK_CACHE_PATH="$XDG_CACHE_HOME/nvidia"
-export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
-
-# Wine (Don't drink and drive)
+# Wine (Hehehe, Windows emulator)
 WINEPREFIXROOT="$XDG_DATA_HOME/wineprefixs"
 # export WINEARCH=win32
 export WINEARCH=win64
