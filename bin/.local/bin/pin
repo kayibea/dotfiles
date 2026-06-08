@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+digits="${1:-6}"
+
+if [[ ! "$digits" =~ ^[0-9]+$ ]] || [ "$digits" -eq 0 ]; then
+  echo "Error: Argument must be a positive integer." >&2
+  exit 1
+fi
+
+set +o pipefail
+LC_ALL=C tr -dc '0-9' </dev/urandom | head -c "$digits"
+set -o pipefail
+
+echo

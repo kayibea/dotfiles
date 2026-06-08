@@ -4,11 +4,11 @@ show_symlink = true
 
 [opener]
 edit = [
-  { run = '$EDITOR "$@"', block = true },
+  { run = '$EDITOR -- "$@"', block = true },
 ]
 
 vlc = [
-  { run = 'vlc "$@"', orphan = true },
+  { run = 'vlc -- "$@"', orphan = true },
 ]
 
 feh = [

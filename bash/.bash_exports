@@ -27,11 +27,11 @@ export HELIX_RUNTIME="$LOCAL_OPT/helix/runtime"
 export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc-2.0"
 
 # Wine (Hehehe, Windows emulator)
-WINEPREFIXROOT="$XDG_DATA_HOME/wineprefixs"
+WINEPREFIX_ROOT="$XDG_DATA_HOME/wineprefixs"
 # export WINEARCH=win32
 export WINEARCH=win64
-export WINEPREFIX="$WINEPREFIXROOT/$WINEARCH"
-unset WINEPREFIXROOT
+export WINEPREFIX="$WINEPREFIX_ROOT/$WINEARCH"
+unset WINEPREFIX_ROOT
 
 # Rust
 export CARGO_HOME="$XDG_DATA_HOME/cargo"

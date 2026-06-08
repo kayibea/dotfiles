@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REMOVE=false
+STOW_FLAGS=("--verbose" "-t" "$HOME")
 
 usage() {
   cat <<EOF
@@ -17,7 +17,7 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     -r | --remove)
       shift
-      REMOVE=true
+      STOW_FLAGS+=("-D")
       ;;
     -h | --help)
       usage
@@ -31,10 +31,23 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ "$REMOVE" = true ]]; then
-  stow --verbose -D -t $HOME */
-else
-  stow --verbose -t $HOME */
-fi
+echo "--- Previewing changes ---"
 
-echo "All done!"
+stow "${STOW_FLAGS[@]}" -n */
+
+echo
+
+read -n 1 -p "Do you want to proceed with these changes? (y/n) " yn
+echo
+
+case "$yn" in
+  [Yy]*)
+    echo "Applying changes..."
+    stow "${STOW_FLAGS[@]}" */
+    echo "All done!"
+    ;;
+  *)
+    echo "Aborted! No changes were made."
+    exit 0
+    ;;
+esac
